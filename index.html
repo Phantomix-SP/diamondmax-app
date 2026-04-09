@@ -1,61 +1,172 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Phantomix | DiamondMax</title>
+    <title>Phantomix | DiamondMax</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-	<style>
-		
-		body{background-color: #0d0d0d;  color: #ffffff; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; text-align:center; padding-top:50px;
-		}
-		h2 {
-			color: #b026ff;
-		}
-		p {
-			color: #a0a0a0;
-			font-size:18px;
-		}
-		.download-btn {
-			display: inline-blocks;
-			background-color: #b026ff;
-			color:white;
-			padding:15px 40px;
-			text-decoration: none;
-			font-size:20px;
-			font-weight: bold;
-			boarder-radius: 8px;
-			margin-top: 25px;
-			margin-bottom: 30px;
-			border:2px solid #b026ff;
-			transition: 0.3s
-		}
-		.download-btn:hover {
-			background-color: transparent;
-			color: #b026ff;
-			box-shadow: 0px 0px 15px #b026ff;
-		}
-		ul {
-			font-size: 18px;
-			margin-bottom: 10px;
-			color: #00ffff;
-		}
-</style>
+    <style>
+        /* Matrix Background */
+        #matrix {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        /* Body aur Font Styling */
+        body {
+            background-color: #0d0d0d;
+            color: #ffffff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-align: center;
+            padding-top: 50px;
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        h1 { color: #00ffff; letter-spacing: 2px; }
+        h2 { color: #b026ff; }
+        p { color: #a0a0a0; font-size: 18px; }
+
+        /* Button Styling */
+        .download-btn {
+            display: inline-block;
+            background-color: #b026ff;
+            color: white;
+            padding: 15px 40px;
+            text-decoration: none;
+            font-size: 20px;
+            font-weight: bold;
+            border-radius: 8px;
+            margin-top: 25px;
+            margin-bottom: 30px;
+            border: 2px solid #b026ff;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .download-btn:hover {
+            background-color: transparent;
+            color: #b026ff;
+            box-shadow: 0px 0px 15px #b026ff;
+        }
+
+        /* Bullet Points */
+        ul {
+            list-style-type: none;
+            padding: 0;
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #00ffff;
+        }
+        li { margin-bottom: 10px; }
+
+        /* Mobile Adjustments */
+        @media (max-width: 768px) {
+            body { padding-top: 20px; }
+            h1 { font-size: 28px; }
+            h2 { font-size: 22px; }
+            p { font-size: 16px; padding: 0px 15px; }
+            .download-btn { width: 80%; padding: 12px 0px; font-size: 18px; }
+        }
+    </style>
 </head>
 <body>
-	<img src="diamodmax.png" alt="Phantomix Logo" style="width: 150px; margin-bottom: 10px; border-radius: 50%; box-shadow: 0px 0px 20px #00ffff";>
-	<h1>Phantomix System</h1>
-	<p>Secure, Fast, Reliable.</p>
-	<hr style="boarder-colour: #333; width: 50%";>
-	<h2>💎 DiamondMax App</h2>
-	<p>India's upcoming premium earning platform.</p>
-	<a href="https://drive.google.com/uc?export=download&id=1y2a2aQEdEZ7bPruQACBpnLKxqVoradR3" class="download-btn">
-		Download APK Now
-	</a>
-	<h3>Core Feature:</h3>
-	<ul>
+
+    <canvas id="matrix"></canvas>
+
+    <img src="logo.png" alt="Phantomix Logo" style="width: 150px; margin-bottom: 10px; border-radius: 50%; box-shadow: 0px 0px 20px #00ffff;">
+    
+    <h1>PHANTOMIX SYSTEM</h1>
+    <p>Secure. Fast. Reliable.</p>
+    
+    <hr style="border-color: #333; width: 50%;">
+    
+    <h2>💎 DiamondMax App</h2>
+    <p>India's upcoming premium earning platform.</p>
+
+    <button id="verify-btn" class="download-btn" onclick="startSecurityCheck()">
+        VERIFY DEVICE SECURITY
+    </button>
+    
+    <p id="status-message" style="font-size: 20px; font-weight: bold;"></p>
+
+    <div id="progress-container" style="width: 80%; background-color: #333; height: 20px; border-radius: 10px; margin: 20px auto; display: none; border: 1px solid #00ffff;">
+        <div id="progress-bar" style="width: 0%; background-color: #00ffff; height: 100%; border-radius: 10px; box-shadow: 0px 0px 10px #00ffff; transition: width 0.1s;"></div>
+    </div>
+
+    <a href="https://drive.google.com/uc?export=download&id=1y2a2aQEdEZ7bPruQACBpnLKxqVoradR3" id="real-download-btn" class="download-btn" style="display: none; background-color: #00ffff; color: #000; border-color: #00ffff;">
+        DOWNLOAD APK NOW
+    </a>
+
+    <h3>Core Features:</h3>
+    <ul>
         <li>⚡ Instant Withdrawals</li>
         <li>🛡️ High-End Security</li>
         <li>🕹️ Next-Gen UI Experience</li>
     </ul>
 
+    <script>
+        // --- 1. Security Check Logic ---
+        function startSecurityCheck() {
+            document.getElementById("verify-btn").style.display = "none";
+            document.getElementById("progress-container").style.display = "block";
+            
+            let statusText = document.getElementById("status-message");
+            let progressBar = document.getElementById("progress-bar");
+            let width = 0;
+            
+            let interval = setInterval(function() {
+                if (width >= 100) {
+                    clearInterval(interval); 
+                    statusText.innerHTML = "✅ Device Secured. Access Granted!";
+                    statusText.style.color = "#00ff00";
+                    document.getElementById("real-download-btn").style.display = "inline-block";
+                } else {
+                    width++; 
+                    progressBar.style.width = width + "%";
+                    statusText.innerHTML = "Scanning Device: " + width + "%";
+                    statusText.style.color = "yellow";
+                }
+            }, 50); 
+        }
+
+        // --- 2. Hacker Matrix Animation Logic ---
+        const canvas = document.getElementById('matrix');
+        const ctx = canvas.getContext('2d');
+        
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        
+        const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()*&^%";
+        const fontSize = 16;
+        const columns = canvas.width / fontSize;
+        const drops = [];
+        
+        for (let i = 0; i < columns; i++) {
+            drops[i] = 1;
+        }
+        
+        function drawMatrix() {
+            ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            ctx.fillStyle = "#0f0";
+            ctx.font = fontSize + "px arial";
+            
+            for (let i = 0; i < drops.length; i++) {
+                const text = letters.charAt(Math.floor(Math.random() * letters.length));
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.97) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
+            }
+        }
+        setInterval(drawMatrix, 33);
+    </script>
 </body>
 </html>
