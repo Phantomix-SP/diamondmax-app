@@ -18,7 +18,7 @@ I am a Tech Entrepreneur, App Developer, and the mind behind **Phantomix**. My p
 ### 📫 Connect With Me (My Digital Ecosystem)
 * 💼 **LinkedIn:** [Shrikant Prajapati]
 * 📸 **Instagram:** [@shrikantxprajapati]https://www.instagram.com/shrikantxprajapati/
-* 🎥 **YouTube:** [My Official Channel] https"//youtube.com/@Phantomix_SP
+* 🎥 **YouTube:** [My Official Channel] https://youtube.com/@Phantomix_SP
 
 ---
 *"Logic needs no RAM, it only needs a vision."* - CEO, Phantomix
