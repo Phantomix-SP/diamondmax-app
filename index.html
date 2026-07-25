@@ -2683,41 +2683,18 @@
             
             toast.style.display = "flex";
             
-            // 3 second baad automatically hide ho jayega
             setTimeout(() => {
                 toast.style.display = "none";
             }, 3000);
         }
-        // 16. Monetization Modal Controller
-       
 
-            // Modal ka text aur header dynamically change karenge
-            const modalHeading = modal.querySelector("h3");
-            const modalText = modal.querySelector("p");
-            const modalImg = modal.querySelector("img");
-
-            modalHeading.innerHTML = `<i class="fas fa-shield-halved" style="color: #0ea5e9;"></i> Activating ${tierName}`;
-            modalText.innerHTML = `You are securing <b>${tierName} Lifetime Access</b> for <b>₹${amount}</b>. Scan the mainframe node to complete transition.`;
-            
-            // Dynamic UPI QR generation with amount mapping
-            // Change 'YOUR_UPI_ID_HERE' to your actual UPI ID in this string below
-            const myUPI = "8168350829@amazonpay"; 
-            modalImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=upi://pay?pa=${myUPI}%26pn=Shrikant%26am=${amount}%26cu=INR&color=0ea5e9&bgcolor=0f172a`;
-
-            // WhatsApp button ka message bhi dynamic set kar dete hain tracking ke liye
-            const waBtn = modal.querySelector("a");
-            waBtn.href = `https://wa.me/918168350829?text=Hi%20Shrikant!%20I%20have%20sent%20₹${amount}%20for%20the%20${encodeURIComponent(tierName)}%20DiamondMax%20Lifetime%20Access.`;
-
-            // Display modal
-            modal.style.display = "flex";
-        }// 18. Mainframe Crowdfunding & FOMO Simulator Engine
+        // 18. Mainframe Crowdfunding & FOMO Simulator Engine
         function runFomoEngine() {
             const targetAmount = 25000;
-            const currentPercentage = 68; // Aap is percentage ko manually badha sakte hain
+            const currentPercentage = 68; 
             const totalRaised = Math.ceil((targetAmount * currentPercentage) / 100);
-            const totalBackers = Math.ceil(totalRaised / 74); // realistic average ticket count
+            const totalBackers = Math.ceil(totalRaised / 74); 
 
-            // Initial UI Mapping with animation delay
             setTimeout(() => {
                 const fillBar = document.getElementById("progress-bar-node");
                 const raisedText = document.getElementById("raised-amount");
@@ -2730,7 +2707,6 @@
                 if(percentText) percentText.innerText = currentPercentage + "% Funded";
             }, 800);
 
-            // Live Activity Feed Simulation Loop (FOMO Trigger)
             const activityText = document.getElementById("live-activity-text");
             const activities = [
                 "🚀 [SYSTEM] New 'Core Architect (₹99)' slot locked by user node_***42",
@@ -2742,20 +2718,17 @@
 
             setInterval(() => {
                 if(!activityText) return;
-                // Random updates stream simulation
                 const randomIndex = Math.floor(Math.random() * activities.length);
-                
-                // Fade out effect structure
                 activityText.style.opacity = 0;
                 setTimeout(() => {
                     activityText.innerText = activities[randomIndex];
                     activityText.style.opacity = 1;
                 }, 400);
-            }, 12000); // Har 12 second me realistic alert pop karega
+            }, 12000); 
         }
 
-        // Initialize Loop
         runFomoEngine();
+
         // 19. Cyber Security Tip Engine
         const cyberTips = [
             "Never reuse passwords across different platforms. If one site gets breached, all your accounts are at risk.",
@@ -2770,10 +2743,7 @@
         function displayDailyTip() {
             const tipElement = document.getElementById("daily-tip-text");
             if(tipElement) {
-                // Randomly select a tip from the array
                 const randomIndex = Math.floor(Math.random() * cyberTips.length);
-                
-                // Add a small fade effect for premium feel
                 tipElement.style.opacity = 0;
                 setTimeout(() => {
                     tipElement.innerText = cyberTips[randomIndex];
@@ -2785,38 +2755,31 @@
 
         // 20. Custom Neon Glow Cursor Logic
         const glowCursor = document.querySelector('.glow-cursor');
-
-        // Check if device has a real mouse (ignore mobile touch screens)
         if (window.matchMedia("(pointer: fine)").matches) {
             glowCursor.style.display = 'block';
-            
-            // Mouse move hone par dot ko pointer ke piche chalana
             document.addEventListener('mousemove', (e) => {
                 glowCursor.style.left = e.clientX + 'px';
                 glowCursor.style.top = e.clientY + 'px';
             });
 
-            // Buttons/Links par aate hi color aur size change karna
             const clickables = document.querySelectorAll('a, button, input, .feature-card, .tier-card, .faq-question');
             clickables.forEach(item => {
                 item.addEventListener('mouseenter', () => {
                     glowCursor.style.width = '45px';
                     glowCursor.style.height = '45px';
-                    glowCursor.style.background = 'rgba(16, 185, 129, 0.3)'; // Neon Green
+                    glowCursor.style.background = 'rgba(16, 185, 129, 0.3)';
                     glowCursor.style.boxShadow = '0 0 25px rgba(16, 185, 129, 0.8)';
                 });
                 item.addEventListener('mouseleave', () => {
                     glowCursor.style.width = '20px';
                     glowCursor.style.height = '20px';
-                    glowCursor.style.background = 'rgba(14, 165, 233, 0.4)'; // Back to Neon Blue
+                    glowCursor.style.background = 'rgba(14, 165, 233, 0.4)';
                     glowCursor.style.boxShadow = '0 0 20px rgba(14, 165, 233, 0.8), 0 0 40px rgba(14, 165, 233, 0.4)';
                 });
             });
         }
 
-        // Run the tip generator when the page loads
         window.addEventListener('load', displayDailyTip);
-        
     </script>
 
     <footer class="phantomix-footer">
@@ -2837,35 +2800,25 @@
             <div class="footer-social">
                 <h4>Connect</h4>
                 <div class="social">
-            <a href="https://instagram.com/shrikantxprajapatii" target="_blank" aria-label="Visit Phantomix Instagram"><i class="fab fa-instagram" aria-hidden="true"></i></a>
-            <a href="https://www.youtube.com/@Phantomix_SP" target="_blank" aria-label="Visit Phantomix YouTube"><i class="fab fa-youtube" aria-hidden="true"></i></a>
-            <a href="https://whatsapp.com/channel/0029VaAQ8ww7dmei9QiQVd2m" target="_blank" aria-label="Join Phantomix WhatsApp"><i class="fab fa-whatsapp" aria-hidden="true"></i></a>
-            <a href="https://t.me/diamondmax_india" target="_blank" aria-label="Join Phantomix Telegram"><i class="fab fa-telegram" aria-hidden="true"></i></a>
-        </div>
+                    <a href="https://instagram.com/shrikantxprajapatii" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.youtube.com/@Phantomix_SP" target="_blank"><i class="fab fa-youtube"></i></a>
+                    <a href="https://whatsapp.com/channel/0029VaAQ8ww7dmei9QiQVd2m" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                    <a href="https://t.me/diamondmax_india" target="_blank"><i class="fab fa-telegram"></i></a>
+                </div>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>
-        &copy; 2026 Phantomix. All rights reserved. 
-        <span style="margin: 0 10px; color: #334155;">|</span> 
-        <a href="privacy.html" style="color: #94a3b8; text-decoration: none; transition: color 0.3s ease;" onmouseover="this.style.color='#0ea5e9'" onmouseout="this.style.color='#94a3b8'">Privacy Policy</a>
-    </p>
+            <p>&copy; 2026 Phantomix. All rights reserved. <span style="margin: 0 10px; color: #334155;">|</span> <a href="privacy.html" style="color: #94a3b8; text-decoration: none;">Privacy Policy</a></p>
             <p>Made with <span style="color: #ef4444; animation: pulse 1.5s infinite;">❤</span> in India by Shrikant Prajapati and Ranjan Kumar</p>
         </div>
     </footer>
+
     <div id="hacker-screen" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(2, 6, 23, 0.98); z-index: 10000; flex-direction: column; justify-content: center; align-items: center; color: #10b981; font-family: 'Courier New', Courier, monospace; text-align: center; padding: 20px;">
         <i class="fas fa-user-secret" style="font-size: 60px; margin-bottom: 20px; animation: pulse 1s infinite;"></i>
         <h2 style="color: #ef4444; margin-bottom: 10px; font-family: 'Courier New', Courier, monospace;">> SYSTEM BREACH DETECTED_</h2>
         <p style="font-size: 18px; margin: 5px 0;">> OVERRIDING DIAMONDMAX PROTOCOLS...</p>
         <p style="font-size: 18px; margin: 5px 0;">> WELCOME TO THE PHANTOMIX MAINFRAME, ELITE FOUNDER.</p>
         <p style="color: #64748b; font-size: 14px; margin-top: 30px; animation: blink 1s infinite;">[ Access Granted - Automatically closing in 5s... ]</p>
-    </div>
-    
-            <div style="display: flex; gap: 10px;">
-                <a href="https://wa.me/918168350829?text=Hi%20Shrikant,%20I%20just%20supported%20Phantomix!" target="_blank" class="btn" style="flex: 1; text-decoration: none; padding: 12px; font-size: 14px;">Confirm Payment</a>
-                <button onclick="toggleMonetizeModal(false)" class="btn" style="background: #334155; box-shadow: none; flex: 1; padding: 12px; font-size: 14px;">Close</button>
-            </div>
-        </div>
     </div>
 
     <section class="phantomix-section scroll-reveal" style="max-width: 800px; padding-top: 10px; padding-bottom: 10px;">
@@ -2879,88 +2832,57 @@
             </div>
         </div>
     </section>
+
     <script>
         setTimeout(() => {
             console.clear();
-            console.log(
-                "%c💎 PHANTOMIX ECOSYSTEM", 
-                "color: #0ea5e9; font-size: 30px; font-weight: 900; text-shadow: 0px 0px 15px rgba(14, 165, 233, 0.6); font-family: sans-serif;"
-            );
-            console.log(
-                "%cWait... are you a developer looking under the hood? 👀", 
-                "color: #10B981; font-size: 16px; font-weight: bold; margin-top: 10px;"
-            );
-            console.log(
-                "%cWelcome to the backend of the new web. If you love clean code and privacy, you are in the right place. Enjoy the tools!", 
-                "color: #94A3B8; font-size: 14px; margin-top: 5px; line-height: 1.5;"
-            );
+            console.log("%c💎 PHANTOMIX ECOSYSTEM", "color: #0ea5e9; font-size: 30px; font-weight: 900; text-shadow: 0px 0px 15px rgba(14, 165, 233, 0.6); font-family: sans-serif;");
+            console.log("%cWait... are you a developer looking under the hood? 👀", "color: #10B981; font-size: 16px; font-weight: bold; margin-top: 10px;");
+            console.log("%cWelcome to the backend of the new web. If you love clean code and privacy, you are in the right place. Enjoy the tools!", "color: #94A3B8; font-size: 14px; margin-top: 5px; line-height: 1.5;");
         }, 1000);
     </script>
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"></script>
     <script>
-        // Features card par 3D effect apply karna
-        VanillaTilt.init(document.querySelectorAll(".feature-card"), {
-            max: 15,          // Kitna tilt hoga (degree)
-            speed: 400,       // Animation ki speed
-            glare: true,      // Shishe jaisi chamak on
-            "max-glare": 0.15 // Chamak ki intensity
-        });
-
-        // Presale Tier cards par bhi same effect apply karna
-        VanillaTilt.init(document.querySelectorAll(".tier-card"), {
-            max: 10,
-            speed: 400,
-            glare: true,
-            "max-glare": 0.1
-        });
+        VanillaTilt.init(document.querySelectorAll(".feature-card"), { max: 15, speed: 400, glare: true, "max-glare": 0.15 });
+        VanillaTilt.init(document.querySelectorAll(".tier-card"), { max: 10, speed: 400, glare: true, "max-glare": 0.1 });
     </script>
-<div id="paymentModal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(15, 23, 42, 0.95); backdrop-filter: blur(8px); z-index:999999; justify-content:center; align-items:center; margin:0; padding:0;">
-    <div style="background:#1e293b; padding:30px; border-radius:15px; border:1px solid #0ea5e9; text-align:center; max-width:350px; width:90%; box-shadow: 0 10px 40px rgba(0,0,0,0.8); transform: translateY(-5%);">
-        
-        <h3 id="planName" style="color:#f8fafc; margin-bottom: 5px; font-size: 22px;">Plan Name</h3>
-        <p style="color:#94a3b8; font-size: 14px; margin-bottom: 20px;">Scan with PhonePe, GPay, or Paytm</p>
-        
-        <div style="background: white; padding: 10px; border-radius: 10px; display: inline-block;">
-            <img id="qrImage" src="" style="width:200px; height:200px;">
+
+    <div id="paymentModal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(15, 23, 42, 0.95); backdrop-filter: blur(8px); z-index:999999; justify-content:center; align-items:center; margin:0; padding:0;">
+        <div style="background:#1e293b; padding:30px; border-radius:15px; border:1px solid #0ea5e9; text-align:center; max-width:350px; width:90%; box-shadow: 0 10px 40px rgba(0,0,0,0.8); transform: translateY(-5%);">
+            <h3 id="planName" style="color:#f8fafc; margin-bottom: 5px; font-size: 22px;">Plan Name</h3>
+            <p style="color:#94a3b8; font-size: 14px; margin-bottom: 20px;">Scan with PhonePe, GPay, or Paytm</p>
+            <div style="background: white; padding: 10px; border-radius: 10px; display: inline-block;">
+                <img id="qrImage" src="" style="width:200px; height:200px;">
+            </div>
+            <p style="color:#f59e0b; font-weight:800; font-size: 24px; margin: 15px 0;">Amount: ₹<span id="planAmount"></span></p>
+            <a id="waButton" href="#" target="_blank" style="display:block; background:#25D366; color:white; padding:12px; border-radius:8px; text-decoration:none; font-weight:bold; font-size: 16px; transition: 0.3s;" onmouseover="this.style.background='#1da851'" onmouseout="this.style.background='#25D366'">
+               <i class="fab fa-whatsapp" style="margin-right: 8px;"></i> I've paid! Send Proof
+            </a>
+            <button onclick="closePaymentModal()" style="margin-top:15px; background:transparent; border:none; color:#cbd5e1; font-size: 14px; cursor:pointer; text-decoration: underline;">Cancel Transaction</button>
         </div>
-        
-        <p style="color:#f59e0b; font-weight:800; font-size: 24px; margin: 15px 0;">Amount: ₹<span id="planAmount"></span></p>
-
-        <a id="waButton" href="#" target="_blank" style="display:block; background:#25D366; color:white; padding:12px; border-radius:8px; text-decoration:none; font-weight:bold; font-size: 16px; transition: 0.3s;" onmouseover="this.style.background='#1da851'" onmouseout="this.style.background='#25D366'">
-           <i class="fab fa-whatsapp" style="margin-right: 8px;"></i> I've paid! Send Proof
-        </a>
-        
-        <button onclick="closePaymentModal()" style="margin-top:15px; background:transparent; border:none; color:#cbd5e1; font-size: 14px; cursor:pointer; text-decoration: underline;">Cancel Transaction</button>
     </div>
-</div>
 
-<script>
-function openPaymentGateway(planTitle, amount) {
-    const myUpiId = "8168350829@amazonpay";
-    const myWhatsAppNumber = "918168350829";
-    
-    document.getElementById('planName').innerText = planTitle + " Pass";
-    document.getElementById('planAmount').innerText = amount;
-    
-    const upiString = `upi://pay?pa=${myUpiId}&pn=Phantomix&am=${amount}&cu=INR`;
-    const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(upiString)}`;
-    document.getElementById('qrImage').src = qrUrl;
-    
-    const waMessage = `Hi! 🚀 I just made a payment of ₹${amount} for the ${planTitle} Plan. Here is my payment screenshot for verification:`;
-    const waUrl = `https://api.whatsapp.com/send?phone=${myWhatsAppNumber}&text=${encodeURIComponent(waMessage)}`;
-    document.getElementById('waButton').href = waUrl;
-    
-    // Popup show karega aur piche ki website ka scroll lock kar dega!
-    const modal = document.getElementById('paymentModal');
-    modal.style.display = 'flex';
-    document.body.style.overflow = 'hidden'; 
-}
-
-function closePaymentModal() {
-    // Popup band karega aur website ka scroll wapas chalu kar dega
-    document.getElementById('paymentModal').style.display = 'none';
-    document.body.style.overflow = 'auto';
-}
-</script>
+    <script>
+    function openPaymentGateway(planTitle, amount) {
+        const myUpiId = "8168350829@amazonpay";
+        const myWhatsAppNumber = "918168350829";
+        document.getElementById('planName').innerText = planTitle + " Pass";
+        document.getElementById('planAmount').innerText = amount;
+        const upiString = `upi://pay?pa=${myUpiId}&pn=Phantomix&am=${amount}&cu=INR`;
+        const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(upiString)}`;
+        document.getElementById('qrImage').src = qrUrl;
+        const waMessage = `Hi! 🚀 I just made a payment of ₹${amount} for the ${planTitle} Plan. Here is my payment screenshot for verification:`;
+        const waUrl = `https://api.whatsapp.com/send?phone=${myWhatsAppNumber}&text=${encodeURIComponent(waMessage)}`;
+        document.getElementById('waButton').href = waUrl;
+        const modal = document.getElementById('paymentModal');
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden'; 
+    }
+    function closePaymentModal() {
+        document.getElementById('paymentModal').style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+    </script>
 </body>
 </html>
