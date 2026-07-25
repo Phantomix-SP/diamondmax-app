@@ -2128,7 +2128,7 @@
                     <li><i class="fas fa-check" style="color: #10b981;"></i> Ad-Free Stealth UI Experience</li>
                     <li><i class="fas fa-check" style="color: #10b981;"></i> Priority Server Routing</li>
                 </ul>
-                <button class="btn" style="width: 100%; margin-top: 15px;" onclick="openPresalePayment('Alpha Node', 29)">Initialize Node ⚡</button>
+                <button class="btn" style="width: 100%; margin-top: 15px;" onclick="openPaymentGateway('Alpha Node', 29)">Initialize Node ⚡</button>
             </div>
 
             <div class="tier-card feature-tier" style="border-color: #8b5cf6; background: rgba(139, 92, 246, 0.05); transform: scale(1.03);">
@@ -2140,7 +2140,7 @@
                     <li><i class="fas fa-check" style="color: #8b5cf6;"></i> Your Name on App "Credits" Page</li>
                     <li><i class="fas fa-check" style="color: #8b5cf6;"></i> Exclusive Founder Discord Role</li>
                 </ul>
-                <button class="btn" style="width: 100%; margin-top: 15px; background: linear-gradient(135deg, #8b5cf6, #c084fc); box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);" onclick="openPresalePayment('Core Architect', 99)">Become Architect 👑</button>
+                <button class="btn" style="width: 100%; margin-top: 15px; background: linear-gradient(135deg, #8b5cf6, #c084fc); box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);" onclick="openPaymentGateway('Architect', 99)">Become Architect 👑</button>
             </div>
 
         </div>
@@ -2930,5 +2930,49 @@
             "max-glare": 0.1
         });
     </script>
+    <div id="paymentModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(15, 23, 42, 0.9); backdrop-filter: blur(5px); z-index:9999; justify-content:center; align-items:center;">
+    <div style="background:#1e293b; padding:30px; border-radius:15px; border:1px solid #0ea5e9; text-align:center; max-width:350px; width:90%; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+        
+        <h3 id="planName" style="color:#f8fafc; margin-bottom: 5px; font-size: 22px;">Plan Name</h3>
+        <p style="color:#94a3b8; font-size: 14px; margin-bottom: 20px;">Scan with PhonePe, GPay, or Paytm</p>
+        
+        <div style="background: white; padding: 10px; border-radius: 10px; display: inline-block;">
+            <img id="qrImage" src="" style="width:200px; height:200px;">
+        </div>
+        
+        <p style="color:#f59e0b; font-weight:800; font-size: 24px; margin: 15px 0;">Amount: ₹<span id="planAmount"></span></p>
+
+        <a id="waButton" href="#" target="_blank" style="display:block; background:#25D366; color:white; padding:12px; border-radius:8px; text-decoration:none; font-weight:bold; font-size: 16px; transition: 0.3s;" onmouseover="this.style.background='#1da851'" onmouseout="this.style.background='#25D366'">
+           <i class="fab fa-whatsapp" style="margin-right: 8px;"></i> I've paid! Send Proof
+        </a>
+        
+        <button onclick="document.getElementById('paymentModal').style.display='none'" style="margin-top:15px; background:transparent; border:none; color:#cbd5e1; font-size: 14px; cursor:pointer; text-decoration: underline;">Cancel Transaction</button>
+    </div>
+</div>
+
+<script>
+function openPaymentGateway(planTitle, amount) {
+    // ⚠️ IMPORTANT: Yahan apni details daalein
+    const myUpiId = "8168350829@amazonpay";
+    const myWhatsAppNumber = "918168350829";
+    
+    // UI update karein
+    document.getElementById('planName').innerText = planTitle + " Pass";
+    document.getElementById('planAmount').innerText = amount;
+    
+    // Dynamic QR Generate karein (Amount ke sath)
+    const upiString = `upi://pay?pa=${myUpiId}&pn=Phantomix&am=${amount}&cu=INR`;
+    const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(upiString)}`;
+    document.getElementById('qrImage').src = qrUrl;
+    
+    // WhatsApp pre-filled message banayein
+    const waMessage = `Hi! 🚀 I just made a payment of ₹${amount} for the ${planTitle} Plan. Here is my payment screenshot for verification:`;
+    const waUrl = `https://api.whatsapp.com/send?phone=${myWhatsAppNumber}&text=${encodeURIComponent(waMessage)}`;
+    document.getElementById('waButton').href = waUrl;
+    
+    // Popup ko screen par show karein
+    document.getElementById('paymentModal').style.display = 'flex';
+}
+</script>
 </body>
 </html>
