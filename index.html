@@ -2689,14 +2689,7 @@
             }, 3000);
         }
         // 16. Monetization Modal Controller
-        function toggleMonetizeModal(show) {
-            const modal = document.getElementById("monetize-modal");
-            if(modal) modal.style.display = show ? "flex" : "none";
-        }
-        // 17. Dynamic Presale Payment Gateway Linker
-        function openPresalePayment(tierName, amount) {
-            const modal = document.getElementById("monetize-modal");
-            if(!modal) return;
+       
 
             // Modal ka text aur header dynamically change karenge
             const modalHeading = modal.querySelector("h3");
@@ -2867,16 +2860,7 @@
         <p style="font-size: 18px; margin: 5px 0;">> WELCOME TO THE PHANTOMIX MAINFRAME, ELITE FOUNDER.</p>
         <p style="color: #64748b; font-size: 14px; margin-top: 30px; animation: blink 1s infinite;">[ Access Granted - Automatically closing in 5s... ]</p>
     </div>
-    <div id="monetize-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(2, 6, 23, 0.9); z-index: 10010; justify-content: center; align-items: center; backdrop-filter: blur(8px);">
-        <div style="background: #0f172a; border: 1px solid #0ea5e9; width: 400px; max-width: 90%; border-radius: 15px; padding: 25px; box-shadow: 0 0 30px rgba(14, 165, 233, 0.3); text-align: center;">
-            <h3 style="margin-top: 0; color: #fff;"><i class="fas fa-heart" style="color: #ef4444;"></i> Support Phantomix</h3>
-            <p style="color: #94a3b8; font-size: 14px; line-height: 1.6;">Help us keep the servers running and speed up the launch of <b>DiamondMax App</b>.</p>
-            
-            <div style="margin: 20px 0;">
-                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=upi://pay?pa=8168350829@amazonpay%26pn=Shrikant%26cu=INR&color=0ea5e9&bgcolor=0f172a" alt="UPI QR" style="border: 2px solid #0ea5e9; border-radius: 10px; padding: 10px; background: #0f172a; width: 150px; height: 150px;">
-                <p style="color: #64748b; font-size: 12px; margin-top: 5px; font-family: monospace;">Scan with any UPI App (PhonePe, GPay, Paytm)</p>
-            </div>
-
+    
             <div style="display: flex; gap: 10px;">
                 <a href="https://wa.me/918168350829?text=Hi%20Shrikant,%20I%20just%20supported%20Phantomix!" target="_blank" class="btn" style="flex: 1; text-decoration: none; padding: 12px; font-size: 14px;">Confirm Payment</a>
                 <button onclick="toggleMonetizeModal(false)" class="btn" style="background: #334155; box-shadow: none; flex: 1; padding: 12px; font-size: 14px;">Close</button>
@@ -2930,8 +2914,8 @@
             "max-glare": 0.1
         });
     </script>
-    <div id="paymentModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(15, 23, 42, 0.9); backdrop-filter: blur(5px); z-index:9999; justify-content:center; align-items:center;">
-    <div style="background:#1e293b; padding:30px; border-radius:15px; border:1px solid #0ea5e9; text-align:center; max-width:350px; width:90%; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+<div id="paymentModal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(15, 23, 42, 0.95); backdrop-filter: blur(8px); z-index:999999; justify-content:center; align-items:center; margin:0; padding:0;">
+    <div style="background:#1e293b; padding:30px; border-radius:15px; border:1px solid #0ea5e9; text-align:center; max-width:350px; width:90%; box-shadow: 0 10px 40px rgba(0,0,0,0.8); transform: translateY(-5%);">
         
         <h3 id="planName" style="color:#f8fafc; margin-bottom: 5px; font-size: 22px;">Plan Name</h3>
         <p style="color:#94a3b8; font-size: 14px; margin-bottom: 20px;">Scan with PhonePe, GPay, or Paytm</p>
@@ -2946,32 +2930,36 @@
            <i class="fab fa-whatsapp" style="margin-right: 8px;"></i> I've paid! Send Proof
         </a>
         
-        <button onclick="document.getElementById('paymentModal').style.display='none'" style="margin-top:15px; background:transparent; border:none; color:#cbd5e1; font-size: 14px; cursor:pointer; text-decoration: underline;">Cancel Transaction</button>
+        <button onclick="closePaymentModal()" style="margin-top:15px; background:transparent; border:none; color:#cbd5e1; font-size: 14px; cursor:pointer; text-decoration: underline;">Cancel Transaction</button>
     </div>
 </div>
 
 <script>
 function openPaymentGateway(planTitle, amount) {
-    // ⚠️ IMPORTANT: Yahan apni details daalein
     const myUpiId = "8168350829@amazonpay";
     const myWhatsAppNumber = "918168350829";
     
-    // UI update karein
     document.getElementById('planName').innerText = planTitle + " Pass";
     document.getElementById('planAmount').innerText = amount;
     
-    // Dynamic QR Generate karein (Amount ke sath)
     const upiString = `upi://pay?pa=${myUpiId}&pn=Phantomix&am=${amount}&cu=INR`;
     const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(upiString)}`;
     document.getElementById('qrImage').src = qrUrl;
     
-    // WhatsApp pre-filled message banayein
     const waMessage = `Hi! 🚀 I just made a payment of ₹${amount} for the ${planTitle} Plan. Here is my payment screenshot for verification:`;
     const waUrl = `https://api.whatsapp.com/send?phone=${myWhatsAppNumber}&text=${encodeURIComponent(waMessage)}`;
     document.getElementById('waButton').href = waUrl;
     
-    // Popup ko screen par show karein
-    document.getElementById('paymentModal').style.display = 'flex';
+    // Popup show karega aur piche ki website ka scroll lock kar dega!
+    const modal = document.getElementById('paymentModal');
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden'; 
+}
+
+function closePaymentModal() {
+    // Popup band karega aur website ka scroll wapas chalu kar dega
+    document.getElementById('paymentModal').style.display = 'none';
+    document.body.style.overflow = 'auto';
 }
 </script>
 </body>
