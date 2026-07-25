@@ -2895,6 +2895,34 @@
             <button onclick="closePaymentModal()" style="margin-top:15px; background:transparent; border:none; color:#cbd5e1; font-size: 14px; cursor:pointer; text-decoration: underline;">Cancel Transaction</button>
         </div>
     </div>
+    <script>
+    // 💳 PAYMENT GATEWAY LOGIC
+    function openPaymentGateway(planTitle, amount) {
+        const myUpiId = "8168350829@amazonpay"; // Aapki UPI
+        const myWhatsAppNumber = "918168350829"; // Aapka WhatsApp
+        
+        document.getElementById('planName').innerText = planTitle + " Pass";
+        document.getElementById('planAmount').innerText = amount;
+        
+        const upiString = `upi://pay?pa=${myUpiId}&pn=Phantomix&am=${amount}&cu=INR`;
+        const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(upiString)}`;
+        document.getElementById('qrImage').src = qrUrl;
+        
+        const waMessage = `Hi! 🚀 I just made a payment of ₹${amount} for the ${planTitle} Plan. Here is my payment screenshot for verification:`;
+        const waUrl = `https://api.whatsapp.com/send?phone=${myWhatsAppNumber}&text=${encodeURIComponent(waMessage)}`;
+        document.getElementById('waButton').href = waUrl;
+        
+        const modal = document.getElementById('paymentModal');
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden'; // Scroll lock karega
+    }
+
+    function closePaymentModal() {
+        const modal = document.getElementById('paymentModal');
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto'; // Scroll wapas chalu karega (Freeze theek karega)
+    }
+    </script>
 
     
 </body>
