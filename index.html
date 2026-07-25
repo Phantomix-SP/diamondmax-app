@@ -2778,6 +2778,39 @@
                 });
             });
         }
+        // 21. Payment Gateway Modal Logic
+        function openPaymentGateway(planTitle, amount) {
+            const myUpiId = "8168350829@amazonpay"; // Aapki UPI ID
+            const myWhatsAppNumber = "918168350829"; // Aapka WhatsApp Number
+            
+            const planNameEl = document.getElementById('planName');
+            const planAmountEl = document.getElementById('planAmount');
+            const qrImageEl = document.getElementById('qrImage');
+            const waButtonEl = document.getElementById('waButton');
+            const modal = document.getElementById('paymentModal');
+            
+            if(planNameEl && planAmountEl && qrImageEl && waButtonEl && modal) {
+                planNameEl.innerText = planTitle + " Pass";
+                planAmountEl.innerText = amount;
+                
+                const upiString = `upi://pay?pa=${myUpiId}&pn=Phantomix&am=${amount}&cu=INR`;
+                qrImageEl.src = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(upiString)}`;
+                
+                const waMessage = `Hi! 🚀 I just made a payment of ₹${amount} for the ${planTitle} Plan. Here is my payment screenshot for verification:`;
+                waButtonEl.href = `https://api.whatsapp.com/send?phone=${myWhatsAppNumber}&text=${encodeURIComponent(waMessage)}`;
+                
+                modal.style.display = 'flex';
+                document.body.style.overflow = 'hidden'; // Scroll lock
+            }
+        }
+
+        function closePaymentModal() {
+            const modal = document.getElementById('paymentModal');
+            if(modal) {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto'; // Scroll unlock
+            }
+        }
 
         window.addEventListener('load', displayDailyTip);
     </script>
@@ -2863,26 +2896,6 @@
         </div>
     </div>
 
-    <script>
-    function openPaymentGateway(planTitle, amount) {
-        const myUpiId = "8168350829@amazonpay";
-        const myWhatsAppNumber = "918168350829";
-        document.getElementById('planName').innerText = planTitle + " Pass";
-        document.getElementById('planAmount').innerText = amount;
-        const upiString = `upi://pay?pa=${myUpiId}&pn=Phantomix&am=${amount}&cu=INR`;
-        const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(upiString)}`;
-        document.getElementById('qrImage').src = qrUrl;
-        const waMessage = `Hi! 🚀 I just made a payment of ₹${amount} for the ${planTitle} Plan. Here is my payment screenshot for verification:`;
-        const waUrl = `https://api.whatsapp.com/send?phone=${myWhatsAppNumber}&text=${encodeURIComponent(waMessage)}`;
-        document.getElementById('waButton').href = waUrl;
-        const modal = document.getElementById('paymentModal');
-        modal.style.display = 'flex';
-        document.body.style.overflow = 'hidden'; 
-    }
-    function closePaymentModal() {
-        document.getElementById('paymentModal').style.display = 'none';
-        document.body.style.overflow = 'auto';
-    }
-    </script>
+    
 </body>
 </html>
