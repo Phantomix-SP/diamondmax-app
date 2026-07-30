@@ -162,15 +162,19 @@
         function processAuth(event) {
             event.preventDefault(); // Stop page reload
             
+            // 🛡️ BROWSER MEIN VIP PASS SAVE KAREIN
+            const userEmail = document.getElementById('email').value;
+            localStorage.setItem("phantomix_session", userEmail);
+            
             // Visual feedback loop
             const btn = document.getElementById('submit-btn');
             btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Authenticating...';
             btn.style.opacity = '0.8';
             btn.style.pointerEvents = 'none';
 
-            // Fake 1.5s delay to simulate server check, then teleport to the dashboard
             setTimeout(() => {
-                window.location.href = "diamondmax-dashboard.html";
+                
+                window.location.href = "diamondmax-dashboard.html"; 
             }, 1500);
         }
     </script>
