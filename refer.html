@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phantomix | Refer & Earn</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        body {
+            margin: 0; padding: 0; font-family: 'Poppins', sans-serif;
+            background-color: #020617; color: #ffffff;
+            display: flex; justify-content: center; align-items: center; min-height: 100vh;
+        }
+        .refer-box {
+            background: rgba(15, 23, 42, 0.9); border: 1px solid #0ea5e9;
+            border-radius: 20px; padding: 40px 30px; width: 100%; max-width: 420px;
+            text-align: center; box-shadow: 0 10px 40px rgba(14, 165, 233, 0.2);
+        }
+        .title { font-size: 26px; font-weight: 800; color: #f8fafc; margin-bottom: 8px; }
+        .subtitle { color: #94a3b8; font-size: 13px; margin-bottom: 25px; line-height: 1.5; }
+        
+        .input-group { text-align: left; margin-bottom: 18px; }
+        .input-group label { display: block; font-size: 12px; color: #0ea5e9; font-weight: 600; margin-bottom: 5px; }
+        .input-group input {
+            width: 100%; padding: 12px 15px; border-radius: 10px;
+            background: rgba(2, 6, 23, 0.6); border: 1px solid rgba(51, 65, 85, 0.8);
+            color: white; font-size: 14px; outline: none; box-sizing: border-box;
+        }
+        .input-group input:focus { border-color: #0ea5e9; }
+        .input-group input[readonly] { background: rgba(14, 165, 233, 0.1); color: #38bdf8; border-color: rgba(14, 165, 233, 0.4); }
+
+        .btn-submit {
+            width: 100%; padding: 14px; background: #0ea5e9; color: white;
+            border: none; border-radius: 10px; font-weight: bold; font-size: 15px;
+            cursor: pointer; transition: 0.3s; margin-top: 10px;
+        }
+        .btn-submit:hover { background: #0284c7; box-shadow: 0 0 15px rgba(14, 165, 233, 0.4); }
+
+        .generator-section {
+            margin-top: 25px; padding-top: 20px; border-top: 1px dashed rgba(51, 65, 85, 0.8);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="refer-box">
+        <div style="font-size: 40px; color: #0ea5e9; margin-bottom: 10px;">
+            <i class="fas fa-user-plus"></i>
+        </div>
+        
+        <h2 class="title" id="pageHeading">Join via Referral</h2>
+        <p class="subtitle" id="pageSub">Enter your details to register under your inviter's referral code.</p>
+
+        <form id="referralForm" onsubmit="submitReferral(event)">
+            <div class="input-group">
+                <label><i class="fas fa-tag"></i> REFERRED BY (CODE)</label>
+                <input type="text" id="refCodeInput" placeholder="No referral code detected" required>
+            </div>
+
+            <div class="input-group">
+                <label><i class="fas fa-user"></i> YOUR FULL NAME</label>
+                <input type="text" id="userNameInput" placeholder="e.g. Rahul Sharma" required>
+            </div>
+
+            <div class="input-group">
+                <label><i class="fas fa-envelope"></i> YOUR EMAIL ADDRESS</label>
+                <input type="email" id="userEmailInput" placeholder="name@example.com" required>
+            </div>
+
+            <button type="submit" class="btn-submit" id="submitBtn">Submit & Continue 🚀</button>
+        </form>
+
+        <div class="generator-section" id="generatorArea" style="display: none;">
+            <p style="color: #94a3b8; font-size: 13px; margin-bottom: 10px;">Want to invite others? Enter your Name/ID to generate link:</p>
+            <div style="display: flex; gap: 10px;">
+                <input type="text" id="myCodeInput" placeholder="Your Name or ID" style="flex: 1; padding: 10px; border-radius: 8px; background: #020617; border: 1px solid #334155; color: white;">
+                <button onclick="generateLink()" style="background: #8b5cf6; color: white; border: none; padding: 10px 15px; border-radius: 8px; cursor: pointer; font-weight: bold;">Copy Link</button>
+            </div>
+        </div>
+        
+        <a href="index.html" style="display: inline-block; margin-top: 20px; color: #64748b; text-decoration: none; font-size: 13px;"><i class="fas fa-arrow-left"></i> Back to Home</a>
+    </div>
+
+    <script>
+        // 🔑 APNI SUPABASE DETAILS YAHAN DAALEIN
+        const SUPABASE_URL = "YOUR_SUPABASE_PROJECT_URL";
+        const SUPABASE_ANON_KEY = "YOUR_SUPABASE_ANON_KEY";
+        
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        // 1. URL se 'ref' parameter check karna
+        const urlParams = new URLSearchParams(window.location.search);
+        const refCode = urlParams.get('ref');
+
+        const refInput = document.getElementById('refCodeInput');
+        const generatorArea = document.getElementById('generatorArea');
+
+        if (refCode) {
+            // Agar link mein referral code hai (?ref=SHRIKANT)
+            refInput.value = refCode;
+            refInput.setAttribute('readonly', 'true'); // Code lock ho jayega
+        } else {
+            // Agar koi direct refer.html kholta hai
+            document.getElementById('pageHeading').innerText = "Referral Program";
+            document.getElementById('pageSub').innerText = "Share your referral link with friends or enter a referral code manually.";
+            generatorArea.style.display = 'block'; // Link Generator dikhao
+        }
+
+        // 2. Data Supabase mein submit karna
+        async function submitReferral(e) {
+            e.preventDefault();
+            
+            const btn = document.getElementById('submitBtn');
+            btn.innerText = "Registering...";
+            btn.style.opacity = "0.7";
+
+            const referrer = document.getElementById('refCodeInput').value;
+            const name = document.getElementById('userNameInput').value;
+            const email = document.getElementById('userEmailInput').value;
+
+            // Supabase mein insert
+            const { data, error } = await supabase
+                .from('referrals')
+                .insert([
+                    { referrer_code: referrer, new_user_name: name, new_user_email: email }
+                ]);
+
+            if (error) {
+                alert("Error saving referral: " + error.message);
+                btn.innerText = "Submit & Continue 🚀";
+                btn.style.opacity = "1";
+            } else {
+                alert("Registration successful via referral!");
+                // Direct main page par redirect
+                window.location.href = "index.html";
+            }
+        }
+
+        // 3. Apne naam se link generate karke copy karna
+        function generateLink() {
+            const myCode = document.getElementById('myCodeInput').value.trim();
+            if (!myCode) {
+                alert("Please enter your Name or ID first!");
+                return;
+            }
+            const fullLink = `${window.location.origin}${window.location.pathname}?ref=${encodeURIComponent(myCode)}`;
+            navigator.clipboard.writeText(fullLink);
+            alert("Referral link copied to clipboard:\n" + fullLink);
+        }
+    </script>
+</body>
+</html>
