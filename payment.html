@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phantomix | Secure Checkout</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body {
+            margin: 0; padding: 0;
+            font-family: 'Poppins', sans-serif;
+            background-color: #020617; /* Deep Dark Cyber Theme */
+            color: #ffffff;
+            display: flex; justify-content: center; align-items: center;
+            min-height: 100vh;
+        }
+        .payment-container {
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid #0ea5e9;
+            border-radius: 20px; padding: 40px 30px;
+            width: 100%; max-width: 400px; text-align: center;
+            box-shadow: 0 15px 50px rgba(14, 165, 233, 0.2);
+            position: relative; overflow: hidden;
+        }
+        .glow-line {
+            position: absolute; top: 0; left: 0; width: 100%; height: 4px;
+            background: linear-gradient(90deg, #0ea5e9, #8b5cf6, #0ea5e9);
+        }
+        .plan-title { font-size: 26px; margin: 0 0 5px; color: #f8fafc; font-weight: 800; }
+        .plan-amount { font-size: 32px; color: #f59e0b; font-weight: 800; margin: 10px 0 20px; }
+        .qr-box {
+            background: white; padding: 15px; border-radius: 15px;
+            display: inline-block; margin-bottom: 20px;
+            box-shadow: 0 0 20px rgba(255,255,255,0.1);
+        }
+        .qr-box img { width: 220px; height: 220px; display: block; }
+        .instruction { color: #94a3b8; font-size: 14px; margin-bottom: 25px; line-height: 1.5; }
+        
+        .action-btn {
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+            width: 100%; padding: 14px; border-radius: 10px;
+            text-decoration: none; font-size: 16px; font-weight: bold;
+            margin-bottom: 12px; transition: 0.3s; box-sizing: border-box;
+        }
+        .btn-wa { background: #25D366; color: white; }
+        .btn-wa:hover { background: #1da851; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3); }
+        
+        .btn-email { background: rgba(51, 65, 85, 0.5); color: #cbd5e1; border: 1px solid rgba(51, 65, 85, 0.8); }
+        .btn-email:hover { background: rgba(51, 65, 85, 0.8); color: white; }
+        
+        .back-link { display: inline-block; margin-top: 15px; color: #64748b; text-decoration: none; font-size: 14px; transition: 0.3s; }
+        .back-link:hover { color: #0ea5e9; }
+    </style>
+</head>
+<body>
+
+    <div class="payment-container">
+        <div class="glow-line"></div>
+        
+        <div style="font-size: 40px; color: #0ea5e9; margin-bottom: 10px;">
+            <i class="fas fa-shield-check"></i>
+        </div>
+        
+        <h2 class="plan-title" id="displayTitle">Loading...</h2>
+        <div class="plan-amount" id="displayAmount">₹0</div>
+        
+        <div class="qr-box">
+            <img id="qrImage" src="" alt="Payment QR Code">
+        </div>
+        
+        <p class="instruction">Scan the QR code above using PhonePe, GPay, or Paytm to complete your upgrade.</p>
+        
+        <a href="#" id="waLink" target="_blank" class="action-btn btn-wa">
+            <i class="fab fa-whatsapp" style="font-size: 20px;"></i> I have paid! Send Proof
+        </a>
+        
+        <a href="mailto:phantomix.00@gmail.com?subject=Payment%20Support%20Request" class="action-btn btn-email">
+            <i class="fas fa-envelope"></i> Need Help? Email Us
+        </a>
+        
+        <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i> Cancel and return to home</a>
+    </div>
+
+    <script>
+        // URL se check karna ki user ne 29 click kiya ya 99
+        const urlParams = new URLSearchParams(window.location.search);
+        const plan = urlParams.get('plan');
+        
+        // Aapki Details
+        const upiId = "8168350829@amazonpay";
+        const waNumber = "918168350829";
+        
+        let planName = "";
+        let amount = "";
+
+        // Logic
+        if (plan === "99") {
+            planName = "Core Architect Pass";
+            amount = "99";
+        } else {
+            // Default to 29 if nothing is provided or if 29 is clicked
+            planName = "Alpha Node Pass";
+            amount = "29";
+        }
+
+        // Update HTML text
+        document.getElementById("displayTitle").innerText = planName;
+        document.getElementById("displayAmount").innerText = "₹" + amount;
+
+        // Generate dynamic UPI QR Code
+        const upiString = `upi://pay?pa=${upiId}&pn=Phantomix&am=${amount}&cu=INR`;
+        const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(upiString)}`;
+        document.getElementById("qrImage").src = qrUrl;
+
+        // Set WhatsApp Link Message
+        const waMessage = `Hi Phantomix Team! 🚀 I just made a payment of ₹${amount} for the ${planName}. Here is my payment screenshot for verification:`;
+        document.getElementById("waLink").href = `https://api.whatsapp.com/send?phone=${waNumber}&text=${encodeURIComponent(waMessage)}`;
+    </script>
+</body>
+</html>
