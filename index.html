@@ -2128,7 +2128,7 @@
                     <li><i class="fas fa-check" style="color: #10b981;"></i> Ad-Free Stealth UI Experience</li>
                     <li><i class="fas fa-check" style="color: #10b981;"></i> Priority Server Routing</li>
                 </ul>
-                <button class="btn" style="width: 100%; margin-top: 15px;" onclick="openPaymentGateway('Alpha Node', 29)">Initialize Node ⚡</button>
+                <button class="btn" style="width: 100%; margin-top: 15px;" onclick="triggerElitePayment('Alpha Node', 29)">Initialize Node ⚡</button>
             </div>
 
             <div class="tier-card feature-tier" style="border-color: #8b5cf6; background: rgba(139, 92, 246, 0.05); transform: scale(1.03);">
@@ -2140,7 +2140,7 @@
                     <li><i class="fas fa-check" style="color: #8b5cf6;"></i> Your Name on App "Credits" Page</li>
                     <li><i class="fas fa-check" style="color: #8b5cf6;"></i> Exclusive Founder Discord Role</li>
                 </ul>
-                <button class="btn" style="width: 100%; margin-top: 15px; background: linear-gradient(135deg, #8b5cf6, #c084fc); box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);" onclick="openPaymentGateway('Architect', 99)">Become Architect 👑</button>
+                <button class="btn" style="width: 100%; margin-top: 15px; background: linear-gradient(135deg, #8b5cf6, #c084fc); box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);" onclick="triggerElitePayment('Core Architect', 99)">Become Architect 👑</button>
             </div>
 
         </div>
@@ -2896,34 +2896,52 @@
         </div>
     </div>
     <script>
-    // 💳 PAYMENT GATEWAY LOGIC
-    function openPaymentGateway(planTitle, amount) {
-        const myUpiId = "8168350829@amazonpay"; // Aapki UPI
-        const myWhatsAppNumber = "918168350829"; // Aapka WhatsApp
+    <div id="phantomEliteModal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(15, 23, 42, 0.95); backdrop-filter: blur(8px); z-index:9999999; justify-content:center; align-items:center; margin:0; padding:0;">
+        <div style="background:#1e293b; padding:30px; border-radius:15px; border:1px solid #0ea5e9; text-align:center; max-width:350px; width:90%; box-shadow: 0 10px 40px rgba(0,0,0,0.8); transform: translateY(-5%);">
+            
+            <h3 id="elitePlanName" style="color:#f8fafc; margin-bottom: 5px; font-size: 22px;">Plan Name</h3>
+            <p style="color:#94a3b8; font-size: 14px; margin-bottom: 20px;">Scan with PhonePe, GPay, or Paytm</p>
+            
+            <div style="background: white; padding: 10px; border-radius: 10px; display: inline-block;">
+                <img id="eliteQrImage" src="" style="width:200px; height:200px;">
+            </div>
+            
+            <p style="color:#f59e0b; font-weight:800; font-size: 24px; margin: 15px 0;">Amount: ₹<span id="elitePlanAmount"></span></p>
+
+            <a id="eliteWaButton" href="#" target="_blank" style="display:block; background:#25D366; color:white; padding:12px; border-radius:8px; text-decoration:none; font-weight:bold; font-size: 16px; transition: 0.3s;" onmouseover="this.style.background='#1da851'" onmouseout="this.style.background='#25D366'">
+               <i class="fab fa-whatsapp" style="margin-right: 8px;"></i> I've paid! Send Proof
+            </a>
+            
+            <button onclick="closeElitePayment()" style="margin-top:15px; background:transparent; border:none; color:#cbd5e1; font-size: 14px; cursor:pointer; text-decoration: underline;">Cancel Transaction</button>
+        </div>
+    </div>
+
+    <script>
+    function triggerElitePayment(planTitle, amount) {
+        const myUpiId = "8168350829@amazonpay"; 
+        const myWhatsAppNumber = "918168350829"; 
         
-        document.getElementById('planName').innerText = planTitle + " Pass";
-        document.getElementById('planAmount').innerText = amount;
+        document.getElementById('elitePlanName').innerText = planTitle + " Pass";
+        document.getElementById('elitePlanAmount').innerText = amount;
         
         const upiString = `upi://pay?pa=${myUpiId}&pn=Phantomix&am=${amount}&cu=INR`;
         const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(upiString)}`;
-        document.getElementById('qrImage').src = qrUrl;
+        document.getElementById('eliteQrImage').src = qrUrl;
         
         const waMessage = `Hi! 🚀 I just made a payment of ₹${amount} for the ${planTitle} Plan. Here is my payment screenshot for verification:`;
         const waUrl = `https://api.whatsapp.com/send?phone=${myWhatsAppNumber}&text=${encodeURIComponent(waMessage)}`;
-        document.getElementById('waButton').href = waUrl;
+        document.getElementById('eliteWaButton').href = waUrl;
         
-        const modal = document.getElementById('paymentModal');
+        const modal = document.getElementById('phantomEliteModal');
         modal.style.display = 'flex';
-        document.body.style.overflow = 'hidden'; // Scroll lock karega
+        document.body.style.overflow = 'hidden'; 
     }
 
-    function closePaymentModal() {
-        const modal = document.getElementById('paymentModal');
-        modal.style.display = 'none';
-        document.body.style.overflow = 'auto'; // Scroll wapas chalu karega (Freeze theek karega)
+    function closeElitePayment() {
+        document.getElementById('phantomEliteModal').style.display = 'none';
+        document.body.style.overflow = 'auto';
     }
     </script>
-
     
 </body>
 </html>
