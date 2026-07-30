@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phantomix | Executive Agreement</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Space+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        body {
+            margin: 0; padding: 0;
+            font-family: 'Poppins', sans-serif;
+            background-color: #020617; color: #ffffff;
+            display: flex; justify-content: center; align-items: center;
+            min-height: 100vh; padding: 20px; box-sizing: border-box;
+            background-image: radial-gradient(circle at top, rgba(14,165,233,0.1) 0%, transparent 50%);
+        }
+
+        .agreement-container {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid #0ea5e9; border-radius: 16px;
+            width: 100%; max-width: 600px; padding: 40px;
+            box-shadow: 0 10px 50px rgba(14, 165, 233, 0.15);
+            backdrop-filter: blur(10px); position: relative; overflow: hidden;
+        }
+
+        .agreement-container::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px;
+            background: linear-gradient(90deg, #0ea5e9, #8b5cf6, #0ea5e9);
+        }
+
+        .header { text-align: center; margin-bottom: 30px; }
+        .header h1 { margin: 0 0 5px; font-size: 24px; font-weight: 800; display: flex; align-items: center; justify-content: center; gap: 10px; }
+        .header h1 i { color: #0ea5e9; }
+        .header p { color: #94a3b8; font-size: 13px; font-family: 'Space Mono', monospace; margin: 0; letter-spacing: 1px; }
+
+        .input-group { margin-bottom: 20px; }
+        .input-group label { display: block; font-size: 13px; color: #cbd5e1; font-weight: 600; margin-bottom: 8px; }
+        .input-group select, .input-group input[type="text"] {
+            width: 100%; padding: 12px 15px; border-radius: 8px;
+            background: rgba(2, 6, 23, 0.8); border: 1px solid rgba(51, 65, 85, 0.8);
+            color: white; font-family: 'Poppins', sans-serif; font-size: 14px;
+            outline: none; transition: 0.3s; box-sizing: border-box;
+        }
+        .input-group select:focus, .input-group input[type="text"]:focus { border-color: #0ea5e9; box-shadow: 0 0 10px rgba(14, 165, 233, 0.2); }
+
+        /* The Scrollable Contract Box */
+        .terms-box {
+            background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(51, 65, 85, 0.8);
+            border-radius: 8px; padding: 20px; height: 220px; overflow-y: auto;
+            margin-bottom: 20px; font-size: 12px; color: #94a3b8; line-height: 1.6;
+        }
+        .terms-box h4 { color: #0ea5e9; margin: 15px 0 5px; font-size: 14px; }
+        .terms-box h4:first-child { margin-top: 0; }
+        .terms-box p { margin: 0 0 10px; }
+        
+        .terms-box::-webkit-scrollbar { width: 6px; }
+        .terms-box::-webkit-scrollbar-thumb { background: #0ea5e9; border-radius: 10px; }
+
+        .checkbox-group { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 20px; }
+        .checkbox-group input[type="checkbox"] { width: 18px; height: 18px; margin-top: 2px; accent-color: #0ea5e9; cursor: pointer; }
+        .checkbox-group label { font-size: 13px; color: #e2e8f0; cursor: pointer; line-height: 1.4; }
+
+        .signature-box { margin-bottom: 30px; }
+        .signature-box input {
+            font-family: 'Space Mono', monospace; font-size: 16px; color: #10b981;
+            letter-spacing: 2px; text-align: center; border: 1px dashed #334155 !important; background: transparent !important;
+        }
+
+        .sign-btn {
+            width: 100%; padding: 15px; background: #0ea5e9; color: white;
+            border: none; border-radius: 8px; font-weight: bold; font-size: 16px;
+            cursor: pointer; transition: 0.3s; display: flex; justify-content: center; align-items: center; gap: 10px;
+        }
+        .sign-btn:hover { background: #0284c7; box-shadow: 0 0 20px rgba(14, 165, 233, 0.4); transform: translateY(-2px); }
+        .sign-btn:disabled { background: #334155; cursor: not-allowed; transform: none; box-shadow: none; color: #94a3b8; }
+
+        /* Success Overlay */
+        .success-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(2, 6, 23, 0.95); display: flex; flex-direction: column;
+            justify-content: center; align-items: center; text-align: center;
+            z-index: 10; opacity: 0; pointer-events: none; transition: 0.5s;
+        }
+        .success-overlay.active { opacity: 1; pointer-events: all; }
+        .success-overlay i { font-size: 50px; color: #10b981; margin-bottom: 15px; text-shadow: 0 0 20px rgba(16, 185, 129, 0.5); }
+        .success-overlay h2 { margin: 0 0 10px; color: white; }
+    </style>
+</head>
+<body>
+
+    <div class="agreement-container">
+        <div class="header">
+            <h1><i class="fa-solid fa-gem"></i> Phantomix Core</h1>
+            <p>// EXECUTIVE ONBOARDING PROTOCOL //</p>
+        </div>
+
+        <div class="input-group">
+            <label>ASSIGNED ROLE</label>
+            <select id="roleSelect">
+                <option value="none">-- Select your official role --</option>
+                <option value="Co-Founder & Lead Architect">Co-Founder & Lead Architect</option>
+                <option value="VP of Brand Experience">VP of Brand Experience</option>
+            </select>
+        </div>
+
+        <div class="terms-box">
+            <h4>ARTICLE I: CONFIDENTIALITY (NDA)</h4>
+            <p>You agree that all code, designs, algorithms, and business strategies related to Phantomix and DiamondMax are strictly confidential. Sharing this data outside the Core Team is a direct violation of this protocol.</p>
+            
+            <h4>ARTICLE II: INTELLECTUAL PROPERTY (IP)</h4>
+            <p>Any ideas, designs, code, or marketing materials created by you during your time at Phantomix are the sole property of the company. You cannot claim personal ownership over company assets.</p>
+
+            <h4>ARTICLE III: BRAND IMAGE & CONDUCT</h4>
+            <p>As a core executive, you represent Phantomix to the public. You agree to maintain a professional standard on social media and in community chats. Any action harming the startup's reputation will not be tolerated.</p>
+
+            <h4>ARTICLE IV: TIME & EXECUTION</h4>
+            <p>We are building a premium, fast, and secure ecosystem. Mediocrity is not accepted. You agree to be responsive, meet deadlines, and execute tasks with maximum efficiency.</p>
+
+            <h4>ARTICLE V: VISION ALIGNMENT & TERMINATION</h4>
+            <p>Phantomix is a bootstrapped startup. Titles are earned through consistent execution. All major technical and business decisions are finalized by the CEO. The CEO reserves the right to terminate this agreement and revoke access if the above articles are violated.</p>
+        </div>
+
+        <div class="checkbox-group">
+            <input type="checkbox" id="agreeCheck" onchange="toggleSignButton()">
+            <label for="agreeCheck">I have read, understood, and legally agree to the Phantomix Core Terms and Articles.</label>
+        </div>
+
+        <div class="input-group signature-box">
+            <label>DIGITAL SIGNATURE (TYPE FULL NAME)</label>
+            <input type="text" id="digitalSignature" placeholder="_ _ _ _ _ _ _" oninput="toggleSignButton()">
+        </div>
+
+        <button class="sign-btn" id="signBtn" disabled onclick="executeSignature()">
+            <i class="fas fa-fingerprint"></i> AUTHORIZE & BIND CONTRACT
+        </button>
+
+        <div class="success-overlay" id="successScreen">
+            <i class="fas fa-shield-check"></i>
+            <h2>Contract Executed.</h2>
+            <p style="color: #94a3b8; font-size: 14px;">Welcome to the Phantomix Mainframe.<br>Your signature has been securely logged.</p>
+            <a href="team.html" style="margin-top: 20px; color: #0ea5e9; text-decoration: none; border: 1px solid #0ea5e9; padding: 8px 20px; border-radius: 6px;">View Core Team</a>
+        </div>
+    </div>
+
+    <script>
+        // 🔑 APNI SUPABASE DETAILS YAHAN DAALEIN
+        const SUPABASE_URL = "YOUR_SUPABASE_PROJECT_URL";
+        const SUPABASE_ANON_KEY = "YOUR_SUPABASE_ANON_KEY";
+        
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        function toggleSignButton() {
+            const role = document.getElementById('roleSelect').value;
+            const isChecked = document.getElementById('agreeCheck').checked;
+            const signature = document.getElementById('digitalSignature').value.trim();
+            const btn = document.getElementById('signBtn');
+
+            if (role !== "none" && isChecked && signature.length > 2) {
+                btn.disabled = false;
+            } else {
+                btn.disabled = true;
+            }
+        }
+
+        document.getElementById('roleSelect').addEventListener('change', toggleSignButton);
+
+        async function executeSignature() {
+            const btn = document.getElementById('signBtn');
+            const role = document.getElementById('roleSelect').value;
+            const signature = document.getElementById('digitalSignature').value.trim();
+            
+            btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> ENCRYPTING & SAVING...';
+            btn.style.opacity = '0.8';
+            btn.disabled = true;
+
+            // Supabase mein Insert kar rahe hain
+            const { data, error } = await supabase
+                .from('executive_agreements')
+                .insert([
+                    { executive_role: role, signature_name: signature, agreed_to_terms: true }
+                ]);
+
+            if (error) {
+                alert("Error saving contract: " + error.message);
+                btn.innerHTML = '<i class="fas fa-fingerprint"></i> AUTHORIZE & BIND CONTRACT';
+                btn.style.opacity = '1';
+                btn.disabled = false;
+            } else {
+                // Agar save ho gaya, tab success screen dikhao
+                document.getElementById('successScreen').classList.add('active');
+            }
+        }
+    </script>
+</body>
+</html>
