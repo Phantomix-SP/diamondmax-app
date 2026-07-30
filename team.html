@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phantomix | Core Team</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        ::selection { background-color: #0ea5e9; color: #ffffff; }
+        
+        body {
+            margin: 0; padding: 0; padding-top: 80px;
+            font-family: 'Poppins', sans-serif;
+            background-color: #020617; /* Deep Cyber Dark */
+            color: #ffffff; text-align: center;
+            overflow-x: hidden;
+        }
+
+        /* Ambient Glow Background */
+        .bg-glow {
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 80vw; height: 80vh;
+            background: radial-gradient(circle, rgba(14,165,233,0.1) 0%, rgba(2,6,23,0) 70%);
+            z-index: -1; filter: blur(50px);
+        }
+
+        /* Navbar (Same as apps.html) */
+        .phantomix-navbar {
+            position: fixed; top: 0; left: 0; width: 100%; height: 65px;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 0 5%; box-sizing: border-box;
+            background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(14, 165, 233, 0.2); z-index: 1000;
+        }
+        .nav-logo { font-size: 18px; font-weight: 700; color: white; display: flex; align-items: center; text-decoration: none; }
+        .back-btn {
+            background: rgba(14, 165, 233, 0.1); color: #0ea5e9;
+            padding: 6px 14px; border: 1px solid #0ea5e9; border-radius: 6px;
+            text-decoration: none; font-size: 13px; font-weight: 600; transition: all 0.3s ease;
+        }
+        .back-btn:hover { background: #0ea5e9; color: white; box-shadow: 0 0 15px rgba(14, 165, 233, 0.4); }
+
+        /* Hero Section */
+        .team-hero { padding: 40px 20px 20px; }
+        .team-tagline { color: #0ea5e9; font-size: 13px; font-family: monospace; letter-spacing: 3px; display: block; margin-bottom: 10px; }
+        .team-title { font-size: 40px; margin: 0; font-weight: 800; text-shadow: 0 0 20px rgba(14, 165, 233, 0.3); }
+        .team-desc { color: #94a3b8; font-size: 15px; max-width: 600px; margin: 15px auto 50px; line-height: 1.6; }
+
+        /* Team Grid */
+        .team-grid {
+            display: flex; flex-wrap: wrap; justify-content: center; gap: 30px;
+            max-width: 1100px; margin: 0 auto 80px; padding: 0 20px;
+        }
+
+        /* Cyberpunk Card */
+        .team-card {
+            background: rgba(15, 23, 42, 0.7);
+            border: 1px solid rgba(51, 65, 85, 0.6);
+            border-radius: 16px; padding: 30px 20px;
+            width: 260px; text-align: center;
+            backdrop-filter: blur(10px);
+            position: relative; overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+            transition: border-color 0.3s ease;
+        }
+
+        /* Animated Top Border */
+        .team-card::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px;
+            background: linear-gradient(90deg, transparent, #0ea5e9, transparent);
+            transform: translateX(-100%); transition: 0.5s;
+        }
+        .team-card:hover::before { transform: translateX(100%); }
+        .team-card:hover { border-color: rgba(14, 165, 233, 0.5); }
+
+        .profile-img-wrapper {
+            width: 110px; height: 110px; margin: 0 auto 20px;
+            border-radius: 50%; padding: 4px;
+            background: linear-gradient(135deg, #0ea5e9, #8b5cf6);
+        }
+        .profile-img {
+            width: 100%; height: 100%; object-fit: cover;
+            border-radius: 50%; border: 3px solid #0f172a;
+        }
+
+        .member-name { font-size: 20px; margin: 0 0 5px; color: #f8fafc; }
+        .member-role { font-size: 13px; color: #0ea5e9; font-weight: 600; margin: 0 0 15px; font-family: monospace;}
+        .member-bio { font-size: 13px; color: #cbd5e1; line-height: 1.6; margin: 0 0 20px; }
+
+        /* Social Icons */
+        .card-social { display: flex; justify-content: center; gap: 15px; }
+        .card-social a {
+            color: #64748b; font-size: 18px; transition: 0.3s;
+        }
+        .card-social a:hover { color: #ffffff; transform: translateY(-3px); text-shadow: 0 0 10px rgba(255,255,255,0.5); }
+
+        /* Specific Role Colors */
+        .role-ceo { color: #0ea5e9; }
+        .role-co { color: #8b5cf6; }
+        .role-cso { color: #10b981; }
+        .role-brand { color: #f43f5e; }
+
+        @media (max-width: 600px) {
+            .team-title { font-size: 32px; }
+            .team-card { width: 100%; max-width: 300px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-glow"></div>
+
+    <nav class="phantomix-navbar">
+        <a href="index.html" class="nav-logo">
+            <i class="fa-solid fa-gem" style="color: #0ea5e9; margin-right: 8px;"></i> Phantomix
+        </a> 
+        <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Home</a>
+    </nav>
+
+    <div class="team-hero">
+        <span class="team-tagline">// THE ARCHITECTS BEHIND THE CODE</span>
+        <h1 class="team-title">Meet the <span style="color: #0ea5e9;">Mainframe.</span></h1>
+        <p class="team-desc">A small, elite team of developers, strategists, and visionaries building the next generation of privacy-first digital tools.</p>
+    </div>
+
+    <div class="team-grid">
+        
+        <div class="team-card" data-tilt data-tilt-max="10" data-tilt-speed="400" data-tilt-glare="true" data-tilt-max-glare="0.2">
+            <div class="profile-img-wrapper" style="background: linear-gradient(135deg, #0ea5e9, #38bdf8);">
+                <img src="https://via.placeholder.com/150/0f172a/0ea5e9?text=SP" alt="Shrikant Prajapati" class="profile-img">
+            </div>
+            <h3 class="member-name">Shrikant Prajapati</h3>
+            <p class="member-role role-ceo">CEO & Founder</p>
+            <p class="member-bio">The visionary hacker driving the Phantomix ecosystem. Obsessed with clean code, ultra-fast UI, and digital privacy.</p>
+            <div class="card-social">
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-github"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+
+        <div class="team-card" data-tilt data-tilt-max="10" data-tilt-speed="400" data-tilt-glare="true" data-tilt-max-glare="0.2">
+            <div class="profile-img-wrapper" style="background: linear-gradient(135deg, #8b5cf6, #c084fc);">
+                <img src="https://via.placeholder.com/150/0f172a/8b5cf6?text=RG" alt="Ranjan Gupta" class="profile-img">
+            </div>
+            <h3 class="member-name">Ranjan Gupta</h3>
+            <p class="member-role role-co">Co-Founder & Lead Architect</p>
+            <p class="member-bio">The backend mastermind. Scaling databases, managing server loads, and ensuring the DiamondMax engine never sleeps.</p>
+            <div class="card-social">
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+                <a href="#"><i class="fab fa-github"></i></a>
+                <a href="#"><i class="fas fa-envelope"></i></a>
+            </div>
+        </div>
+
+        <div class="team-card" data-tilt data-tilt-max="10" data-tilt-speed="400" data-tilt-glare="true" data-tilt-max-glare="0.2">
+            <div class="profile-img-wrapper" style="background: linear-gradient(135deg, #10b981, #34d399);">
+                <img src="https://via.placeholder.com/150/0f172a/10b981?text=CSO" alt="Secret Friend" class="profile-img">
+            </div>
+            <h3 class="member-name">[Alias / Name]</h3>
+            <p class="member-role role-cso">Chief Strategy Officer</p>
+            <p class="member-bio">The tactical brain of the operation. Connecting the dots between raw ideas, product features, and aggressive market execution.</p>
+            <div class="card-social">
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fas fa-globe"></i></a>
+            </div>
+        </div>
+
+        <div class="team-card" data-tilt data-tilt-max="10" data-tilt-speed="400" data-tilt-glare="true" data-tilt-max-glare="0.2">
+            <div class="profile-img-wrapper" style="background: linear-gradient(135deg, #f43f5e, #fb7185);">
+                <img src="https://via.placeholder.com/150/0f172a/f43f5e?text=VP" alt="Girlfriend Name" class="profile-img">
+            </div>
+            <h3 class="member-name">[Her Name]</h3>
+            <p class="member-role role-brand">VP of Brand Experience</p>
+            <p class="member-bio">The creative force shaping Phantomix's culture. Managing the community vibe, aesthetics, and ensuring our tools feel premium.</p>
+            <div class="card-social">
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-dribbble"></i></a>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"></script>
+
+</body>
+</html>
