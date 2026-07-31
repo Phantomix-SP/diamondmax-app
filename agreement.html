@@ -89,7 +89,7 @@
     <div class="agreement-container">
         <div class="header">
             <h1><i class="fa-solid fa-gem"></i> Phantomix Ecosystem</h1>
-            <p>// LEGAL & ONBOARDING PROTOCOL //</p>
+            <p>LEGAL & ONBOARDING PROTOCOL</p>
         </div>
 
         <div class="input-group">
@@ -147,11 +147,13 @@
         </div>
     </div>
 
-    <script>
-        
+        <script>
+        // Supabase Connection
         const SUPABASE_URL = "https://pekmsttmosuzcvielala.supabase.co";
         const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBla21zdHRtb3N1emN2aWVsYWxhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODM0MjY4NDUsImV4cCI6MjA5OTAwMjg0NX0.D0akjMO2d5sYhgbSy8IIFJT4sPHGO_Lm9r1YMWM_uUc"; 
-        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        
+        // 🚀 FIX: Naam 'supabase' se badal kar 'supabaseClient' kar diya!
+        const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
         // Function to check all fields
         function toggleSignButton() {
@@ -170,8 +172,7 @@
             }
         }
 
-        // 🚀 THE FIX: Auto-Scanner for Mobile Browsers
-        // Yeh har 0.5 seconds mein form ko scan karega, browser events ki zarurat hi nahi!
+        // Auto-Scanner for Mobile Browsers
         setInterval(toggleSignButton, 500);
 
         async function executeSignature() {
@@ -184,7 +185,8 @@
             btn.style.opacity = '0.8';
             btn.disabled = true;
 
-            const { data, error } = await supabase
+            // 🚀 FIX: Yahan bhi 'supabaseClient' use kiya hai
+            const { data, error } = await supabaseClient
                 .from('executive_agreements')
                 .insert([
                     { 
@@ -205,6 +207,7 @@
             }
         }
     </script>
+
 
 </body>
 </html>
