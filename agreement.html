@@ -150,17 +150,16 @@
     <script>
         
         const SUPABASE_URL = "https://pekmsttmosuzcvielala.supabase.co";
-        const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBla21zdHRtb3N1emN2aWVsYWxhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODM0MjY4NDUsImV4cCI6MjA5OTAwMjg0NX0.D0akjMO2d5sYhgbSy8IIFJT4sPHGO_Lm9r1YMWM_uUc";
-        
+        const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBla21zdHRtb3N1emN2aWVsYWxhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODM0MjY4NDUsImV4cCI6MjA5OTAwMjg0NX0.D0akjMO2d5sYhgbSy8IIFJT4sPHGO_Lm9r1YMWM_uUc"; 
         const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
+        // Function to check all fields
         function toggleSignButton() {
             const role = document.getElementById('roleSelect').value;
             const email = document.getElementById('emailInput').value.trim();
             const isChecked = document.getElementById('agreeCheck').checked;
             const signature = document.getElementById('digitalSignature').value.trim();
             const btn = document.getElementById('signBtn');
-
 
             const isEmailValid = email.includes("@") && email.includes(".");
 
@@ -170,6 +169,10 @@
                 btn.disabled = true;
             }
         }
+
+        // 🚀 THE FIX: Auto-Scanner for Mobile Browsers
+        // Yeh har 0.5 seconds mein form ko scan karega, browser events ki zarurat hi nahi!
+        setInterval(toggleSignButton, 500);
 
         async function executeSignature() {
             const btn = document.getElementById('signBtn');
@@ -181,7 +184,6 @@
             btn.style.opacity = '0.8';
             btn.disabled = true;
 
-            
             const { data, error } = await supabase
                 .from('executive_agreements')
                 .insert([
@@ -199,10 +201,10 @@
                 btn.style.opacity = '1';
                 btn.disabled = false;
             } else {
-            
                 document.getElementById('successScreen').classList.add('active');
             }
         }
     </script>
+
 </body>
 </html>
