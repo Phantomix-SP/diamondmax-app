@@ -1558,6 +1558,112 @@
         @media (max-width: 768px) {
             .glow-cursor { display: none !important; }
         }
+
+        .vault-gate-card {
+    display: flex;
+    align-items: center;
+    background: linear-gradient(145deg, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.9));
+    border: 1px solid rgba(14, 165, 233, 0.3);
+    border-radius: 16px;
+    padding: 20px 25px;
+    max-width: 600px;
+    margin: 40px auto; /* Page ke center me laane ke liye */
+    text-decoration: none;
+    transition: all 0.4s ease;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+}
+
+.vault-gate-card:hover {
+    transform: translateY(-5px) scale(1.02);
+    border-color: #0ea5e9;
+    box-shadow: 0 15px 40px rgba(14, 165, 233, 0.25);
+}
+
+.vault-icon {
+    background: rgba(14, 165, 233, 0.1);
+    color: #0ea5e9;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    flex-shrink: 0;
+    transition: transform 0.4s ease;
+}
+
+.vault-gate-card:hover .vault-icon {
+    transform: rotate(10deg) scale(1.1);
+}
+
+.vault-content {
+    margin-left: 20px;
+    text-align: left;
+    flex-grow: 1;
+}
+
+.vault-content h3 {
+    margin: 0 0 6px 0;
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: 700;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* "NEW" Tag Style */
+.vault-content .badge {
+    background: #10b981;
+    color: #ffffff;
+    font-size: 10px;
+    padding: 3px 8px;
+    border-radius: 12px;
+    vertical-align: middle;
+    margin-left: 8px;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+}
+
+.vault-content p {
+    margin: 0;
+    color: #94a3b8;
+    font-size: 13px;
+    font-family: 'Poppins', sans-serif;
+    line-height: 1.5;
+}
+
+.vault-arrow {
+    color: #334155;
+    font-size: 20px;
+    transition: all 0.4s ease;
+}
+
+.vault-gate-card:hover .vault-arrow {
+    color: #0ea5e9;
+    transform: translateX(6px);
+}
+
+/* 📱 Mobile Responsiveness */
+@media (max-width: 600px) {
+    .vault-gate-card {
+        flex-direction: column;
+        text-align: center;
+        padding: 25px 20px;
+        margin: 25px 15px; /* Mobile par width set karne ke liye */
+    }
+    .vault-content {
+        margin-left: 0;
+        margin-top: 15px;
+        text-align: center;
+    }
+    .vault-arrow {
+        display: none; /* Mobile par arrow hide kar diya for clean look */
+    }
+}
+
     </style>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
 <script>
@@ -1663,6 +1769,20 @@
         
         <p style="color: #94a3b8; margin-top: 30px; margin-bottom: 5px;">🚀 Official Launch Countdown</p>
         <div id="timer" style="font-size: 24px; color: #10B981; font-weight: bold; margin-bottom: 20px;">Calculating...</div>
+
+        <a href="gallery.html" class="vault-gate-card">
+    <div class="vault-icon">
+        <i class="fa-solid fa-photo-film"></i>
+    </div>
+    <div class="vault-content">
+        <h3>Phantomix Media Vault <span class="badge">NEW</span></h3>
+        <p>Explore high-res app UI, team behind the scenes, and official ecosystem updates.</p>
+    </div>
+    <div class="vault-arrow">
+        <i class="fas fa-arrow-right"></i>
+    </div>
+</a>
+
 
         <div class="social">
             <a href="https://instagram.com/shrikantxprajapatii" target="_blank" aria-label="Visit Phantomix Instagram"><i class="fab fa-instagram" aria-hidden="true"></i></a>
