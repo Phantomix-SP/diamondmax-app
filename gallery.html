@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Media Gallery | Phantomix</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        ::selection { background-color: #0ea5e9; color: #ffffff; }
+        ::-moz-selection { background-color: #0ea5e9; color: #ffffff; }
+        
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #020617; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; border: 2px solid #020617; }
+        ::-webkit-scrollbar-thumb:hover { background: #0ea5e9; }
+
+        body {
+            margin: 0; padding: 0; padding-top: 100px;
+            font-family: 'Poppins', sans-serif;
+            background-color: #0f172a; color: #ffffff;
+            text-align: center; overflow-x: hidden; position: relative;
+            animation: appLoad 0.8s ease-out forwards;
+            display: flex; flex-direction: column; min-height: 100vh;
+        }
+
+        @keyframes appLoad {
+            0% { opacity: 0; transform: translateY(15px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Glowing Background */
+        .bg-animation {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: -1; overflow: hidden; background: #0f172a;
+        }
+        .glow-shape {
+            position: absolute; filter: blur(80px); opacity: 0.5;
+            animation: float 10s infinite alternate ease-in-out; border-radius: 50%;
+        }
+        .shape1 { width: 400px; height: 400px; background: #0ea5e9; top: -10%; left: -10%; animation-duration: 12s; }
+        .shape2 { width: 500px; height: 500px; background: #8b5cf6; bottom: -20%; right: -10%; animation-duration: 15s; }
+        
+        @keyframes float {
+            0% { transform: translateY(0px) scale(1); }
+            100% { transform: translateY(-50px) scale(1.1); }
+        }
+
+        /* Navbar */
+        .phantomix-navbar {
+            position: fixed; top: 0; left: 0; width: 100%; height: 70px;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 0 5%; background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(12px); border-bottom: 1px solid rgba(14, 165, 233, 0.2);
+            z-index: 1000; box-sizing: border-box;
+        }
+        .nav-logo { font-size: 20px; font-weight: 700; color: white; display: flex; align-items: center; text-decoration: none; }
+        .nav-btn {
+            background: rgba(14, 165, 233, 0.1); color: #0ea5e9; padding: 8px 18px;
+            border: 1px solid #0ea5e9; border-radius: 6px; text-decoration: none;
+            font-size: 14px; font-weight: 600; transition: all 0.3s ease;
+        }
+        .nav-btn:hover { background: #0ea5e9; color: white; box-shadow: 0 0 15px rgba(14, 165, 233, 0.4); }
+
+        /* Gallery Header */
+        .gallery-header { max-width: 800px; margin: 20px auto 40px; padding: 0 20px; }
+        h1 { font-size: 36px; margin: 0 0 10px 0; color: #fff; }
+        h1 span { color: #0ea5e9; }
+        p { color: #94a3b8; font-size: 15px; line-height: 1.6; }
+
+        /* Filter Buttons */
+        .filter-container {
+            display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin-bottom: 40px; padding: 0 20px;
+        }
+        .filter-btn {
+            background: rgba(30, 41, 59, 0.6); color: #94a3b8; border: 1px solid rgba(51, 65, 85, 0.6);
+            padding: 8px 20px; border-radius: 20px; font-family: 'Poppins', sans-serif;
+            font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.3s ease;
+        }
+        .filter-btn:hover, .filter-btn.active {
+            background: #0ea5e9; color: #ffffff; border-color: #0ea5e9;
+            box-shadow: 0 0 15px rgba(14, 165, 233, 0.4);
+        }
+
+        /* Gallery Grid Layout */
+        .gallery-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px; max-width: 1200px; margin: 0 auto 60px; padding: 0 20px; box-sizing: border-box;
+        }
+        .gallery-item {
+            background: rgba(30, 41, 59, 0.6); border: 1px solid rgba(51, 65, 85, 0.5);
+            border-radius: 14px; overflow: hidden; transition: all 0.4s ease;
+            display: flex; flex-direction: column; cursor: pointer; position: relative;
+        }
+        .gallery-item:hover {
+            transform: translateY(-6px); border-color: #0ea5e9;
+            box-shadow: 0 10px 30px rgba(14, 165, 233, 0.2);
+        }
+        .gallery-img-wrapper {
+            width: 100%; height: 200px; overflow: hidden; background: #020617; position: relative;
+        }
+        .gallery-img-wrapper img {
+            width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease;
+        }
+        .gallery-item:hover .gallery-img-wrapper img { transform: scale(1.08); }
+        
+        .gallery-info { padding: 18px; text-align: left; display: flex; flex-direction: column; flex-grow: 1; }
+        .gallery-tag {
+            font-size: 10px; font-weight: 700; color: #0ea5e9; text-transform: uppercase;
+            letter-spacing: 1px; margin-bottom: 6px;
+        }
+        .gallery-title { font-size: 16px; color: #f8fafc; margin: 0 0 6px 0; font-weight: 600; }
+        .gallery-desc { color: #94a3b8; font-size: 12px; margin: 0; line-height: 1.5; }
+
+        /* Lightbox Modal */
+        #lightbox-modal {
+            display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(2, 6, 23, 0.95); backdrop-filter: blur(10px); z-index: 99999;
+            justify-content: center; align-items: center; flex-direction: column; padding: 20px; box-sizing: border-box;
+        }
+        #lightbox-modal img {
+            max-width: 90%; max-height: 75vh; border-radius: 10px; border: 1px solid rgba(14, 165, 233, 0.4);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.8); object-fit: contain;
+        }
+        #lightbox-caption { color: #f8fafc; font-size: 16px; margin-top: 15px; font-weight: 600; }
+        .close-lightbox {
+            position: absolute; top: 25px; right: 30px; background: rgba(255,255,255,0.1);
+            color: #fff; border: none; width: 45px; height: 45px; border-radius: 50%;
+            font-size: 20px; cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center;
+        }
+        .close-lightbox:hover { background: #ef4444; }
+
+        /* Footer */
+        .phantomix-footer {
+            background: #020617; border-top: 1px solid rgba(14, 165, 233, 0.2);
+            padding: 30px 5%; margin-top: auto; font-size: 13px; color: #64748b; text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-animation">
+        <div class="glow-shape shape1"></div>
+        <div class="glow-shape shape2"></div>
+    </div>
+
+    <nav class="phantomix-navbar">
+        <a href="index.html" class="nav-logo">
+            <i class="fa-solid fa-gem" style="color: #0ea5e9; margin-right: 8px;"></i> Phantomix
+        </a>
+        <a href="apps.html" class="nav-btn"><i class="fas fa-arrow-left"></i> Back to Hub</a>
+    </nav>
+
+    <div class="gallery-header">
+        <h1>Phantomix <span>Media Vault</span></h1>
+        <p>Explore high-res app screenshots, team behind the scenes, and official ecosystem updates.</p>
+    </div>
+
+    <div class="filter-container">
+        <button class="filter-btn active" onclick="filterGallery('all')">All Media</button>
+        <button class="filter-btn" onclick="filterGallery('apps')">Apps & UI</button>
+        <button class="filter-btn" onclick="filterGallery('team')">Team & Behind Scenes</button>
+        <button class="filter-btn" onclick="filterGallery('updates')">Posters & Socials</button>
+    </div>
+
+    <div class="gallery-grid" id="galleryGrid">
+        </div>
+
+    <div id="lightbox-modal" onclick="closeLightbox()">
+        <button class="close-lightbox" onclick="closeLightbox()">&times;</button>
+        <img id="lightbox-img" src="" alt="Zoomed View">
+        <div id="lightbox-caption"></div>
+    </div>
+
+    <footer class="phantomix-footer">
+        <p>&copy; 2026 Phantomix. All rights reserved. Built with passion by Shrikant Prajapati & Ranjan Gupta.</p>
+    </footer>
+
+    <script>
+        // 🌟 APKO BAS YAHAN NICHE LIST MEIN NAYI PHOTO ADD KARTI JANI HAIN (No Coding Required!)
+        const galleryData = [
+            {
+                category: "apps",
+                title: "DiamondMax Dashboard UI",
+                description: "Alpha core user reward ecosystem preview.",
+                image: "https://raw.githubusercontent.com/Phantomix-dev/phantomix-dev.github.io/refs/heads/main/%E2%80%8Bdiamondmax-logo.png"
+            },
+            {
+                category: "team",
+                title: "Core Architecture Setup",
+                description: "Shrikant Prajapati & team working on backend scaling.",
+                image: "https://via.placeholder.com/600x400/0ea5e9/ffffff?text=Founder+Workspace"
+            },
+            {
+                category: "apps",
+                title: "Diamond-Vault Secure Screen",
+                description: "Unbreakable password generation utility interface.",
+                image: "https://raw.githubusercontent.com/Phantomix-dev/phantomix-dev.github.io/refs/heads/main/%E2%80%8Bvault-logo.png"
+            },
+            {
+                category: "updates",
+                title: "YouTube / Instagram Launch Poster",
+                description: "Official community announcement visual asset.",
+                image: "https://via.placeholder.com/600x400/8b5cf6/ffffff?text=Phantomix+Social"
+            },
+            {
+                category: "team",
+                title: "Ranjan Gupta - Lead Architect",
+                description: "Database and cloud infrastructure deployment session.",
+                image: "https://via.placeholder.com/600x400/10b981/ffffff?text=Co-Founder+Ranjan"
+            },
+            {
+                category: "apps",
+                title: "Word Cipher Game Mockup",
+                description: "Decryption puzzle interface layout preview.",
+                image: "https://raw.githubusercontent.com/Phantomix-dev/phantomix-dev.github.io/refs/heads/main/%E2%80%8Bwordcipher-logo.png"
+            }
+        ];
+
+        // ⚙️ AUTOMATIC RENDER ENGINE (Isme kuch change nahi karna hai)
+        function renderGallery(filter = 'all') {
+            const grid = document.getElementById('galleryGrid');
+            grid.innerHTML = "";
+
+            const filteredItems = filter === 'all' 
+                ? galleryData 
+                : galleryData.filter(item => item.category === filter);
+
+            filteredItems.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'gallery-item';
+                card.onclick = () => openLightbox(item.image, item.title);
+
+                card.innerHTML = `
+                    <div class="gallery-img-wrapper">
+                        <img src="${item.image}" alt="${item.title}" loading="lazy">
+                    </div>
+                    <div class="gallery-info">
+                        <span class="gallery-tag"><i class="fas fa-tag"></i> ${item.category.toUpperCase()}</span>
+                        <h3 class="gallery-title">${item.title}</h3>
+                        <p class="gallery-desc">${item.description}</p>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Filter Selection Handler
+        function filterGallery(category) {
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            renderGallery(category);
+        }
+
+        // Lightbox Functions
+        function openLightbox(imgSrc, captionText) {
+            const modal = document.getElementById('lightbox-modal');
+            const modalImg = document.getElementById('lightbox-img');
+            const caption = document.getElementById('lightbox-caption');
+
+            modal.style.display = 'flex';
+            modalImg.src = imgSrc;
+            caption.innerText = captionText;
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox-modal').style.display = 'none';
+        }
+
+        // Page load par default 'all' render karega
+        window.onload = () => renderGallery('all');
+    </script>
+</body>
+</html>
