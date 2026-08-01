@@ -139,6 +139,19 @@
             background: #020617; border-top: 1px solid rgba(14, 165, 233, 0.2);
             padding: 30px 5%; margin-top: auto; font-size: 13px; color: #64748b; text-align: center;
         }
+        @media (max-width: 768px) {
+            body { padding-top: 80px; }
+            .phantomix-navbar { height: 60px; padding: 0 15px; }
+            .nav-logo { font-size: 16px; }
+            .gallery-header h1 { font-size: 26px; }
+            .gallery-grid {
+                grid-template-columns: 1fr; 
+                gap: 15px;
+                padding: 0 15px;
+            }
+            .filter-container { gap: 8px; }
+            .filter-btn { padding: 6px 14px; font-size: 12px; }
+        }
     </style>
 </head>
 <body>
