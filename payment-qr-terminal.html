@@ -34,7 +34,8 @@
             position: relative;
             animation: appLoad 0.8s ease-out forwards;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
+            min-height: 100vh;
         }
 
         @keyframes appLoad {
@@ -77,6 +78,15 @@
         }
         .nav-btn:hover { background: #0ea5e9; color: white; box-shadow: 0 0 15px rgba(14, 165, 233, 0.4); }
 
+        /* --- Main Content Wrapper --- */
+        .content-wrapper {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
         /* --- Tool Container --- */
         .container { 
             width: 100%; 
@@ -87,7 +97,6 @@
             padding: 40px 30px; 
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); 
             backdrop-filter: blur(10px);
-            margin-bottom: 50px;
             box-sizing: border-box;
             text-align: left;
         }
@@ -96,9 +105,7 @@
         h1 span { color: #0ea5e9; }
         p.subtitle { color: #94a3b8; font-size: 14px; margin-bottom: 25px; text-align: center; }
         
-        .input-group {
-            margin-bottom: 20px;
-        }
+        .input-group { margin-bottom: 20px; }
 
         label {
             display: block;
@@ -131,6 +138,7 @@
             text-align: center; 
             margin-top: 30px; 
             box-shadow: 0 0 20px rgba(14, 165, 233, 0.05);
+            display: none;
         }
 
         #qr-canvas {
@@ -158,6 +166,81 @@
             margin-top: 10px;
         }
         button.generate-btn:hover { box-shadow: 0 6px 20px rgba(14, 165, 233, 0.6); transform: translateY(-2px); }
+
+        /* --- Phantomix Footer Styling --- */
+        .phantomix-footer {
+            background: #020617;
+            border-top: 1px solid rgba(14, 165, 233, 0.2);
+            padding: 40px 5% 20px 5%;
+            margin-top: auto;
+            font-family: 'Poppins', sans-serif;
+            text-align: left;
+        }
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 40px;
+            margin-bottom: 30px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .footer-brand { flex: 1; min-width: 250px; }
+        .footer-brand h3 {
+            color: white;
+            font-size: 22px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .footer-brand p { color: #94a3b8; font-size: 14px; line-height: 1.6; margin: 0; }
+        .footer-social h4 { color: white; margin-bottom: 12px; font-size: 16px; }
+        .social-icons { display: flex; gap: 12px; }
+        .social-icons a {
+            color: #94a3b8;
+            font-size: 18px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 38px;
+            height: 38px;
+            text-decoration: none;
+        }
+        .social-icons a:hover {
+            color: white;
+            background: #0ea5e9;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(14, 165, 233, 0.4);
+        }
+        .footer-bottom {
+            border-top: 1px solid rgba(51, 65, 85, 0.4);
+            padding-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            color: #64748b;
+            font-size: 13px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .footer-bottom p { margin: 0; }
+        @keyframes pulse {
+            0% { opacity: 0.4; }
+            50% { opacity: 1; }
+            100% { opacity: 0.4; }
+        }
+        @media (max-width: 768px) {
+            .footer-content { flex-direction: column; gap: 25px; }
+            .footer-bottom { flex-direction: column; text-align: center; justify-content: center; }
+        }
     </style>
 </head>
 <body>
@@ -178,39 +261,62 @@
         </div>
     </nav>
 
-    <div class="container">
-        <h1>Custom Payment <span>QR Generator</span></h1>
-        <p class="subtitle">Generate dynamic UPI merchant or personal payment QR codes instantly.</p>
+    <div class="content-wrapper">
+        <div class="container">
+            <h1>Custom Payment <span>QR Generator</span></h1>
+            <p class="subtitle">Generate dynamic UPI merchant or personal payment QR codes securely.</p>
 
-        <div class="input-group">
-            <label><i class="fas fa-wallet" style="color: #0ea5e9;"></i> UPI ID (VPA)</label>
-            <input type="text" id="upi-id" placeholder="e.g. yourname@paytm or 8168350829@amazonpay">
-        </div>
+            <div class="input-group">
+                <label><i class="fas fa-wallet" style="color: #0ea5e9;"></i> UPI ID (VPA)</label>
+                <input type="text" id="upi-id" placeholder="e.g. yourname@paytm">
+            </div>
 
-        <div class="input-group">
-            <label><i class="fas fa-user" style="color: #0ea5e9;"></i> Payee Name</label>
-            <input type="text" id="payee-name" placeholder="e.g. Shrikant Prajapati">
-        </div>
+            <div class="input-group">
+                <label><i class="fas fa-user" style="color: #0ea5e9;"></i> Payee Name</label>
+                <input type="text" id="payee-name" placeholder="e.g. Shrikant Prajapati">
+            </div>
 
-        <div class="input-group">
-            <label><i class="fas fa-indian-rupee-sign" style="color: #0ea5e9;"></i> Amount (INR)</label>
-            <input type="number" id="pay-amount" placeholder="e.g. 99">
-        </div>
+            <div class="input-group">
+                <label><i class="fas fa-indian-rupee-sign" style="color: #0ea5e9;"></i> Amount (INR)</label>
+                <input type="number" id="pay-amount" placeholder="e.g. 99">
+            </div>
 
-        <div class="input-group">
-            <label><i class="fas fa-note-sticky" style="color: #0ea5e9;"></i> Transaction Note / Memo</label>
-            <input type="text" id="pay-note" placeholder="e.g. DiamondMax Lifetime Pass">
-        </div>
+            <div class="input-group">
+                <label><i class="fas fa-note-sticky" style="color: #0ea5e9;"></i> Transaction Note / Memo</label>
+                <input type="text" id="pay-note" placeholder="e.g. DiamondMax Lifetime Pass">
+            </div>
 
-        <button class="generate-btn" onclick="generatePaymentQR()">
-            <i class="fas fa-qrcode" style="margin-right: 8px;"></i> Generate Payment QR
-        </button>
+            <button class="generate-btn" onclick="generatePaymentQR()">
+                <i class="fas fa-qrcode" style="margin-right: 8px;"></i> Generate Payment QR
+            </button>
 
-        <div class="qr-display-box" id="qr-result-container" style="display: none;">
-            <div id="qr-canvas"></div>
-            <p id="qr-info-text" style="color: #cbd5e1; font-size: 13px; margin: 0; font-family: monospace;"></p>
+            <div class="qr-display-box" id="qr-result-container">
+                <div id="qr-canvas"></div>
+                <p id="qr-info-text" style="color: #cbd5e1; font-size: 13px; margin: 0; font-family: monospace;"></p>
+            </div>
         </div>
     </div>
+
+    <footer class="phantomix-footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <h3><i class="fa-solid fa-gem" style="color: #0ea5e9;"></i> Phantomix</h3>
+                <p>Building the future of digital experience. Fast, secure, and premium. Join the revolution with DiamondMax.</p>
+            </div>
+            <div class="footer-social">
+                <h4>Connect</h4>
+                <div class="social-icons">
+                    <a href="https://twitter.com/ceophantomix" target="_blank" title="X (Twitter)"><i class="fa-brands fa-x-twitter"></i></a>
+                    <a href="https://github.com/Phantomix-dev" target="_blank" title="GitHub"><i class="fa-brands fa-github"></i></a>
+                    <a href="https://youtube.com/@phantomix_sp" target="_blank" title="YouTube"><i class="fa-brands fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Phantomix. All rights reserved.</p>
+            <p>Made with <span style="color: #ef4444; animation: pulse 1.5s infinite;">❤</span> in India by Shrikant Prajapati and Ranjan Gupta</p>
+        </div>
+    </footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script>
@@ -256,13 +362,8 @@
                 correctLevel : QRCode.CorrectLevel.H
             });
 
-            infoText.innerHTML = `Scanning will pay <b>₹${amount || '0'}</b> to <b>${payeeName}</b>`;
+            infoText.innerHTML = `Scanning will pay <b>₹${amount || '0'}</b> to <b>${payeeName || 'Merchant'}</b>`;
         }
-
-        // Automatically generate on page load using default values
-        window.onload = function() {
-            generatePaymentQR();
-        };
     </script>
 </body>
 </html>
