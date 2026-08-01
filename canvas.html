@@ -3,118 +3,183 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Code-to-Canvas | Premium Aesthetic Code Snippet Exporter</title>
+    <title>Code-to-Canvas | Phantomix</title>
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
-    <meta name="description" content="Convert your raw programming source code into beautiful, high-end, visual canvas images ready for social media sharing.">
-    <meta name="keywords" content="code to canvas, code snippet to image, share code beautifully, carbon alternative, developer image maker, phantomix code studio">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
-    <meta property="og:title" content="Code-to-Canvas | Phantomix">
-    <meta property="og:description" content="Convert raw code into beautiful, high-end snippets for social media sharing.">
-    <meta property="og:url" content="https://phantomix-dev.github.io/canvas.html">
-    <meta property="og:image" content="https://raw.githubusercontent.com/Phantomix-dev/phantomix-dev.github.io/refs/heads/main/%E2%80%8Bdiamondmax-logo.png">
-    <meta name="theme-color" content="#0B1221">
-
-    <style
+    <style>
         /* 🎨 CUSTOM PHANTOMIX TEXT SELECTION */
-        ::selection {
-            background-color: #0ea5e9; /* Neon Blue */
-            color: #ffffff; /* White Text */
-        }
+        ::selection { background-color: #0ea5e9; color: #ffffff; }
+        ::-moz-selection { background-color: #0ea5e9; color: #ffffff; }
         
-        /* Firefox browser ke liye */
-        ::-moz-selection {
-            background-color: #0ea5e9;
-            color: #ffffff;
-        }
-        /* ✨ PREMIUM FADE-IN ANIMATION */
+        /* --- Premium Custom Scrollbar --- */
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #020617; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; border: 2px solid #020617; }
+        ::-webkit-scrollbar-thumb:hover { background: #0ea5e9; }
+
+        /* Base Styling */
         body {
+            margin: 0;
+            padding: 0;
+            padding-top: 115px; 
+            font-family: 'Poppins', sans-serif;
+            background-color: #0f172a; 
+            color: #ffffff;
+            text-align: center;
+            overflow-x: hidden;
+            position: relative;
             animation: appLoad 0.8s ease-out forwards;
+            display: flex;
+            justify-content: center;
         }
 
         @keyframes appLoad {
-            0% {
-                opacity: 0;
-                transform: translateY(15px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            0% { opacity: 0; transform: translateY(15px); }
+            100% { opacity: 1; transform: translateY(0); }
         }
-        :root {
-            --bg-main: #0B1221;
-            --card-bg: #151E32;
-            --border-color: rgba(255, 255, 255, 0.08);
-            --text-main: #F3F4F6;
-            --text-muted: #9CA3AF;
-            --accent-blue: #3B82F6;
+
+        /* PREMIUM ANIMATED GLOWING BACKGROUND */
+        .bg-animation {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: -1; overflow: hidden; background: #0f172a;
         }
-        body { background-color: var(--bg-main); color: var(--text-main); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; text-align: center; padding: 20px 15px; margin: 0; display: flex; justify-content: center; }
-        .container { width: 100%; max-width: 650px; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 16px; padding: 30px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4); }
-        h1 { font-size: 1.6em; margin-top: 0; margin-bottom: 8px; font-weight: 700; }
-        p { color: var(--text-muted); font-size: 0.95em; margin-bottom: 20px; }
+        .glow-shape {
+            position: absolute; filter: blur(80px); opacity: 0.5;
+            animation: float 10s infinite alternate ease-in-out; border-radius: 50%;
+        }
+        .shape1 { width: 400px; height: 400px; background: #0ea5e9; top: -10%; left: -10%; animation-duration: 12s; }
+        .shape2 { width: 500px; height: 500px; background: #8b5cf6; bottom: -20%; right: -10%; animation-duration: 15s; }
+        .shape3 { width: 300px; height: 300px; background: #3b82f6; top: 40%; left: 40%; animation-duration: 18s; }
         
-        textarea { width: 100%; height: 100px; background: rgba(0,0,0,0.2); color: var(--text-main); border: 1px solid var(--border-color); border-radius: 8px; padding: 15px; font-family: monospace; resize: none; box-sizing: border-box; margin-bottom: 20px; }
-        textarea:focus { outline: none; border-color: var(--accent-blue); }
+        @keyframes float {
+            0% { transform: translateY(0px) scale(1); }
+            100% { transform: translateY(-50px) scale(1.1); }
+        }
+
+        /* --- Premium Sticky Navbar --- */
+        .phantomix-navbar {
+            position: fixed; top: 0; left: 0; width: 100%; height: 70px;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 0 5%; background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(14, 165, 233, 0.2); z-index: 1000;
+            box-sizing: border-box;
+        }
+        .nav-logo { font-size: 20px; font-weight: 700; color: white; display: flex; align-items: center; text-decoration: none;}
+        .nav-btn {
+            background: rgba(14, 165, 233, 0.1); color: #0ea5e9; padding: 8px 18px;
+            border: 1px solid #0ea5e9; border-radius: 6px; text-decoration: none;
+            font-size: 14px; font-weight: 600; transition: all 0.3s ease;
+        }
+        .nav-btn:hover { background: #0ea5e9; color: white; box-shadow: 0 0 15px rgba(14, 165, 233, 0.4); }
+
+        /* --- Tool Container (Vault Style) --- */
+        .container { 
+            width: 100%; 
+            max-width: 650px; 
+            background: rgba(15, 23, 42, 0.7); 
+            border: 1px solid rgba(14, 165, 233, 0.3); 
+            border-radius: 15px; 
+            padding: 40px 30px; 
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); 
+            backdrop-filter: blur(10px);
+            margin-bottom: 50px;
+            box-sizing: border-box;
+        }
+
+        h1 { font-size: 28px; margin-top: 0; margin-bottom: 8px; font-weight: 700; color: #fff; }
+        h1 span { color: #0ea5e9; }
+        p { color: #94a3b8; font-size: 14px; margin-bottom: 25px; }
         
-        #canvas-preview { background: linear-gradient(135deg, #1e3a8a, #312e81); padding: 40px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); text-align: left; box-sizing: border-box; margin-bottom: 20px; overflow: hidden; }
-        #code-window { background: #0F172A; border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 20px; color: #E2E8F0; font-family: 'Courier New', monospace; font-size: 1em; white-space: pre-wrap; word-wrap: break-word; box-shadow: 0 4px 20px rgba(0,0,0,0.5); }
+        textarea { 
+            width: 100%; 
+            height: 110px; 
+            background: rgba(15, 23, 42, 0.9); 
+            color: #0ea5e9; 
+            border: 1px solid #334155; 
+            border-radius: 8px; 
+            padding: 15px; 
+            font-family: 'Courier New', monospace; 
+            resize: none; 
+            box-sizing: border-box; 
+            margin-bottom: 25px; 
+            outline: none;
+            transition: all 0.3s ease;
+        }
+        textarea:focus { border-color: #0ea5e9; box-shadow: 0 0 10px rgba(14, 165, 233, 0.3); }
+        
+        #canvas-preview { 
+            background: linear-gradient(135deg, #0284c7, #7c3aed); 
+            padding: 40px; 
+            border-radius: 12px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3); 
+            text-align: left; 
+            box-sizing: border-box; 
+            margin-bottom: 25px; 
+            overflow: hidden; 
+        }
+        
+        #code-window { 
+            background: rgba(2, 6, 23, 0.9); 
+            border: 1px solid rgba(255,255,255,0.1); 
+            border-radius: 8px; 
+            padding: 20px; 
+            color: #E2E8F0; 
+            font-family: 'Courier New', monospace; 
+            font-size: 14px; 
+            white-space: pre-wrap; 
+            word-wrap: break-word; 
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5); 
+        }
         
         .dots { display: flex; gap: 8px; margin-bottom: 15px; }
         .dot { width: 12px; height: 12px; border-radius: 50%; }
-        .dot-red { background: #ff5f56; } .dot-yellow { background: #ffbd2e; } .dot-green { background: #27c93f; }
+        .dot-red { background: #ef4444; } 
+        .dot-yellow { background: #f59e0b; } 
+        .dot-green { background: #10b981; }
         
-        button { background: var(--accent-blue); color: #fff; padding: 14px 30px; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 1em; width: 100%; transition: 0.2s; }
-        button:hover { opacity: 0.9; }
-        /* 🎚️ CUSTOM CYBER SCROLLBAR */
-        ::-webkit-scrollbar {
-            width: 8px; /* Scrollbar ki motai */
+        button.export-btn { 
+            background: linear-gradient(135deg, #0ea5e9, #3b82f6); 
+            color: #fff; 
+            padding: 15px 30px; 
+            border: none; 
+            border-radius: 8px; 
+            cursor: pointer; 
+            font-weight: 600; 
+            font-size: 15px; 
+            width: 100%; 
+            transition: all 0.3s ease; 
+            box-shadow: 0 4px 15px rgba(14, 165, 233, 0.3);
+            font-family: 'Poppins', sans-serif;
         }
-        
-        ::-webkit-scrollbar-track {
-            background: #0f172a; /* Dark background */
-        }
-        
-        ::-webkit-scrollbar-thumb {
-            background: rgba(14, 165, 233, 0.5); /* Neon Blue semi-transparent */
-            border-radius: 10px;
-        }
-        
-        ::-webkit-scrollbar-thumb:hover {
-            background: rgba(14, 165, 233, 1); /* Hover par full bright Neon Blue */
-        }
+        button.export-btn:hover { box-shadow: 0 6px 20px rgba(14, 165, 233, 0.6); transform: translateY(-2px); }
     </style>
 </head>
 <body>
-    <style>
-    body { padding-top: 80px; } /* Navbar ke liye space */
-    .phantomix-top-nav {
-        position: fixed; top: 0; left: 0; width: 100%; height: 60px;
-        display: flex; justify-content: space-between; align-items: center;
-        padding: 0 20px; box-sizing: border-box;
-        background: rgba(11, 18, 33, 0.85); backdrop-filter: blur(12px);
-        border-bottom: 1px solid rgba(59, 130, 246, 0.2); z-index: 9999;
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    }
-    .nav-brand { font-size: 18px; font-weight: 700; color: #fff; text-decoration: none; display: flex; align-items: center; gap: 8px; }
-    .nav-brand span { color: #3B82F6; }
-    .nav-back {
-        background: rgba(59, 130, 246, 0.1); color: #3B82F6;
-        padding: 6px 14px; border: 1px solid #3B82F6; border-radius: 6px;
-        text-decoration: none; font-size: 13px; font-weight: 600; transition: 0.3s;
-    }
-    .nav-back:hover { background: #3B82F6; color: #fff; box-shadow: 0 0 15px rgba(59, 130, 246, 0.4); }
-</style>
-<nav class="phantomix-top-nav">
-    <a href="apps.html" class="nav-brand"><span>✦</span> Phantomix</a>
-    <a href="apps.html" class="nav-back">← Hub</a>
-</nav>
+
+    <div class="bg-animation">
+        <div class="glow-shape shape1"></div>
+        <div class="glow-shape shape2"></div>
+        <div class="glow-shape shape3"></div>
+    </div>
+
+    <nav class="phantomix-navbar">
+        <a href="apps.html" class="nav-logo">
+            <i class="fa-solid fa-gem" style="color: #0ea5e9; margin-right: 8px;"></i>
+            Phantomix
+        </a>
+        <div class="nav-action">
+            <a href="apps.html" class="nav-btn"><i class="fas fa-arrow-left"></i> Back to Hub</a>
+        </div>
+    </nav>
 
     <div class="container">
-        <h1>🎨 Code-to-Canvas</h1>
-        <p>Generate high-end aesthetic images of your source code.</p>
+        <h1>Code-to-<span>Canvas</span></h1>
+        <p>Generate high-end aesthetic images of your source code for social sharing.</p>
 
         <textarea id="code-input" placeholder="Paste your code snippet here..." oninput="updateSnippet()"></textarea>
 
@@ -125,8 +190,30 @@
             </div>
         </div>
 
-        <button onclick="exportToImage()">Download Snippet Image</button>
+        <button class="export-btn" onclick="exportToImage()">
+            <i class="fas fa-download" style="margin-right: 8px;"></i> Download Snippet Image
+        </button>
     </div>
+    <footer class="phantomix-footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <h3><i class="fa-solid fa-gem" style="color: #0ea5e9;"></i> Phantomix</h3>
+                <p>Building the future of digital experience. Fast, secure, and premium. Join the revolution with DiamondMax.</p>
+            </div>
+            <div class="footer-social">
+                <h4>Connect</h4>
+                <div class="social-icons">
+                    <a href="https://twitter.com/ceophantomix" target="_blank" title="X (Twitter)"><i class="fa-brands fa-x-twitter"></i></a>
+                    <a href="https://github.com/Phantomix-dev" target="_blank" title="GitHub"><i class="fa-brands fa-github"></i></a>
+                    <a href="https://youtube.com/@phantomix_sp" target="_blank" title="YouTube"><i class="fa-brands fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Phantomix. All rights reserved.</p>
+            <p>Made with <span style="color: #ef4444; animation: pulse 1.5s infinite;">❤</span> in India by Shrikant Prajapati and Ranjan Gupta</p>
+        </div>
+    </footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script>
@@ -136,8 +223,10 @@
         }
         function exportToImage() {
             html2canvas(document.getElementById('canvas-preview'), { backgroundColor: null, scale: 2 }).then(canvas => {
-                const link = document.createElement('a'); link.download = 'phantomix_snippet.png';
-                link.href = canvas.toDataURL('image/png'); link.click();
+                const link = document.createElement('a'); 
+                link.download = 'phantomix_snippet.png';
+                link.href = canvas.toDataURL('image/png'); 
+                link.click();
             });
         }
     </script>
