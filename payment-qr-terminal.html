@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Payment QR Terminal | Phantomix</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        /* 🎨 CUSTOM PHANTOMIX TEXT SELECTION */
+        ::selection { background-color: #0ea5e9; color: #ffffff; }
+        ::-moz-selection { background-color: #0ea5e9; color: #ffffff; }
+        
+        /* --- Premium Custom Scrollbar --- */
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #020617; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; border: 2px solid #020617; }
+        ::-webkit-scrollbar-thumb:hover { background: #0ea5e9; }
+
+        /* Base Styling */
+        body {
+            margin: 0;
+            padding: 0;
+            padding-top: 115px; 
+            font-family: 'Poppins', sans-serif;
+            background-color: #0f172a; 
+            color: #ffffff;
+            text-align: center;
+            overflow-x: hidden;
+            position: relative;
+            animation: appLoad 0.8s ease-out forwards;
+            display: flex;
+            justify-content: center;
+        }
+
+        @keyframes appLoad {
+            0% { opacity: 0; transform: translateY(15px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        /* PREMIUM ANIMATED GLOWING BACKGROUND */
+        .bg-animation {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: -1; overflow: hidden; background: #0f172a;
+        }
+        .glow-shape {
+            position: absolute; filter: blur(80px); opacity: 0.5;
+            animation: float 10s infinite alternate ease-in-out; border-radius: 50%;
+        }
+        .shape1 { width: 400px; height: 400px; background: #0ea5e9; top: -10%; left: -10%; animation-duration: 12s; }
+        .shape2 { width: 500px; height: 500px; background: #8b5cf6; bottom: -20%; right: -10%; animation-duration: 15s; }
+        .shape3 { width: 300px; height: 300px; background: #3b82f6; top: 40%; left: 40%; animation-duration: 18s; }
+        
+        @keyframes float {
+            0% { transform: translateY(0px) scale(1); }
+            100% { transform: translateY(-50px) scale(1.1); }
+        }
+
+        /* --- Premium Sticky Navbar --- */
+        .phantomix-navbar {
+            position: fixed; top: 0; left: 0; width: 100%; height: 70px;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 0 5%; background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(14, 165, 233, 0.2); z-index: 1000;
+            box-sizing: border-box;
+        }
+        .nav-logo { font-size: 20px; font-weight: 700; color: white; display: flex; align-items: center; text-decoration: none;}
+        .nav-btn {
+            background: rgba(14, 165, 233, 0.1); color: #0ea5e9; padding: 8px 18px;
+            border: 1px solid #0ea5e9; border-radius: 6px; text-decoration: none;
+            font-size: 14px; font-weight: 600; transition: all 0.3s ease;
+        }
+        .nav-btn:hover { background: #0ea5e9; color: white; box-shadow: 0 0 15px rgba(14, 165, 233, 0.4); }
+
+        /* --- Tool Container --- */
+        .container { 
+            width: 100%; 
+            max-width: 600px; 
+            background: rgba(15, 23, 42, 0.7); 
+            border: 1px solid rgba(14, 165, 233, 0.3); 
+            border-radius: 15px; 
+            padding: 40px 30px; 
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); 
+            backdrop-filter: blur(10px);
+            margin-bottom: 50px;
+            box-sizing: border-box;
+            text-align: left;
+        }
+
+        h1 { font-size: 26px; margin-top: 0; margin-bottom: 5px; font-weight: 700; color: #fff; text-align: center; }
+        h1 span { color: #0ea5e9; }
+        p.subtitle { color: #94a3b8; font-size: 14px; margin-bottom: 25px; text-align: center; }
+        
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-size: 13px;
+            color: #cbd5e1;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        input[type="text"], input[type="number"] { 
+            width: 100%; 
+            padding: 12px 15px; 
+            background: rgba(15, 23, 42, 0.9); 
+            color: #ffffff; 
+            border: 1px solid #334155; 
+            border-radius: 8px; 
+            font-size: 15px; 
+            font-family: 'Poppins', sans-serif; 
+            box-sizing: border-box; 
+            outline: none;
+            transition: all 0.3s ease;
+        }
+        input[type="text"]:focus, input[type="number"]:focus { border-color: #0ea5e9; box-shadow: 0 0 10px rgba(14, 165, 233, 0.3); }
+        
+        .qr-display-box { 
+            background: rgba(2, 6, 23, 0.8); 
+            border: 1px solid rgba(14, 165, 233, 0.4); 
+            border-radius: 12px;
+            padding: 25px; 
+            text-align: center; 
+            margin-top: 30px; 
+            box-shadow: 0 0 20px rgba(14, 165, 233, 0.05);
+        }
+
+        #qr-canvas {
+            display: inline-block;
+            background: #ffffff;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        #qr-canvas img { display: block; margin: 0 auto; }
+        
+        button.generate-btn { 
+            background: linear-gradient(135deg, #0ea5e9, #3b82f6); 
+            color: #fff; 
+            padding: 14px; 
+            border: none; 
+            border-radius: 8px; 
+            cursor: pointer; 
+            font-weight: 600; 
+            font-size: 15px; 
+            width: 100%; 
+            transition: all 0.3s ease; 
+            box-shadow: 0 4px 15px rgba(14, 165, 233, 0.3);
+            font-family: 'Poppins', sans-serif;
+            margin-top: 10px;
+        }
+        button.generate-btn:hover { box-shadow: 0 6px 20px rgba(14, 165, 233, 0.6); transform: translateY(-2px); }
+    </style>
+</head>
+<body>
+
+    <div class="bg-animation">
+        <div class="glow-shape shape1"></div>
+        <div class="glow-shape shape2"></div>
+        <div class="glow-shape shape3"></div>
+    </div>
+
+    <nav class="phantomix-navbar">
+        <a href="apps.html" class="nav-logo">
+            <i class="fa-solid fa-gem" style="color: #0ea5e9; margin-right: 8px;"></i>
+            Phantomix
+        </a>
+        <div class="nav-action">
+            <a href="apps.html" class="nav-btn"><i class="fas fa-arrow-left"></i> Back to Hub</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1>Custom Payment <span>QR Generator</span></h1>
+        <p class="subtitle">Generate dynamic UPI merchant or personal payment QR codes instantly.</p>
+
+        <div class="input-group">
+            <label><i class="fas fa-wallet" style="color: #0ea5e9;"></i> UPI ID (VPA)</label>
+            <input type="text" id="upi-id" placeholder="e.g. yourname@paytm or 8168350829@amazonpay" value="8168350829@amazonpay">
+        </div>
+
+        <div class="input-group">
+            <label><i class="fas fa-user" style="color: #0ea5e9;"></i> Payee Name</label>
+            <input type="text" id="payee-name" placeholder="e.g. Shrikant Prajapati" value="Phantomix">
+        </div>
+
+        <div class="input-group">
+            <label><i class="fas fa-indian-rupee-sign" style="color: #0ea5e9;"></i> Amount (INR)</label>
+            <input type="number" id="pay-amount" placeholder="e.g. 99" value="99">
+        </div>
+
+        <div class="input-group">
+            <label><i class="fas fa-note-sticky" style="color: #0ea5e9;"></i> Transaction Note / Memo</label>
+            <input type="text" id="pay-note" placeholder="e.g. DiamondMax Lifetime Pass" value="Phantomix Node Backing">
+        </div>
+
+        <button class="generate-btn" onclick="generatePaymentQR()">
+            <i class="fas fa-qrcode" style="margin-right: 8px;"></i> Generate Payment QR
+        </button>
+
+        <div class="qr-display-box" id="qr-result-container" style="display: none;">
+            <div id="qr-canvas"></div>
+            <p id="qr-info-text" style="color: #cbd5e1; font-size: 13px; margin: 0; font-family: monospace;"></p>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script>
+        let qrcodeInstance = null;
+
+        function generatePaymentQR() {
+            const upiId = document.getElementById('upi-id').value.trim();
+            const payeeName = document.getElementById('payee-name').value.trim();
+            const amount = document.getElementById('pay-amount').value.trim();
+            const note = document.getElementById('pay-note').value.trim();
+
+            if (!upiId) {
+                alert("Kripya valid UPI ID enter karein!");
+                return;
+            }
+
+            // Standard UPI String formatting specification
+            let upiString = `upi://pay?pa=${encodeURIComponent(upiId)}&pn=${encodeURIComponent(payeeName)}`;
+            
+            if (amount) {
+                upiString += `&am=${encodeURIComponent(amount)}`;
+            }
+            if (note) {
+                upiString += `&tn=${encodeURIComponent(note)}`;
+            }
+            upiString += `&cu=INR`;
+
+            // UI Elements update
+            const resultBox = document.getElementById('qr-result-container');
+            const canvasContainer = document.getElementById('qr-canvas');
+            const infoText = document.getElementById('qr-info-text');
+
+            canvasContainer.innerHTML = "";
+            resultBox.style.display = "block";
+
+            // Build QR Code
+            qrcodeInstance = new QRCode(canvasContainer, {
+                text: upiString,
+                width: 180,
+                height: 180,
+                colorDark : "#020617",
+                colorLight : "#ffffff",
+                correctLevel : QRCode.CorrectLevel.H
+            });
+
+            infoText.innerHTML = `Scanning will pay <b>₹${amount || '0'}</b> to <b>${payeeName}</b>`;
+        }
+
+        // Automatically generate on page load using default values
+        window.onload = function() {
+            generatePaymentQR();
+        };
+    </script>
+</body>
+</html>
