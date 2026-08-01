@@ -12,11 +12,10 @@
     
     <style>
         ::selection { background-color: #0ea5e9; color: #ffffff; }
-        ::-moz-selection { background-color: #0ea5e9; color: #ffffff; }
         
         ::-webkit-scrollbar { width: 10px; }
         ::-webkit-scrollbar-track { background: #020617; }
-        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; border: 2px solid #020617; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: #0ea5e9; }
 
         body {
@@ -24,13 +23,7 @@
             font-family: 'Poppins', sans-serif;
             background-color: #0f172a; color: #ffffff;
             text-align: center; overflow-x: hidden; position: relative;
-            animation: appLoad 0.8s ease-out forwards;
             display: flex; flex-direction: column; min-height: 100vh;
-        }
-
-        @keyframes appLoad {
-            0% { opacity: 0; transform: translateY(15px); }
-            100% { opacity: 1; transform: translateY(0); }
         }
 
         /* Glowing Background */
@@ -45,10 +38,7 @@
         .shape1 { width: 400px; height: 400px; background: #0ea5e9; top: -10%; left: -10%; animation-duration: 12s; }
         .shape2 { width: 500px; height: 500px; background: #8b5cf6; bottom: -20%; right: -10%; animation-duration: 15s; }
         
-        @keyframes float {
-            0% { transform: translateY(0px) scale(1); }
-            100% { transform: translateY(-50px) scale(1.1); }
-        }
+        @keyframes float { 0% { transform: translateY(0px) scale(1); } 100% { transform: translateY(-50px) scale(1.1); } }
 
         /* Navbar */
         .phantomix-navbar {
@@ -66,24 +56,21 @@
         }
         .nav-btn:hover { background: #0ea5e9; color: white; box-shadow: 0 0 15px rgba(14, 165, 233, 0.4); }
 
-        /* Gallery Header */
+        /* Header */
         .gallery-header { max-width: 800px; margin: 20px auto 40px; padding: 0 20px; }
         h1 { font-size: 36px; margin: 0 0 10px 0; color: #fff; }
         h1 span { color: #0ea5e9; }
         p { color: #94a3b8; font-size: 15px; line-height: 1.6; }
 
         /* Filter Buttons */
-        .filter-container {
-            display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin-bottom: 40px; padding: 0 20px;
-        }
+        .filter-container { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin-bottom: 40px; padding: 0 20px; }
         .filter-btn {
             background: rgba(30, 41, 59, 0.6); color: #94a3b8; border: 1px solid rgba(51, 65, 85, 0.6);
             padding: 8px 20px; border-radius: 20px; font-family: 'Poppins', sans-serif;
             font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.3s ease;
         }
         .filter-btn:hover, .filter-btn.active {
-            background: #0ea5e9; color: #ffffff; border-color: #0ea5e9;
-            box-shadow: 0 0 15px rgba(14, 165, 233, 0.4);
+            background: #0ea5e9; color: #ffffff; border-color: #0ea5e9; box-shadow: 0 0 15px rgba(14, 165, 233, 0.4);
         }
 
         /* Gallery Grid Layout */
@@ -94,90 +81,28 @@
         .gallery-item {
             background: rgba(30, 41, 59, 0.6); border: 1px solid rgba(51, 65, 85, 0.5);
             border-radius: 14px; overflow: hidden; transition: all 0.4s ease;
-            display: flex; flex-direction: column; cursor: pointer; position: relative;
+            display: flex; flex-direction: column; cursor: pointer; text-decoration: none;
         }
-        .gallery-item:hover {
-            transform: translateY(-6px); border-color: #0ea5e9;
-            box-shadow: 0 10px 30px rgba(14, 165, 233, 0.2);
-        }
-        .gallery-img-wrapper {
-            width: 100%; height: 200px; overflow: hidden; background: #020617; position: relative;
-        }
-        .gallery-img-wrapper img {
-            width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease;
-        }
+        .gallery-item:hover { transform: translateY(-6px); border-color: #0ea5e9; box-shadow: 0 10px 30px rgba(14, 165, 233, 0.2); }
+        .gallery-img-wrapper { width: 100%; height: 200px; overflow: hidden; background: #020617; position: relative; }
+        .gallery-img-wrapper img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
         .gallery-item:hover .gallery-img-wrapper img { transform: scale(1.08); }
         
         .gallery-info { padding: 18px; text-align: left; display: flex; flex-direction: column; flex-grow: 1; }
-        .gallery-tag {
-            font-size: 10px; font-weight: 700; color: #0ea5e9; text-transform: uppercase;
-            letter-spacing: 1px; margin-bottom: 6px;
-        }
+        .gallery-tag { font-size: 10px; font-weight: 700; color: #0ea5e9; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
         .gallery-title { font-size: 16px; color: #f8fafc; margin: 0 0 6px 0; font-weight: 600; }
         .gallery-desc { color: #94a3b8; font-size: 12px; margin: 0; line-height: 1.5; }
 
-        /* 📱 FIXED MOBILE LIGHTBOX MODAL (No Scroll Required!) */
-        #lightbox-modal {
-            display: none; 
-            position: fixed; 
-            top: 0; 
-            left: 0; 
-            width: 100vw; 
-            height: 100vh;
-            background: rgba(2, 6, 23, 0.95); 
-            backdrop-filter: blur(10px); 
-            z-index: 999999;
-            justify-content: center; 
-            align-items: center; 
-            flex-direction: column; 
-            padding: 20px; 
-            box-sizing: border-box;
-        }
-        #lightbox-modal img {
-            max-width: 90%; 
-            max-height: 70vh; 
-            border-radius: 10px; 
-            border: 1px solid rgba(14, 165, 233, 0.4);
-            box-shadow: 0 10px 40px rgba(0,0,0,0.8); 
-            object-fit: contain;
-        }
-        #lightbox-caption { color: #f8fafc; font-size: 15px; margin-top: 15px; font-weight: 600; text-align: center; }
-        .close-lightbox {
-            position: absolute; 
-            top: 20px; 
-            right: 20px; 
-            background: rgba(255,255,255,0.1);
-            color: #fff; 
-            border: none; 
-            width: 42px; 
-            height: 42px; 
-            border-radius: 50%;
-            font-size: 20px; 
-            cursor: pointer; 
-            transition: 0.3s; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center;
-        }
-        .close-lightbox:hover { background: #ef4444; }
-
         /* Footer */
-        .phantomix-footer {
-            background: #020617; border-top: 1px solid rgba(14, 165, 233, 0.2);
-            padding: 30px 5%; margin-top: auto; font-size: 13px; color: #64748b; text-align: center;
-        }
+        .phantomix-footer { background: #020617; border-top: 1px solid rgba(14, 165, 233, 0.2); padding: 30px 5%; margin-top: auto; font-size: 13px; color: #64748b; text-align: center; }
 
-        /* 📱 Mobile Responsive Layout Fix */
+        /* Mobile Layout */
         @media (max-width: 768px) {
             body { padding-top: 80px; }
             .phantomix-navbar { height: 60px; padding: 0 15px; }
             .nav-logo { font-size: 16px; }
             .gallery-header h1 { font-size: 26px; }
-            .gallery-grid {
-                grid-template-columns: 1fr;
-                gap: 18px;
-                padding: 0 15px;
-            }
+            .gallery-grid { grid-template-columns: 1fr; gap: 18px; padding: 0 15px; }
             .filter-container { gap: 8px; }
             .filter-btn { padding: 6px 14px; font-size: 12px; }
         }
@@ -185,15 +110,10 @@
 </head>
 <body>
 
-    <div class="bg-animation">
-        <div class="glow-shape shape1"></div>
-        <div class="glow-shape shape2"></div>
-    </div>
+    <div class="bg-animation"><div class="glow-shape shape1"></div><div class="glow-shape shape2"></div></div>
 
     <nav class="phantomix-navbar">
-        <a href="index.html" class="nav-logo">
-            <i class="fa-solid fa-gem" style="color: #0ea5e9; margin-right: 8px;"></i> Phantomix
-        </a>
+        <a href="index.html" class="nav-logo"><i class="fa-solid fa-gem" style="color: #0ea5e9; margin-right: 8px;"></i> Phantomix</a>
         <a href="apps.html" class="nav-btn"><i class="fas fa-arrow-left"></i> Back to Hub</a>
     </nav>
 
@@ -209,15 +129,7 @@
         <button class="filter-btn" onclick="filterGallery('updates', event)">Posters & Socials</button>
     </div>
 
-    <div class="gallery-grid" id="galleryGrid">
-        <p style="color: #0ea5e9;">Connecting to Mainframe Vault...</p>
-    </div>
-
-    <div id="lightbox-modal" onclick="closeLightbox()">
-        <button class="close-lightbox" onclick="closeLightbox()">&times;</button>
-        <img id="lightbox-img" src="" alt="Zoomed View" onclick="event.stopPropagation()">
-        <div id="lightbox-caption" onclick="event.stopPropagation()"></div>
-    </div>
+    <div class="gallery-grid" id="galleryGrid"><p style="color: #0ea5e9;">Connecting to Mainframe Vault...</p></div>
 
     <footer class="phantomix-footer">
         <p>&copy; 2026 Phantomix. All rights reserved. Built with passion by Shrikant Prajapati & Ranjan Gupta.</p>
@@ -233,16 +145,12 @@
             const grid = document.getElementById('galleryGrid');
             try {
                 const resp = await fetch(`${SUPABASE_URL}/rest/v1/gallery?select=*&order=created_at.desc`, {
-                    headers: {
-                        "apikey": SUPABASE_KEY,
-                        "Authorization": `Bearer ${SUPABASE_KEY}`
-                    }
+                    headers: { "apikey": SUPABASE_KEY, "Authorization": `Bearer ${SUPABASE_KEY}` }
                 });
                 
                 allGalleryData = await resp.json();
                 renderGallery('all');
             } catch (err) {
-                console.error(err);
                 grid.innerHTML = "<p style='color:#ef4444;'>Failed to load media vault.</p>";
             }
         }
@@ -261,16 +169,19 @@
             }
 
             filteredItems.forEach(item => {
-                const card = document.createElement('div');
+                // Yahan a tag use kiya hai jisse photo directly new tab (_blank) me khulegi
+                const card = document.createElement('a');
                 card.className = 'gallery-item';
-                card.onclick = () => openLightbox(item.image_url, item.title);
+                card.href = item.image_url;
+                card.target = '_blank'; // Opens in new tab
+                card.rel = 'noopener noreferrer'; // Security best practice
 
                 card.innerHTML = `
                     <div class="gallery-img-wrapper">
                         <img src="${item.image_url}" alt="${item.title}" loading="lazy">
                     </div>
                     <div class="gallery-info">
-                        <span class="gallery-tag"><i class="fas fa-tag"></i> ${item.category.toUpperCase()}</span>
+                        <span class="gallery-tag"><i class="fas fa-external-link-alt"></i> ${item.category.toUpperCase()}</span>
                         <h3 class="gallery-title">${item.title}</h3>
                         <p class="gallery-desc">${item.description || ''}</p>
                     </div>
@@ -283,26 +194,6 @@
             document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
             if(evt) evt.target.classList.add('active');
             renderGallery(category);
-        }
-
-        // 📱 Lightbox Open & Lock Scroll
-        function openLightbox(imgSrc, captionText) {
-            const modal = document.getElementById('lightbox-modal');
-            const modalImg = document.getElementById('lightbox-img');
-            const caption = document.getElementById('lightbox-caption');
-
-            modal.style.display = 'flex';
-            modalImg.src = imgSrc;
-            caption.innerText = captionText;
-            
-            // Screen scroll lock kar dega taaki top par na jana pade
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeLightbox() {
-            document.getElementById('lightbox-modal').style.display = 'none';
-            // Scroll wapas enable karega
-            document.body.style.overflow = 'auto';
         }
 
         window.onload = fetchGalleryFromSupabase;
