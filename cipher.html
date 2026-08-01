@@ -14,120 +14,114 @@
     
     <style>
         /* 🎨 CUSTOM PHANTOMIX TEXT SELECTION */
-        ::selection {
-            background-color: #0ea5e9; /* Neon Blue */
-            color: #ffffff; /* White Text */
-        }
-        
-        /* Firefox browser ke liye */
-        ::-moz-selection {
-            background-color: #0ea5e9;
-            color: #ffffff;
-        }
+        ::selection { background-color: #0ea5e9; color: #ffffff; }
+        ::-moz-selection { background-color: #0ea5e9; color: #ffffff; }
+
         /* ✨ PREMIUM FADE-IN ANIMATION */
-        body {
-            animation: appLoad 0.8s ease-out forwards;
+        body { animation: appLoad 0.8s ease-out forwards; }
+        @keyframes appLoad {
+            0% { opacity: 0; transform: translateY(15px); }
+            100% { opacity: 1; transform: translateY(0); }
         }
 
-        @keyframes appLoad {
-            0% {
-                opacity: 0;
-                transform: translateY(15px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
         body {
-            margin: 0; padding: 0; padding-top: 80px;
+            margin: 0; padding: 0; padding-top: 90px;
             font-family: 'Poppins', sans-serif;
             background-color: #020617; 
             color: #ffffff;
             text-align: center; overflow-x: hidden;
-            background-image: radial-gradient(circle at 50% 50%, rgba(16, 185, 129, 0.05) 0%, transparent 60%);
+            /* Premium Phantomix Background Gradient */
+            background-image: radial-gradient(circle at top, rgba(14,165,233,0.1) 0%, transparent 50%);
         }
 
-        /* --- Navbar --- */
+        /* --- Phantomix Premium Navbar --- */
         .phantomix-navbar {
-            position: fixed; top: 0; left: 0; width: 100%; height: 65px;
+            position: fixed; top: 0; left: 0; width: 100%; height: 70px;
             display: flex; justify-content: space-between; align-items: center;
             padding: 0 5%; box-sizing: border-box;
-            background: rgba(2, 6, 23, 0.9); backdrop-filter: blur(15px);
-            border-bottom: 1px solid rgba(16, 185, 129, 0.3); z-index: 1000;
+            background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(14, 165, 233, 0.2); z-index: 1000;
         }
-        .nav-logo { font-size: 18px; font-weight: 700; color: white; display: flex; align-items: center; text-decoration: none; }
+        .nav-logo { font-size: 20px; font-weight: 700; color: white; display: flex; align-items: center; text-decoration: none; letter-spacing: 1px; }
         .back-btn {
-            background: rgba(16, 185, 129, 0.1); color: #10b981;
-            padding: 6px 14px; border: 1px solid #10b981; border-radius: 6px;
-            text-decoration: none; font-size: 13px; font-weight: 600; transition: all 0.3s ease;
+            background: rgba(14, 165, 233, 0.1); color: #0ea5e9;
+            padding: 8px 18px; border: 1px solid #0ea5e9; border-radius: 6px;
+            text-decoration: none; font-size: 14px; font-weight: 600; transition: all 0.3s ease;
         }
-        .back-btn:hover { background: #10b981; color: #020617; box-shadow: 0 0 15px rgba(16, 185, 129, 0.6); }
+        .back-btn:hover { background: #0ea5e9; color: white; box-shadow: 0 0 15px rgba(14, 165, 233, 0.4); }
 
-        /* --- Game Container --- */
-        .game-wrapper {
-            max-width: 600px; margin: 40px auto; padding: 0 20px;
-        }
+        /* --- Game Container (Phantomix Glassmorphism) --- */
+        .game-wrapper { max-width: 650px; margin: 40px auto; padding: 0 20px; }
+        
         .game-header { margin-bottom: 30px; }
         .game-header h1 {
-            color: #10b981; font-family: 'Courier Prime', monospace;
-            font-size: 32px; margin: 0 0 10px 0; text-shadow: 0 0 15px rgba(16, 185, 129, 0.5);
+            color: #ffffff; font-family: 'Poppins', sans-serif; font-weight: 800;
+            font-size: 32px; margin: 0 0 5px 0; display: flex; justify-content: center; align-items: center; gap: 10px;
         }
-        .game-header p { color: #94a3b8; font-size: 14px; margin: 0; }
+        .game-header h1 i { color: #10b981; }
+        .game-header p { color: #94a3b8; font-size: 14px; margin: 0; font-family: 'Courier Prime', monospace; }
 
         .cipher-box {
-            background: rgba(15, 23, 42, 0.8);
-            border: 2px solid rgba(16, 185, 129, 0.4);
-            border-radius: 15px; padding: 40px 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), inset 0 0 20px rgba(16, 185, 129, 0.1);
-            position: relative;
+            background: rgba(15, 23, 42, 0.85);
+            border: 1px solid #0ea5e9; border-radius: 16px;
+            padding: 40px 30px; position: relative; overflow: hidden;
+            box-shadow: 0 10px 50px rgba(14, 165, 233, 0.15);
+            backdrop-filter: blur(10px);
+        }
+        
+        /* Top Glowing Border Line */
+        .cipher-box::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px;
+            background: linear-gradient(90deg, #0ea5e9, #8b5cf6, #0ea5e9);
         }
 
         .stats-bar {
             display: flex; justify-content: space-between;
             font-family: 'Courier Prime', monospace; font-size: 16px;
-            color: #cbd5e1; margin-bottom: 20px;
-            border-bottom: 1px dashed rgba(16, 185, 129, 0.3); padding-bottom: 15px;
+            color: #cbd5e1; margin-bottom: 25px;
+            border-bottom: 1px dashed rgba(51, 65, 85, 0.8); padding-bottom: 15px;
         }
-        .timer { color: #ef4444; font-weight: bold; }
-        .score { color: #10b981; font-weight: bold; }
+        .timer { color: #ef4444; font-weight: bold; animation: pulse 1.5s infinite; }
+        .score { color: #0ea5e9; font-weight: bold; }
 
         .scrambled-word {
-            font-size: 42px; font-weight: 700; letter-spacing: 10px;
-            margin: 10px 0 20px; color: #ffffff;
-            font-family: 'Courier Prime', monospace;
-            text-transform: uppercase;
+            font-size: 42px; font-weight: 700; letter-spacing: 12px;
+            margin: 10px 0 20px; color: #10b981;
+            font-family: 'Courier Prime', monospace; text-transform: uppercase;
+            text-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
         }
 
         .hint-text {
-            color: #0ea5e9; font-size: 14px; font-style: italic;
-            min-height: 20px; margin-bottom: 25px;
+            color: #8b5cf6; font-size: 14px; font-weight: 600;
+            min-height: 20px; margin-bottom: 25px; font-family: 'Courier Prime', monospace;
         }
 
         .input-group {
-            display: flex; gap: 10px; max-width: 400px; margin: 0 auto; flex-wrap: wrap; justify-content: center;
+            display: flex; gap: 10px; margin: 0 auto; flex-wrap: wrap; justify-content: center;
         }
         .guess-input {
             width: 100%; padding: 15px; border-radius: 8px; box-sizing: border-box;
-            border: 1px solid #334155; background: #0f172a; color: #10b981;
-            font-size: 18px; font-family: 'Courier Prime', monospace; text-transform: uppercase;
-            text-align: center; outline: none; transition: all 0.3s;
-            margin-bottom: 10px;
+            background: rgba(2, 6, 23, 0.8); border: 1px solid rgba(51, 65, 85, 0.8);
+            color: #ffffff; font-size: 20px; font-family: 'Courier Prime', monospace; text-transform: uppercase;
+            text-align: center; outline: none; transition: all 0.3s; margin-bottom: 15px;
+            letter-spacing: 2px;
         }
-        .guess-input:focus { border-color: #10b981; box-shadow: 0 0 15px rgba(16, 185, 129, 0.2); }
+        .guess-input:focus { border-color: #0ea5e9; box-shadow: 0 0 15px rgba(14, 165, 233, 0.3); }
         
         .action-btn {
-            background: #10b981; color: #020617;
-            border: none; padding: 12px 25px; border-radius: 8px;
+            background: linear-gradient(135deg, #0ea5e9, #3b82f6); color: white;
+            border: none; padding: 14px 25px; border-radius: 8px;
             font-weight: 700; font-family: 'Poppins', sans-serif;
-            cursor: pointer; transition: all 0.3s; font-size: 16px; flex: 1; min-width: 120px;
+            cursor: pointer; transition: all 0.3s; font-size: 15px; flex: 1; min-width: 120px;
         }
-        .action-btn:hover { background: #059669; box-shadow: 0 0 20px rgba(16, 185, 129, 0.5); transform: translateY(-2px); }
+        .action-btn:hover { box-shadow: 0 5px 20px rgba(14, 165, 233, 0.4); transform: translateY(-2px); }
+        .action-btn:disabled { background: #334155; cursor: not-allowed; box-shadow: none; transform: none; color: #94a3b8; }
         
-        .hint-btn { background: #334155; color: white; }
-        .hint-btn:hover { background: #0ea5e9; box-shadow: 0 0 15px rgba(14, 165, 233, 0.5); }
+        .hint-btn { background: rgba(30, 41, 59, 0.8); border: 1px solid #334155; color: #cbd5e1; }
+        .hint-btn:hover { background: #334155; box-shadow: 0 0 15px rgba(51, 65, 85, 0.5); }
+        .hint-btn:disabled { opacity: 0.5; }
 
-        .message { margin-top: 20px; font-size: 14px; font-weight: 600; height: 20px; }
+        .message { margin-top: 25px; font-size: 15px; font-weight: 600; height: 20px; font-family: 'Courier Prime', monospace; letter-spacing: 1px;}
         .correct { color: #10b981; }
         .wrong { color: #ef4444; animation: shake 0.4s; }
 
@@ -142,75 +136,54 @@
         .game-over-screen {
             display: none; position: absolute; top: 0; left: 0;
             width: 100%; height: 100%; background: rgba(2, 6, 23, 0.95);
-            border-radius: 15px; flex-direction: column; justify-content: center; align-items: center;
+            flex-direction: column; justify-content: center; align-items: center; z-index: 10;
         }
-        .game-over-screen h2 { color: #10b981; font-family: 'Courier Prime', monospace; font-size: 28px; margin-bottom: 10px; }
-        .final-score { font-size: 48px; font-weight: bold; color: white; margin: 10px 0 30px; }
-        /* 🎚️ CUSTOM CYBER SCROLLBAR */
-        ::-webkit-scrollbar {
-            width: 8px; /* Scrollbar ki motai */
-        }
-        
-        ::-webkit-scrollbar-track {
-            background: #0f172a; /* Dark background */
-        }
-        
-        ::-webkit-scrollbar-thumb {
-            background: rgba(14, 165, 233, 0.5); /* Neon Blue semi-transparent */
-            border-radius: 10px;
-        }
-        
-        ::-webkit-scrollbar-thumb:hover {
-            background: rgba(14, 165, 233, 1); /* Hover par full bright Neon Blue */
-        }
-    </style>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+        .game-over-screen h2 { color: #ef4444; font-family: 'Courier Prime', monospace; font-size: 28px; margin-bottom: 10px; }
+        .final-score { font-size: 55px; font-weight: bold; color: #0ea5e9; margin: 10px 0 30px; text-shadow: 0 0 20px rgba(14, 165, 233, 0.4); }
 
-  gtag('config', 'G-LX3YH0GSZG');
-</script>
+        /* 🎚️ CUSTOM CYBER SCROLLBAR */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0f172a; }
+        ::-webkit-scrollbar-thumb { background: rgba(14, 165, 233, 0.5); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(14, 165, 233, 1); }
+        
+        /* Phantomix Standard Footer */
+        .phantomix-footer {
+            background: #020617; border-top: 1px solid rgba(14, 165, 233, 0.2);
+            padding: 50px 5% 20px 5%; margin-top: 60px; font-family: 'Poppins', sans-serif; text-align: left;
+        }
+        .footer-content { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 40px; margin-bottom: 40px; max-width: 1200px; margin-left: auto; margin-right: auto; }
+        .footer-brand h3 { color: white; font-size: 24px; margin-bottom: 15px; display: flex; align-items: center; gap: 10px; }
+        .footer-brand p { color: #94a3b8; font-size: 14px; line-height: 1.6; max-width: 300px; }
+        .footer-social h4 { color: white; margin-bottom: 15px; font-size: 18px; }
+        .social-icons { display: flex; gap: 15px; }
+        .social-icons a {
+            color: #94a3b8; font-size: 20px; background: rgba(255, 255, 255, 0.05);
+            padding: 10px; border-radius: 8px; transition: all 0.3s ease;
+            display: flex; align-items: center; justify-content: center; width: 40px; height: 40px;
+        }
+        .social-icons a:hover { color: white; background: #0ea5e9; transform: translateY(-5px); box-shadow: 0 5px 15px rgba(14, 165, 233, 0.4); }
+        .footer-bottom {
+            border-top: 1px solid rgba(51, 65, 85, 0.5); padding-top: 20px;
+            display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;
+            color: #64748b; font-size: 13px; max-width: 1200px; margin-left: auto; margin-right: auto;
+        }
+        @media (max-width: 768px) { .footer-bottom { flex-direction: column; text-align: center; justify-content: center; } }
+    </style>
 </head>
 <body>
-    <style>
-    body { padding-top: 80px; } /* Navbar ke liye space */
-    .phantomix-top-nav {
-        position: fixed; top: 0; left: 0; width: 100%; height: 60px;
-        display: flex; justify-content: space-between; align-items: center;
-        padding: 0 20px; box-sizing: border-box;
-        background: rgba(11, 18, 33, 0.85); backdrop-filter: blur(12px);
-        border-bottom: 1px solid rgba(59, 130, 246, 0.2); z-index: 9999;
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    }
-    .nav-brand { font-size: 18px; font-weight: 700; color: #fff; text-decoration: none; display: flex; align-items: center; gap: 8px; }
-    .nav-brand span { color: #3B82F6; }
-    .nav-back {
-        background: rgba(59, 130, 246, 0.1); color: #3B82F6;
-        padding: 6px 14px; border: 1px solid #3B82F6; border-radius: 6px;
-        text-decoration: none; font-size: 13px; font-weight: 600; transition: 0.3s;
-    }
-    .nav-back:hover { background: #3B82F6; color: #fff; box-shadow: 0 0 15px rgba(59, 130, 246, 0.4); }
-</style>
-<nav class="phantomix-top-nav">
-    <a href="apps.html" class="nav-brand"><span>✦</span> Phantomix</a>
-    <a href="apps.html" class="nav-back">← Hub</a>
-</nav>
-
 
     <nav class="phantomix-navbar">
-        <a href="apps" class="nav-logo">
-            <i class="fa-solid fa-terminal" style="color: #10b981; margin-right: 8px;"></i>
-            Cipher
+        <a href="apps.html" class="nav-logo">
+            <i class="fa-solid fa-gem" style="color: #0ea5e9; margin-right: 8px;"></i> Phantomix
         </a>
         <a href="apps.html" class="back-btn"><i class="fas fa-arrow-left"></i> App Hub</a>
     </nav>
 
     <div class="game-wrapper">
         <div class="game-header">
-            <h1>WORD CIPHER</h1>
-            <p>Decrypt the scrambled tech words before the mainframe resets.</p>
+            <h1><i class="fa-solid fa-terminal"></i> WORD CIPHER</h1>
+            <p>// DECRYPT THE MAINFRAME NODES //</p>
         </div>
 
         <div class="cipher-box" id="game-box">
@@ -223,21 +196,22 @@
             <div class="hint-text" id="hint-display"></div>
 
             <div class="input-group">
-                <input type="text" id="user-guess" class="guess-input" placeholder="Enter word..." autocomplete="off" disabled>
+                <input type="text" id="user-guess" class="guess-input" placeholder="Enter decrypted word..." autocomplete="off" disabled>
                 <button class="action-btn hint-btn" id="hint-btn" onclick="showHint()" disabled><i class="fas fa-lightbulb"></i> HINT</button>
-                <button class="action-btn" id="submit-btn" onclick="startGame()">START</button>
+                <button class="action-btn" id="submit-btn" onclick="startGame()">INITIALIZE</button>
             </div>
 
             <div class="message" id="feedback-msg"></div>
 
             <div class="game-over-screen" id="game-over">
-                <h2>CONNECTION LOST</h2>
-                <div style="color: #94a3b8;">Final Decryption Score</div>
+                <h2>CONNECTION SEVERED</h2>
+                <div style="color: #94a3b8; font-family: 'Poppins', sans-serif;">Final Decryption Score</div>
                 <div class="final-score" id="final-score-val">0</div>
-                <button class="action-btn" style="padding: 15px 30px;" onclick="startGame()">REBOOT SYSTEM</button>
+                <button class="action-btn" style="padding: 15px 30px;" onclick="startGame()"><i class="fas fa-power-off"></i> REBOOT SYSTEM</button>
             </div>
         </div>
     </div>
+
     <footer class="phantomix-footer">
         <div class="footer-content">
             <div class="footer-brand">
@@ -249,7 +223,6 @@
                 <div class="social-icons">
                     <a href="https://twitter.com" target="_blank" title="X (Twitter)"><i class="fa-brands fa-x-twitter"></i></a>
                     <a href="https://github.com/Phantomix-dev" target="_blank" title="GitHub"><i class="fa-brands fa-github"></i></a>
-                    <a href="#" target="_blank" title="Discord"><i class="fa-brands fa-discord"></i></a>
                     <a href="https://youtube.com/@phantomix_sp" target="_blank" title="YouTube"><i class="fa-brands fa-youtube"></i></a>
                 </div>
             </div>
@@ -324,7 +297,9 @@
 
         function showHint() {
             if(isPlaying) {
-                hintDisplay.innerText = "💡 HINT: " + currentHint;
+                hintDisplay.innerText = "> HINT: " + currentHint;
+                score = Math.max(0, score - 2); // Penalty for hint
+                scoreDisplay.innerText = score;
             }
         }
 
@@ -368,11 +343,11 @@
             if (userGuess === currentWord) {
                 score += 10;
                 scoreDisplay.innerText = score;
-                feedbackMsg.innerText = "ACCESS GRANTED +10";
+                feedbackMsg.innerText = "[+] ACCESS GRANTED +10";
                 feedbackMsg.className = "message correct";
                 loadNewWord();
             } else {
-                feedbackMsg.innerText = "ACCESS DENIED";
+                feedbackMsg.innerText = "[-] ACCESS DENIED";
                 feedbackMsg.className = "message wrong";
                 guessInput.value = "";
                 guessInput.focus();
