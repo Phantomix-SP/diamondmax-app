@@ -3,68 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Phantomix Admin | Gallery Upload</title>
+    <title>Phantomix | Core Team Vault</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #0f172a;
-            color: #ffffff;
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-        }
-        .admin-card {
-            width: 100%;
-            max-width: 500px;
-            background: rgba(30, 41, 59, 0.8);
-            border: 1px solid rgba(14, 165, 233, 0.3);
-            border-radius: 15px;
-            padding: 25px;
-            box-sizing: border-box;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
+        body { font-family: 'Poppins', sans-serif; background-color: #0f172a; color: #ffffff; margin: 0; padding: 20px; display: flex; justify-content: center; align-items: center; min-height: 90vh; }
+        .admin-card { width: 100%; max-width: 500px; background: rgba(30, 41, 59, 0.8); border: 1px solid rgba(14, 165, 233, 0.3); border-radius: 15px; padding: 30px; box-sizing: border-box; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
         h2 { text-align: center; color: #0ea5e9; margin-top: 0; }
         .input-group { margin-bottom: 18px; }
         label { display: block; font-size: 13px; color: #cbd5e1; margin-bottom: 6px; font-weight: 600; }
-        input[type="text"], select, input[type="file"] {
-            width: 100%;
-            padding: 12px;
-            background: #020617;
-            color: #fff;
-            border: 1px solid #334155;
-            border-radius: 8px;
-            box-sizing: border-box;
-            font-family: inherit;
-        }
-        button.upload-btn {
-            width: 100%;
-            padding: 14px;
-            background: linear-gradient(135deg, #0ea5e9, #3b82f6);
-            color: #fff;
-            border: none;
-            border-radius: 8px;
-            font-size: 15px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-        button.upload-btn:hover { opacity: 0.9; }
+        input[type="text"], input[type="password"], input[type="email"], select, input[type="file"] { width: 100%; padding: 12px; background: #020617; color: #fff; border: 1px solid #334155; border-radius: 8px; box-sizing: border-box; font-family: inherit; }
+        .action-btn { width: 100%; padding: 14px; background: linear-gradient(135deg, #0ea5e9, #3b82f6); color: #fff; border: none; border-radius: 8px; font-size: 15px; font-weight: 700; cursor: pointer; transition: 0.3s; margin-top: 10px; }
+        .action-btn:hover { opacity: 0.9; box-shadow: 0 0 15px rgba(14, 165, 233, 0.4); }
+        .logout-btn { background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid #ef4444; margin-top: 15px; }
+        .logout-btn:hover { background: #ef4444; color: #fff; }
         .status-msg { text-align: center; font-size: 13px; margin-top: 15px; font-weight: 600; }
-        
-        /* Manage List */
         .photo-list { margin-top: 30px; border-top: 1px solid #334155; padding-top: 20px; }
-        .item-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: #020617;
-            padding: 10px;
-            border-radius: 8px;
-            margin-bottom: 10px;
-        }
+        .item-row { display: flex; align-items: center; justify-content: space-between; background: #020617; padding: 10px; border-radius: 8px; margin-bottom: 10px; }
         .item-row img { width: 45px; height: 45px; object-fit: cover; border-radius: 6px; }
         .item-info { flex: 1; margin-left: 12px; text-align: left; }
         .item-info h4 { margin: 0; font-size: 13px; color: #fff; }
@@ -74,48 +30,124 @@
 </head>
 <body>
 
-    <div class="admin-card">
-        <h2><i class="fas fa-cloud-upload-alt"></i> Upload to Gallery</h2>
+    <div class="admin-card" id="loginScreen">
+        <h2><i class="fas fa-lock"></i> Phantomix Core</h2>
+        <p style="text-align: center; font-size: 13px; color: #94a3b8; margin-bottom: 25px;">Encrypted Team Gateway</p>
         
         <div class="input-group">
-            <label>Select Photo (Auto-Compressed)</label>
-            <input type="file" id="photoInput" accept="image/*">
+            <input type="email" id="adminEmail" placeholder="Official Team Email">
+        </div>
+        <div class="input-group">
+            <input type="password" id="adminPassword" placeholder="Password">
+        </div>
+        <button class="action-btn" onclick="loginAdmin()"><i class="fas fa-sign-in-alt"></i> Authenticate</button>
+        <div id="loginMsg" class="status-msg"></div>
+    </div>
+
+    <div class="admin-card" id="adminPanel" style="display: none;">
+        
+        <div id="welcomeBanner" style="background: rgba(14, 165, 233, 0.1); border: 1px solid rgba(14, 165, 233, 0.3); border-radius: 12px; padding: 16px; margin-bottom: 25px; text-align: left;">
+            <h3 id="welcomeTitle" style="margin: 0 0 4px 0; color: #0ea5e9; font-size: 17px; font-weight: 700;"></h3>
+            <p id="welcomeRole" style="margin: 0 0 12px 0; font-size: 12px; color: #10b981; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;"></p>
+            <p style="margin: 0; font-size: 11px; color: #94a3b8; border-top: 1px dashed rgba(14, 165, 233, 0.2); padding-top: 10px; line-height: 1.5;">
+                🔒 <strong>Privacy Note:</strong> System vault me upload hone wali sabhi images public gallery me live render hoti hain. Security aur privacy ke liye kripya koi bhi personal ID, passwords, ya sensitive data upload na karein.
+            </p>
         </div>
 
+        <h2><i class="fas fa-cloud-upload-alt"></i> Upload Media</h2>
+        
+        <div class="input-group"><input type="file" id="photoInput" accept="image/*"></div>
+        <div class="input-group"><input type="text" id="titleInput" placeholder="Photo Title"></div>
         <div class="input-group">
-            <label>Title</label>
-            <input type="text" id="titleInput" placeholder="e.g. DiamondMax Launch Event">
-        </div>
-
-        <div class="input-group">
-            <label>Category</label>
             <select id="categoryInput">
                 <option value="apps">Apps & UI</option>
                 <option value="team">Team & Behind Scenes</option>
                 <option value="updates">Posters & Socials</option>
             </select>
         </div>
+        <div class="input-group"><input type="text" id="descInput" placeholder="Short description..."></div>
 
-        <div class="input-group">
-            <label>Description</label>
-            <input type="text" id="descInput" placeholder="Short line about this photo...">
-        </div>
-
-        <button class="upload-btn" onclick="uploadPhoto()"><i class="fas fa-paper-plane"></i> Upload From Phone</button>
-
+        <button class="action-btn" onclick="uploadPhoto()"><i class="fas fa-paper-plane"></i> Upload to Vault</button>
+        
         <div id="statusMsg" class="status-msg"></div>
 
         <div class="photo-list">
-            <h3 style="font-size: 16px; color: #0ea5e9;">Manage Existing Photos</h3>
+            <h3 style="font-size: 16px; color: #0ea5e9;">Manage Existing</h3>
             <div id="manageList">Loading...</div>
         </div>
+
+        <button class="action-btn logout-btn" onclick="logoutAdmin()"><i class="fas fa-sign-out-alt"></i> Secure Logout</button>
     </div>
 
     <script>
+        // ⚙️ SUPABASE INITIALIZATION
         const SUPABASE_URL = "https://pekmsttmosuzcvielala.supabase.co";
         const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBla21zdHRtb3N1emN2aWVsYWxhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODM0MjY4NDUsImV4cCI6MjA5OTAwMjg0NX0.D0akjMO2d5sYhgbSy8IIFJT4sPHGO_Lm9r1YMWM_uUc";
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-        // Image Auto-Compression Function (Phone mein hi 100-200KB kar deta hai)
+        // 🛡️ CORE TEAM DETAILS & ROLES MAPPING
+        const TEAM_MEMBERS = {
+            "gk2929913@gmail.com": {
+                name: "Shrikant Prajapati",
+                role: "CEO & Co-Founder"
+            },
+            "ranjankumarcpt@gmail.com": {
+                name: "Ranjan Gupta",
+                role: "Co-Founder & Lead Architect"
+            },
+            "nainargv2612@gmail.com": {
+                name: "Naina",
+                role: "VP of Brand Experience"
+            }
+        };
+
+        // 🛡️ STRICT TEAM EMAIL CHECK & WELCOME DISPLAY
+        supabaseClient.auth.onAuthStateChange((event, session) => {
+            if (session && TEAM_MEMBERS[session.user.email]) {
+                const userObj = TEAM_MEMBERS[session.user.email];
+                
+                // Set Welcome Message
+                document.getElementById('welcomeTitle').innerHTML = `<i class="fas fa-user-shield" style="margin-right: 6px;"></i> Welcome back, ${userObj.name}!`;
+                document.getElementById('welcomeRole').innerHTML = `<i class="fas fa-id-badge" style="margin-right: 5px;"></i> ${userObj.role}`;
+
+                document.getElementById('loginScreen').style.display = 'none';
+                document.getElementById('adminPanel').style.display = 'block';
+                fetchManageList();
+            } else if (session) {
+                // Unauthorized user handling
+                const msg = document.getElementById('loginMsg');
+                msg.style.color = "#ef4444";
+                msg.innerText = "❌ Access Denied: Unauthorized Personnel!";
+                setTimeout(() => { supabaseClient.auth.signOut(); }, 1500);
+            } else {
+                document.getElementById('loginScreen').style.display = 'block';
+                document.getElementById('adminPanel').style.display = 'none';
+            }
+        });
+
+        // 🔐 LOGIN FUNCTION
+        async function loginAdmin() {
+            const email = document.getElementById('adminEmail').value.trim();
+            const password = document.getElementById('adminPassword').value;
+            const msg = document.getElementById('loginMsg');
+            
+            msg.style.color = "#0ea5e9";
+            msg.innerText = "Authenticating...";
+
+            const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
+            
+            if (error) {
+                msg.style.color = "#ef4444";
+                msg.innerText = "❌ Login Failed: " + error.message;
+            }
+        }
+
+        // 🚪 LOGOUT FUNCTION
+        async function logoutAdmin() {
+            await supabaseClient.auth.signOut();
+        }
+
+        // 🖼️ AUTO-COMPRESS FUNCTION
         function compressImage(file, maxWidth = 1200, quality = 0.7) {
             return new Promise((resolve) => {
                 const reader = new FileReader();
@@ -125,28 +157,18 @@
                     img.src = event.target.result;
                     img.onload = () => {
                         const canvas = document.createElement('canvas');
-                        let width = img.width;
-                        let height = img.height;
-
-                        if (width > maxWidth) {
-                            height = Math.round((height * maxWidth) / width);
-                            width = maxWidth;
-                        }
-
-                        canvas.width = width;
-                        canvas.height = height;
-
-                        const ctx = canvas.getContext('canvas');
+                        let width = img.width, height = img.height;
+                        if (width > maxWidth) { height = Math.round((height * maxWidth) / width); width = maxWidth; }
+                        canvas.width = width; canvas.height = height;
+                        const ctx = canvas.getContext('2d');
                         ctx.drawImage(img, 0, 0, width, height);
-
-                        canvas.toBlob((blob) => {
-                            resolve(blob);
-                        }, 'image/jpeg', quality);
+                        canvas.toBlob((blob) => resolve(blob), 'image/jpeg', quality);
                     };
                 };
             });
         }
 
+        // 🚀 UPLOAD LOGIC
         async function uploadPhoto() {
             const fileInput = document.getElementById('photoInput');
             const title = document.getElementById('titleInput').value.trim();
@@ -155,109 +177,76 @@
             const statusMsg = document.getElementById('statusMsg');
 
             if (!fileInput.files[0] || !title) {
-                alert("Please select a photo and type a title!");
-                return;
+                alert("Photo and Title are required!"); return;
             }
 
             try {
                 statusMsg.style.color = "#0ea5e9";
-                statusMsg.innerText = "⏳ Compressing image on phone...";
+                statusMsg.innerText = "⏳ Compressing image on device...";
+                const compressedBlob = await compressImage(fileInput.files[0]);
 
-                const rawFile = fileInput.files[0];
-                const compressedBlob = await compressImage(rawFile);
-
-                statusMsg.innerText = "🚀 Uploading to Mainframe...";
+                statusMsg.innerText = "🚀 Uploading File to Supabase...";
                 const fileName = `photo_${Date.now()}.jpg`;
 
-                // 1. Upload compressed image to Supabase Storage
-                const storageResp = await fetch(`${SUPABASE_URL}/storage/v1/object/gallery-images/${fileName}`, {
-                    method: "POST",
-                    headers: {
-                        "apikey": SUPABASE_KEY,
-                        "Authorization": `Bearer ${SUPABASE_KEY}`,
-                        "Content-Type": "image/jpeg"
-                    },
-                    body: compressedBlob
-                });
+                const { data: storageData, error: storageError } = await supabaseClient
+                    .storage
+                    .from('gallery-images')
+                    .upload(fileName, compressedBlob, { contentType: 'image/jpeg' });
 
-                if (!storageResp.ok) throw new Error("Storage Upload Failed!");
+                if (storageError) throw storageError;
 
-                const publicImageUrl = `${SUPABASE_URL}/storage/v1/object/public/gallery-images/${fileName}`;
+                const { data: publicUrlData } = supabaseClient.storage.from('gallery-images').getPublicUrl(fileName);
+                const publicUrl = publicUrlData.publicUrl;
 
-                // 2. Save metadata in Database Table
-                const dbResp = await fetch(`${SUPABASE_URL}/rest/v1/gallery`, {
-                    method: "POST",
-                    headers: {
-                        "apikey": SUPABASE_KEY,
-                        "Authorization": `Bearer ${SUPABASE_KEY}`,
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        title: title,
-                        category: category,
-                        description: desc,
-                        image_url: publicImageUrl
-                    })
-                });
+                statusMsg.innerText = "📝 Saving record...";
+                
+                const { error: dbError } = await supabaseClient
+                    .from('gallery')
+                    .insert([{ title: title, category: category, description: desc, image_url: publicUrl }]);
 
-                if (dbResp.ok) {
-                    statusMsg.style.color = "#10b981";
-                    statusMsg.innerText = "✅ Upload Successful!";
-                    fileInput.value = "";
-                    document.getElementById('titleInput').value = "";
-                    document.getElementById('descInput').value = "";
-                    fetchManageList();
-                }
+                if (dbError) throw dbError;
+
+                statusMsg.style.color = "#10b981";
+                statusMsg.innerText = "✅ Upload Successful!";
+                
+                fileInput.value = ""; document.getElementById('titleInput').value = ""; document.getElementById('descInput').value = "";
+                fetchManageList();
 
             } catch (err) {
                 console.error(err);
                 statusMsg.style.color = "#ef4444";
-                statusMsg.innerText = "❌ Upload Failed. Check Supabase Storage Bucket Setup!";
+                statusMsg.innerText = "❌ Failed: " + err.message;
             }
         }
 
+        // 📋 FETCH LIST
         async function fetchManageList() {
             const listDiv = document.getElementById('manageList');
-            try {
-                const resp = await fetch(`${SUPABASE_URL}/rest/v1/gallery?select=*&order=created_at.desc`, {
-                    headers: { "apikey": SUPABASE_KEY, "Authorization": `Bearer ${SUPABASE_KEY}` }
-                });
-                const data = await resp.json();
-                listDiv.innerHTML = "";
-                
-                if(data.length === 0) {
-                    listDiv.innerText = "No photos uploaded yet.";
-                    return;
-                }
+            const { data, error } = await supabaseClient.from('gallery').select('*').order('created_at', { ascending: false });
+            
+            listDiv.innerHTML = "";
+            if (error || data.length === 0) { listDiv.innerText = "No photos found."; return; }
 
-                data.forEach(item => {
-                    listDiv.innerHTML += `
-                        <div class="item-row">
-                            <img src="${item.image_url}">
-                            <div class="item-info">
-                                <h4>${item.title}</h4>
-                                <p>${item.category}</p>
-                            </div>
-                            <button class="delete-btn" onclick="deletePhoto(${item.id})"><i class="fas fa-trash"></i></button>
+            data.forEach(item => {
+                listDiv.innerHTML += `
+                    <div class="item-row">
+                        <img src="${item.image_url}">
+                        <div class="item-info">
+                            <h4>${item.title}</h4>
+                            <p>${item.category}</p>
                         </div>
-                    `;
-                });
-            } catch (e) {
-                listDiv.innerText = "Failed to load list.";
-            }
+                        <button class="delete-btn" onclick="deletePhoto(${item.id})"><i class="fas fa-trash"></i></button>
+                    </div>
+                `;
+            });
         }
 
+        // 🗑️ DELETE LOGIC
         async function deletePhoto(id) {
-            if(!confirm("Photo delete karein? Isse storage wapas free ho jayegi.")) return;
-
-            await fetch(`${SUPABASE_URL}/rest/v1/gallery?id=eq.${id}`, {
-                method: "DELETE",
-                headers: { "apikey": SUPABASE_KEY, "Authorization": `Bearer ${SUPABASE_KEY}` }
-            });
+            if(!confirm("Are you sure? This will permanently delete the record.")) return;
+            await supabaseClient.from('gallery').delete().eq('id', id);
             fetchManageList();
         }
-
-        window.onload = fetchManageList;
     </script>
 </body>
 </html>
