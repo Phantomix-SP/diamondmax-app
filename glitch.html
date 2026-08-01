@@ -3,116 +3,218 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Glitch Text Generator | Cyber Hacker Font & Zalgo Text</title>
+    <title>Glitch Generator | Phantomix</title>
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
-    <meta name="description" content="Convert standard text into corrupted cyber hacker typography, zalgo fonts, and creepy glitch effects instantly with Phantomix.">
-    <meta name="keywords" content="glitch text generator, zalgo text, hacker font, corrupted text generator, scary text, cyber typography, phantomix tools">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
-    <meta property="og:title" content="Glitch Text Generator | Phantomix">
-    <meta property="og:description" content="Convert standard text into corrupted cyber hacker typography instantly.">
-    <meta property="og:url" content="https://phantomix-dev.github.io/glitch.html">
-    <meta property="og:image" content="https://raw.githubusercontent.com/Phantomix-dev/phantomix-dev.github.io/refs/heads/main/%E2%80%8Bdiamondmax-logo.png">
-    <meta name="theme-color" content="#0B1221">
-
     <style>
         /* 🎨 CUSTOM PHANTOMIX TEXT SELECTION */
-        ::selection {
-            background-color: #0ea5e9; /* Neon Blue */
-            color: #ffffff; /* White Text */
-        }
+        ::selection { background-color: #0ea5e9; color: #ffffff; }
+        ::-moz-selection { background-color: #0ea5e9; color: #ffffff; }
         
-        /* Firefox browser ke liye */
-        ::-moz-selection {
-            background-color: #0ea5e9;
-            color: #ffffff;
-        }
-        /* ✨ PREMIUM FADE-IN ANIMATION */
+        /* --- Premium Custom Scrollbar --- */
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #020617; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; border: 2px solid #020617; }
+        ::-webkit-scrollbar-thumb:hover { background: #0ea5e9; }
+
+        /* Base Styling */
         body {
+            margin: 0;
+            padding: 0;
+            padding-top: 115px; 
+            font-family: 'Poppins', sans-serif;
+            background-color: #0f172a; 
+            color: #ffffff;
+            text-align: center;
+            overflow-x: hidden;
+            position: relative;
             animation: appLoad 0.8s ease-out forwards;
         }
 
         @keyframes appLoad {
-            0% {
-                opacity: 0;
-                transform: translateY(15px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            0% { opacity: 0; transform: translateY(15px); }
+            100% { opacity: 1; transform: translateY(0); }
         }
-        body { background-color: #0a0a0a; color: #00ff00; font-family: monospace; text-align: center; padding: 50px; }
-        input { width: 80%; padding: 15px; background: #111; color: #00ff00; border: 1px solid #00ff00; font-size: 1.1em; text-align: center; font-family: monospace; }
-        #output-box { width: 80%; min-height: 80px; background: #1a1a1a; margin: 20px auto; padding: 15px; border: 1px dashed #00ff00; word-wrap: break-word; font-size: 1.4em; color: #ffffff; display: flex; align-items: center; justify-content: center; }
-        button { background: #00ff00; color: #000; padding: 10px 25px; border: none; cursor: pointer; font-weight: bold; font-size: 1em; }
-        button:hover { background: #fff; }
-        /* 🎚️ CUSTOM CYBER SCROLLBAR */
-        ::-webkit-scrollbar {
-            width: 8px; /* Scrollbar ki motai */
+
+        /* PREMIUM ANIMATED GLOWING BACKGROUND */
+        .bg-animation {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: -1; overflow: hidden; background: #0f172a;
         }
+        .glow-shape {
+            position: absolute; filter: blur(80px); opacity: 0.5;
+            animation: float 10s infinite alternate ease-in-out; border-radius: 50%;
+        }
+        .shape1 { width: 400px; height: 400px; background: #0ea5e9; top: -10%; left: -10%; animation-duration: 12s; }
+        .shape2 { width: 500px; height: 500px; background: #8b5cf6; bottom: -20%; right: -10%; animation-duration: 15s; }
+        .shape3 { width: 300px; height: 300px; background: #3b82f6; top: 40%; left: 40%; animation-duration: 18s; }
         
-        ::-webkit-scrollbar-track {
-            background: #0f172a; /* Dark background */
+        @keyframes float {
+            0% { transform: translateY(0px) scale(1); }
+            100% { transform: translateY(-50px) scale(1.1); }
         }
+
+        /* --- Premium Sticky Navbar --- */
+        .phantomix-navbar {
+            position: fixed; top: 0; left: 0; width: 100%; height: 70px;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 0 5%; background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(14, 165, 233, 0.2); z-index: 1000;
+            box-sizing: border-box;
+        }
+        .nav-logo { font-size: 20px; font-weight: 700; color: white; display: flex; align-items: center; text-decoration: none;}
+        .nav-btn {
+            background: rgba(14, 165, 233, 0.1); color: #0ea5e9; padding: 8px 18px;
+            border: 1px solid #0ea5e9; border-radius: 6px; text-decoration: none;
+            font-size: 14px; font-weight: 600; transition: all 0.3s ease;
+        }
+        .nav-btn:hover { background: #0ea5e9; color: white; box-shadow: 0 0 15px rgba(14, 165, 233, 0.4); }
+
+        /* --- Tool Container (Vault Style) --- */
+        .tool-container {
+            background: rgba(15, 23, 42, 0.7);
+            border: 1px solid rgba(14, 165, 233, 0.3);
+            border-radius: 15px;
+            padding: 40px 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            max-width: 600px;
+            margin: 0 auto 50px auto;
+            backdrop-filter: blur(10px);
+        }
+
+        h2 { margin-top: 0; color: #ffffff; font-size: 28px; }
+        h2 span { color: #0ea5e9; }
         
-        ::-webkit-scrollbar-thumb {
-            background: rgba(14, 165, 233, 0.5); /* Neon Blue semi-transparent */
-            border-radius: 10px;
+        /* Input & Output Styling */
+        input[type="text"] {
+            width: 100%;
+            padding: 15px 20px;
+            background: rgba(15, 23, 42, 0.9);
+            color: #0ea5e9;
+            border: 1px solid #334155;
+            border-radius: 8px;
+            font-size: 16px;
+            font-family: 'Courier New', monospace;
+            outline: none;
+            box-sizing: border-box;
+            margin-bottom: 25px;
+            transition: all 0.3s ease;
         }
+        input[type="text"]:focus { border-color: #0ea5e9; box-shadow: 0 0 10px rgba(14, 165, 233, 0.3); }
+
+        #output-box {
+            width: 100%;
+            min-height: 100px;
+            background: rgba(2, 6, 23, 0.6);
+            border: 1px dashed rgba(16, 185, 129, 0.5);
+            border-radius: 8px;
+            padding: 20px;
+            color: #10b981;
+            font-size: 24px;
+            font-family: 'Courier New', monospace;
+            word-wrap: break-word;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-sizing: border-box;
+            margin-bottom: 25px;
+            letter-spacing: 2px;
+        }
+
+        /* Buttons Styling */
+        .btn-group { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; }
         
-        ::-webkit-scrollbar-thumb:hover {
-            background: rgba(14, 165, 233, 1); /* Hover par full bright Neon Blue */
+        .btn-primary {
+            padding: 12px 25px;
+            background: linear-gradient(135deg, #0ea5e9, #3b82f6);
+            color: white; border: none; border-radius: 8px; font-family: 'Poppins', sans-serif;
+            font-size: 15px; font-weight: 600; cursor: pointer; transition: all 0.3s ease;
+            display: flex; align-items: center; gap: 8px; flex: 1; justify-content: center;
         }
+        .btn-primary:hover { box-shadow: 0 4px 15px rgba(14, 165, 233, 0.4); transform: translateY(-2px); }
+
+        .btn-secondary {
+            padding: 12px 25px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff; border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 8px;
+            font-family: 'Poppins', sans-serif; font-size: 15px; font-weight: 600;
+            cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 8px; flex: 1; justify-content: center;
+        }
+        .btn-secondary:hover { background: #ffffff; color: #020617; box-shadow: 0 4px 15px rgba(255, 255, 255, 0.3); transform: translateY(-2px); }
+
     </style>
 </head>
 <body>
-    <style>
-    body { padding-top: 80px; } /* Navbar ke liye space */
-    .phantomix-top-nav {
-        position: fixed; top: 0; left: 0; width: 100%; height: 60px;
-        display: flex; justify-content: space-between; align-items: center;
-        padding: 0 20px; box-sizing: border-box;
-        background: rgba(11, 18, 33, 0.85); backdrop-filter: blur(12px);
-        border-bottom: 1px solid rgba(59, 130, 246, 0.2); z-index: 9999;
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    }
-    .nav-brand { font-size: 18px; font-weight: 700; color: #fff; text-decoration: none; display: flex; align-items: center; gap: 8px; }
-    .nav-brand span { color: #3B82F6; }
-    .nav-back {
-        background: rgba(59, 130, 246, 0.1); color: #3B82F6;
-        padding: 6px 14px; border: 1px solid #3B82F6; border-radius: 6px;
-        text-decoration: none; font-size: 13px; font-weight: 600; transition: 0.3s;
-    }
-    .nav-back:hover { background: #3B82F6; color: #fff; box-shadow: 0 0 15px rgba(59, 130, 246, 0.4); }
-</style>
-<nav class="phantomix-top-nav">
-    <a href="apps.html" class="nav-brand"><span>✦</span> Phantomix</a>
-    <a href="apps.html" class="nav-back">← Hub</a>
-</nav>
 
+    <div class="bg-animation">
+        <div class="glow-shape shape1"></div>
+        <div class="glow-shape shape2"></div>
+        <div class="glow-shape shape3"></div>
+    </div>
 
-    <h1>🔠 Cyber Glitch Generator</h1>
-    <p>Corrupt your text stream for secure data masking.</p>
+    <nav class="phantomix-navbar">
+        <a href="apps.html" class="nav-logo">
+            <i class="fa-solid fa-gem" style="color: #0ea5e9; margin-right: 8px;"></i>
+            Phantomix
+        </a>
+        <div class="nav-action">
+            <a href="apps.html" class="nav-btn"><i class="fas fa-arrow-left"></i> Back to Hub</a>
+        </div>
+    </nav>
 
-    <input type="text" id="normal-text" placeholder="Type normal text here..." oninput="corruptText()">
+    <div class="tool-container">
+        <h2>Cyber <span>Glitch</span> Generator</h2>
+        <p style="color: #94a3b8; margin-bottom: 30px; font-size: 14px;">Corrupt your text stream for secure data masking. Untraceable & encrypted visual noise.</p>
 
-    <div id="output-box" id="glitch-output">Your corrupted transmission will appear here...</div>
+        <input type="text" id="normal-text" placeholder="Type normal text here..." oninput="corruptText()">
 
-    <button onclick="copyToClipboard()">1-Click Copy</button>
+        <div id="output-box">Your corrupted transmission will appear here...</div>
+
+        <div class="btn-group">
+            <button class="btn-primary" onclick="copyToClipboard()" id="copyBtn">
+                <i class="fas fa-copy"></i> Copy Text
+            </button>
+            <button class="btn-secondary" onclick="shareText()" id="shareBtn">
+                <i class="fas fa-share-nodes"></i> Share
+            </button>
+        </div>
+    </div> 
+    <footer class="phantomix-footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <h3><i class="fa-solid fa-gem" style="color: #0ea5e9;"></i> Phantomix</h3>
+                <p>Building the future of digital experience. Fast, secure, and premium. Join the revolution with DiamondMax.</p>
+            </div>
+            <div class="footer-social">
+                <h4>Connect</h4>
+                <div class="social-icons">
+                    <a href="https://twitter.com/ceophantomix" target="_blank" title="X (Twitter)"><i class="fa-brands fa-x-twitter"></i></a>
+                    <a href="https://github.com/Phantomix-dev" target="_blank" title="GitHub"><i class="fa-brands fa-github"></i></a>
+                    <a href="https://youtube.com/@phantomix_sp" target="_blank" title="YouTube"><i class="fa-brands fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Phantomix. All rights reserved.</p>
+            <p>Made with <span style="color: #ef4444; animation: pulse 1.5s infinite;">❤</span> in India by Shrikant Prajapati and Ranjan Gupta</p>
+        </div>
+    </footer>
 
     <script>
-        // Hardcore Zalgo Unicode Arrays (Text ke upar/niche noise add karne ke liye)
         const zalgoUp = ['\u030d', '\u030e', '\u0304', '\u0305', '\u033f', '\u0311', '\u0306', '\u0310', '\u0352', '\u0357', '\u0351', '\u0307', '\u0308', '\u030a', '\u0342', '\u0343', '\u0344', '\u034a', '\u034b', '\u034c', '\u0303', '\u0302', '\u030c', '\u0350', '\u0300', '\u0301', '\u030b', '\u030f', '\u0312', '\u0313', '\u0314', '\u033d', '\u0309', '\u035b', '\u0346', '\u031a'];
         const zalgoDown = ['\u0316', '\u0317', '\u0318', '\u0319', '\u031c', '\u031d', '\u031e', '\u031f', '\u0320', '\u0324', '\u0325', '\u0326', '\u0329', '\u032a', '\u032b', '\u032c', '\u032d', '\u032e', '\u032f', '\u0330', '\u0331', '\u0332', '\u0333', '\u0339', '\u033a', '\u033b', '\u033c', '\u0345', '\u0347', '\u0348', '\u0349', '\u034d', '\u034e', '\u0353', '\u0354', '\u0355', '\u0356', '\u0359', '\u035a', '\u0323'];
         const zalgoMid = ['\u0315', '\u0334', '\u0335', '\u0336', '\u0337', '\u0338', '\u0358', '\u0327', '\u0328', '\u035e', '\u035f', '\u0360', '\u0362', '\u0338', '\u035c', '\u0328'];
 
-        // Core Glitch Generator Logic
         function corruptText() {
             const sourceText = document.getElementById('normal-text').value;
             if(!sourceText) {
                 document.getElementById('output-box').innerText = "Your corrupted transmission will appear here...";
+                document.getElementById('output-box').style.color = "#10b981"; // reset color
                 return;
             }
 
@@ -120,8 +222,6 @@
             for (let i = 0; i < sourceText.length; i++) {
                 let letter = sourceText[i];
                 result += letter;
-
-                // Har letter ke baad random 2-3 glitch characters mix karein (space ko chhod kar)
                 if (letter !== " ") {
                     for (let j = 0; j < 2; j++) {
                         result += zalgoUp[Math.floor(Math.random() * zalgoUp.length)];
@@ -131,18 +231,38 @@
                 }
             }
             document.getElementById('output-box').innerText = result;
+            document.getElementById('output-box').style.color = "#ef4444"; // Glitch looking red/error color
         }
 
-        // 1-Click Copy Hack
         function copyToClipboard() {
             const textToCopy = document.getElementById('output-box').innerText;
             if(textToCopy === "Your corrupted transmission will appear here...") return;
 
             navigator.clipboard.writeText(textToCopy).then(() => {
-                alert("🎯 Glitch text copied! Go flex it anywhere, CEO Sahab!");
+                const copyBtn = document.getElementById("copyBtn");
+                copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                setTimeout(() => {
+                    copyBtn.innerHTML = '<i class="fas fa-copy"></i> Copy Text';
+                }, 2000);
             }).catch(err => {
                 alert("Copy failed. Try selecting manually.");
             });
+        }
+
+        function shareText() {
+            const textToCopy = document.getElementById('output-box').innerText;
+            if(textToCopy === "Your corrupted transmission will appear here...") return;
+
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Phantomix Glitch Text',
+                    text: textToCopy
+                }).catch((error) => {
+                    console.log('Error sharing', error);
+                });
+            } else {
+                alert("Aapka browser direct share support nahi karta. Kripya text copy karke share karein.");
+            }
         }
     </script>
 </body>
