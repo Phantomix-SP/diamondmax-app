@@ -116,12 +116,11 @@
         .card-vault:hover { border-color: #8b5cf6; box-shadow: 0 15px 35px rgba(139, 92, 246, 0.2); }
 
         .badge {
-            /* 'position: absolute' ko hata diya gaya hai taaki overlap na ho */
             width: fit-content;
             font-size: 10px; font-weight: 700; padding: 4px 10px;
             border-radius: 20px; letter-spacing: 1px;
             display: inline-flex; align-items: center; gap: 5px;
-            margin-bottom: 15px; /* Ye title aur badge ke beech space dega */
+            margin-bottom: 15px;
         }
         .badge-upcoming { background: rgba(245, 158, 11, 0.1); color: #f59e0b; border: 1px solid #f59e0b; }
         .badge-demo { background: rgba(139, 92, 246, 0.1); color: #8b5cf6; border: 1px solid #8b5cf6; }
@@ -142,7 +141,6 @@
         .btn-demo { background: linear-gradient(135deg, #8b5cf6, #c084fc); color: white; border: none; }
         .btn-demo:hover { background: linear-gradient(135deg, #7c3aed, #a855f7); box-shadow: 0 5px 15px rgba(139, 92, 246, 0.4); }
 
-        /* Premium Accent Buttons for new tools */
         .btn-red { background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.5); }
         .btn-red:hover { background: #ef4444; color: white; box-shadow: 0 5px 15px rgba(239, 68, 68, 0.4); }
         
@@ -158,23 +156,11 @@
             .app-logo { width: 70px; height: 70px; }
             .badge { top: 20px; right: 20px; }
         }
-        /* 🎚️ CUSTOM CYBER SCROLLBAR */
-        ::-webkit-scrollbar {
-            width: 8px; /* Scrollbar ki motai */
-        }
-        
-        ::-webkit-scrollbar-track {
-            background: #0f172a; /* Dark background */
-        }
-        
-        ::-webkit-scrollbar-thumb {
-            background: rgba(14, 165, 233, 0.5); /* Neon Blue semi-transparent */
-            border-radius: 10px;
-        }
-        
-        ::-webkit-scrollbar-thumb:hover {
-            background: rgba(14, 165, 233, 1); /* Hover par full bright Neon Blue */
-        }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0f172a; }
+        ::-webkit-scrollbar-thumb { background: rgba(14, 165, 233, 0.5); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(14, 165, 233, 1); }
     </style>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-LX3YH0GSZG"></script>
     <script>
@@ -186,22 +172,19 @@
 </head>
 <body>
 
-        <nav class="phantomix-navbar">
-    <a href="index.html" class="nav-logo">
-        <i class="fa-solid fa-gem" style="color: #0ea5e9; margin-right: 8px;"></i> Phantomix
-    </a> 
-    
-    <div style="display: flex; gap: 12px; align-items: center;">
-        <a href="support.html" style="background: linear-gradient(90deg, #0ea5e9, #10b981); color: white; padding: 6px 14px; border-radius: 6px; text-decoration: none; font-size: 13px; font-weight: 600; box-shadow: 0 2px 10px rgba(16, 185, 129, 0.3); transition: 0.3s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
-            <i class="fas fa-bolt" style="margin-right: 4px;"></i> Support
-        </a>
-        <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Home</a>
-    </div>
-</nav>
+    <nav class="phantomix-navbar">
+        <a href="index.html" class="nav-logo">
+            <i class="fa-solid fa-gem" style="color: #0ea5e9; margin-right: 8px;"></i> Phantomix
+        </a> 
+        <div style="display: flex; gap: 12px; align-items: center;">
+            <a href="support.html" style="background: linear-gradient(90deg, #0ea5e9, #10b981); color: white; padding: 6px 14px; border-radius: 6px; text-decoration: none; font-size: 13px; font-weight: 600; box-shadow: 0 2px 10px rgba(16, 185, 129, 0.3); transition: 0.3s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+                <i class="fas fa-bolt" style="margin-right: 4px;"></i> Support
+            </a>
+            <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Home</a>
+        </div>
+    </nav>
 
-
-
-        <div style="text-align: center; padding: 60px 20px 40px; max-width: 800px; margin: 0 auto;">
+    <div style="text-align: center; padding: 60px 20px 40px; max-width: 800px; margin: 0 auto;">
         <span style="background: rgba(16, 185, 129, 0.1); color: #10B981; padding: 6px 15px; border-radius: 20px; font-size: 13px; font-weight: 600; border: 1px solid rgba(16, 185, 129, 0.3); display: inline-block; margin-bottom: 20px;">
             <i class="fas fa-heart"></i> Made for Everyday Humans
         </span>
@@ -213,7 +196,7 @@
         </p>
     </div>
 
-        <div style="max-width: 1000px; margin: -10px auto 30px; padding: 15px 20px; background: rgba(245, 158, 11, 0.08); border: 1px solid rgba(245, 158, 11, 0.25); border-radius: 15px; text-align: left; box-sizing: border-box;">
+    <div style="max-width: 1000px; margin: -10px auto 30px; padding: 15px 20px; background: rgba(245, 158, 11, 0.08); border: 1px solid rgba(245, 158, 11, 0.25); border-radius: 15px; text-align: left; box-sizing: border-box;">
         <h4 style="color: #f59e0b; margin: 0 0 5px 0; font-size: 14px; display: flex; align-items: center; gap: 8px;">
             <i class="fas fa-exclamation-triangle"></i> SYSTEM STATUS: SANDBOX ALPHA ENVIRONMENT
         </h4>
@@ -221,57 +204,24 @@
             <strong>Earning Restriction:</strong> Phantomix is currently operating in a non-commercial simulation mode. No active financial compensation, reward distribution, or direct monetary earnings are enabled. All interactive modules are for user interface testing and demonstration purposes only.
         </p>
     </div>
-    <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(245, 158, 11, 0.4); border-radius: 12px; padding: 24px; text-align: center; position: relative; overflow: hidden; margin: 20px auto; max-width: 400px; box-shadow: 0 4px 15px rgba(245, 158, 11, 0.1);">
-    
-    <div style="position: absolute; top: 12px; right: 12px; background: linear-gradient(90deg, #f59e0b, #fbbf24); color: #000; font-size: 10px; font-weight: 800; padding: 4px 10px; border-radius: 20px; letter-spacing: 1px;">
-        DIAMONDMAX APP
-    </div>
-    
-    <i class="fas fa-lock" style="font-size: 32px; color: #94a3b8; margin-bottom: 12px; margin-top: 10px;"></i>
-    <h3 style="color: #f3f4f6; font-size: 20px; margin-bottom: 8px;">Quantum Vault</h3>
-    <p style="color: #94a3b8; font-size: 13px; margin-bottom: 16px;">
-        Advanced military-grade encrypted storage. Exclusively available on our upcoming mobile app.
-    </p>
-    
-    <button style="background: rgba(245, 158, 11, 0.1); border: 1px solid #f59e0b; color: #fbbf24; padding: 8px 24px; border-radius: 6px; font-weight: 600; font-size: 14px; cursor: not-allowed; transition: 0.3s;" onmouseover="this.style.background='rgba(245, 158, 11, 0.2)'" onmouseout="this.style.background='rgba(245, 158, 11, 0.1)'">
-        Coming Soon
-    </button>
-</div>
 
     <div class="app-grid">
-        
         
         <div class="app-card card-diamondmax">
             <span class="badge badge-demo" style="background: rgba(16, 185, 129, 0.1); color: #10B981; border-color: #10B981;">
                 <i class="fas fa-satellite-dish"></i> DEMO LIVE
             </span>
-            <img src="https://raw.githubusercontent.com/Phantomix-dev/phantomix-dev.github.io/refs/heads/main/%E2%80%8Bdiamondmax-logo.png" alt="DiamondMax" class="app-logo">
+            <img src="https://raw.githubusercontent.com/Phantomix-dev/phantomix-dev.github.io/refs/heads/main/%E2%80%8Bdiamondmax-logo.png" alt="DiamondMax" class="app-logo" loading="lazy" width="80" height="80">
             <h3 class="app-title">DiamondMax</h3>
             <p class="app-desc">Our flagship reward ecosystem. Complete elite missions and earn real-world rewards safely and instantly.</p>
-            
             <a href="diamondmax-login.html" class="action-btn btn-waitlist" style="background: rgba(14, 165, 233, 0.1); border-color: #0ea5e9; color: #0ea5e9;">
                 Enter Portal 🚀
             </a>
         </div>
 
-        <div style="background: rgba(30, 41, 59, 0.6); border: 1px dashed rgba(14, 165, 233, 0.4); border-radius: 12px; padding: 20px; text-align: center; margin: 40px auto; max-width: 600px; backdrop-filter: blur(10px); box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);">
-    <p style="color: #94a3b8; font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 8px; font-weight: 600;">
-        <i class="fas fa-star" style="color: #f59e0b; margin-right: 4px;"></i> Recommended for Privacy
-    </p>
-    <h3 style="color: #f3f4f6; font-size: 18px; margin-bottom: 12px; font-weight: 700;">
-        Secure your digital footprint from trackers.
-    </h3>
-    <p style="color: #cbd5e1; font-size: 13px; margin-bottom: 18px;">
-        Browse anonymously and unlock restricted content globally with our top-rated VPN partner.
-    </p>
-    <a href="https://go.nordvpn.net/aff_c?offer_id=15&aff_id=152599" target="_blank" style="display: inline-block; background: rgba(14, 165, 233, 0.1); color: #38bdf8; border: 1px solid #0ea5e9; padding: 10px 24px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 14px; transition: 0.3s;" onmouseover="this.style.background='#0ea5e9'; this.style.color='white'" onmouseout="this.style.background='rgba(14, 165, 233, 0.1)'; this.style.color='#38bdf8'">
-        <i class="fas fa-shield-alt" style="margin-right: 6px;"></i> Get 60% Off VPN
-    </a>
-</div>
-
         <div class="app-card card-cipher">
             <span class="badge badge-upcoming"><i class="fas fa-clock"></i> UPCOMING</span>
-            <img src="https://raw.githubusercontent.com/Phantomix-dev/phantomix-dev.github.io/refs/heads/main/%E2%80%8Bwordcipher-logo.png" alt="Word Cipher" class="app-logo">
+            <img src="https://raw.githubusercontent.com/Phantomix-dev/phantomix-dev.github.io/refs/heads/main/%E2%80%8Bwordcipher-logo.png" alt="Word Cipher" class="app-logo" loading="lazy" width="80" height="80">
             <h3 class="app-title">Word Cipher</h3>
             <p class="app-desc">A highly addictive brain-teaser game. Decrypt secret words to prove your intelligence and unlock Founder perks.</p>
             <a href="cipher.html" class="action-btn btn-waitlist">Play Web Demo 🧠</a>
@@ -279,22 +229,24 @@
 
         <div class="app-card card-vault">
             <span class="badge badge-demo"><i class="fas fa-laptop-code"></i> WEB DEMO LIVE</span>
-            <img src="https://raw.githubusercontent.com/Phantomix-dev/phantomix-dev.github.io/refs/heads/main/%E2%80%8Bvault-logo.png" alt="Diamond-Vault" class="app-logo">
+            <img src="https://raw.githubusercontent.com/Phantomix-dev/phantomix-dev.github.io/refs/heads/main/%E2%80%8Bvault-logo.png" alt="Diamond-Vault" class="app-logo" loading="lazy" width="80" height="80">
             <h3 class="app-title">Diamond-Vault</h3>
             <p class="app-desc">App is in development, but you can try our military-grade password generator directly on our website for free.</p>
             <a href="index.html#vault-section" class="action-btn btn-demo">Try Web Demo 💻</a>
         </div>
 
-       <div class="app-card">
+        <div class="app-card">
             <span class="badge" style="background: rgba(16, 185, 129, 0.1); color: #10B981; border-color: #10B981; display: inline-block; margin-bottom: 15px;">
                 <i class="fas fa-comment-slash"></i> SECURE SHARING
             </span>
+            <img src="burner-logo.png" alt="Private Note Sender" class="app-logo" loading="lazy" width="80" height="80">
             <h3 class="app-title">Private Note Sender</h3>
             <p class="app-desc">Send sensitive information (like passwords or bank details) safely. Once the receiver reads the note, it automatically deletes itself forever.</p>
             <a href="burner.html" class="action-btn" style="background: rgba(14, 165, 233, 0.1); border-color: #0ea5e9; color: #0ea5e9;">Use Tool 🚀</a>
         </div>
 
         <div class="app-card">
+            <img src="glitch-logo.png" alt="Glitch Text Generator" class="app-logo" loading="lazy" width="80" height="80">
             <h3 class="app-title">🔠 Glitch Text Generator</h3>
             <p class="app-desc">Convert normal text into corrupted, cyber hacker style typography instantly.</p>
             <a href="glitch.html" class="action-btn btn-green">Open Terminal</a>
@@ -304,6 +256,7 @@
             <span class="badge" style="background: rgba(16, 185, 129, 0.1); color: #10B981; border-color: #10B981; display: inline-block; margin-bottom: 15px;">
                 <i class="fas fa-qrcode"></i> CREATOR TOOL
             </span>
+            <img src="qr-logo.png" alt="Custom QR Studio" class="app-logo" loading="lazy" width="80" height="80">
             <h3 class="app-title">Custom QR Studio</h3>
             <p class="app-desc">Create beautiful, high-quality QR codes for your links, Wi-Fi, or business cards in seconds. No ads, just clean design.</p>
             <a href="qr.html" class="action-btn" style="background: rgba(14, 165, 233, 0.1); border-color: #0ea5e9; color: #0ea5e9;">Use Tool 🚀</a>
@@ -313,12 +266,14 @@
             <span class="badge" style="background: rgba(16, 185, 129, 0.1); color: #10B981; border-color: #10B981; display: inline-block; margin-bottom: 15px;">
                 <i class="fas fa-shield-alt"></i> PRIVACY TOOL
             </span>
+            <img src="stripper-logo.png" alt="Photo Privacy Cleaner" class="app-logo" loading="lazy" width="80" height="80">
             <h3 class="app-title">Photo Privacy Cleaner</h3>
             <p class="app-desc">Remove hidden location (GPS) and camera data from your photos before sharing them on social media. Stay safe online.</p>
             <a href="stripper.html" class="action-btn" style="background: rgba(14, 165, 233, 0.1); border-color: #0ea5e9; color: #0ea5e9;">Use Tool 🚀</a>
         </div>
 
         <div class="app-card">
+            <img src="canvas-logo.png" alt="Code-to-Canvas" class="app-logo" loading="lazy" width="80" height="80">
             <h3 class="app-title">🎨 Code-to-Canvas</h3>
             <p class="app-desc">Convert raw code into beautiful, neon-cyberpunk snippets for sharing on social media.</p>
             <a href="canvas.html" class="action-btn btn-waitlist">Open Studio</a>
@@ -328,6 +283,7 @@
             <span class="badge" style="background: rgba(14, 165, 233, 0.1); color: #0ea5e9; border-color: #0ea5e9; display: inline-block; margin-bottom: 15px;">
                 <i class="fas fa-qrcode"></i> FINANCE UTILITY
             </span>
+            <img src="payment-logo.png" alt="Custom Payment QR" class="app-logo" loading="lazy" width="80" height="80">
             <h3 class="app-title">Custom Payment QR</h3>
             <p class="app-desc">Generate dynamic UPI merchant or personal payment QR codes securely and instantly for smooth transactions.</p>
             <a href="payment-qr-terminal.html" class="action-btn" style="background: rgba(14, 165, 233, 0.1); border-color: #0ea5e9; color: #0ea5e9;">Use Tool 🚀</a>
@@ -337,6 +293,7 @@
             <span class="badge" style="background: rgba(16, 185, 129, 0.1); color: #10B981; border-color: #10B981; display: inline-block; margin-bottom: 15px;">
                 <i class="fas fa-envelope"></i> EVERYDAY UTILITY
             </span>
+            <img src="mail-logo.png" alt="Smart Temp Mail" class="app-logo" loading="lazy" width="80" height="80">
             <h3 class="app-title">Smart Temp Mail</h3>
             <p class="app-desc">Keep your real inbox 100% spam-free. Generate a temporary email address instantly for quick website sign-ups.</p>
             <a href="mail.html" class="action-btn" style="background: rgba(14, 165, 233, 0.1); border-color: #0ea5e9; color: #0ea5e9;">Use Tool 🚀</a>
@@ -346,6 +303,7 @@
             <span class="badge" style="background: rgba(16, 185, 129, 0.1); color: #10B981; border-color: #10B981; display: inline-block; margin-bottom: 15px;">
                 <i class="fas fa-shield-virus"></i> EDUCATION
             </span>
+            <img src="detective-logo.png" alt="Scam Spotter Training" class="app-logo" loading="lazy" width="80" height="80">
             <h3 class="app-title">Scam Spotter Training</h3>
             <p class="app-desc">Learn how to spot fake links and scam emails before they trick you. An interactive quiz to keep you and your family safe online.</p>
             <a href="detective.html" class="action-btn" style="background: rgba(14, 165, 233, 0.1); border-color: #0ea5e9; color: #0ea5e9;">Play & Learn 🚀</a>
@@ -355,21 +313,24 @@
             <span class="badge" style="background: rgba(16, 185, 129, 0.1); color: #10B981; border-color: #10B981; display: inline-block; margin-bottom: 15px;">
                 <i class="fas fa-lock"></i> SECURITY
             </span>
+            <img src="password-logo.png" alt="Password Strength Check" class="app-logo" loading="lazy" width="80" height="80">
             <h3 class="app-title">Password Strength Check</h3>
             <p class="app-desc">Find out how secure your passwords really are. Test them against modern algorithms and learn how to make them stronger.</p>
             <a href="password.html" class="action-btn" style="background: rgba(14, 165, 233, 0.1); border-color: #0ea5e9; color: #0ea5e9;">Use Tool 🚀</a>
         </div>
 
         <div class="app-card">
+            <img src="terminal-logo.png" alt="Linux Terminal Simulator" class="app-logo" loading="lazy" width="80" height="80">
             <h3 class="app-title">🖥️ Linux Terminal Simulator</h3>
             <p class="app-desc">Access the virtual sandbox core. Run network diagnostics, file scans, and interface customization diagnostics.</p>
             <a href="terminal.html" class="action-btn btn-waitlist">Boot Terminal</a>
         </div>
 
-       <div class="app-card">
+        <div class="app-card">
             <span class="badge" style="background: rgba(16, 185, 129, 0.1); color: #10B981; border-color: #10B981; display: inline-block; margin-bottom: 15px;">
                 <i class="fas fa-lock"></i> FUN & SAFE
             </span>
+            <img src="encoder-logo.png" alt="Secure Message Encoder" class="app-logo" loading="lazy" width="80" height="80">
             <h3 class="app-title">Secure Message Encoder</h3>
             <p class="app-desc">Turn your private text into unreadable secret codes before sending them to friends. Only your trusted circle can decode them back.</p>
             <a href="encoder.html" class="action-btn" style="background: rgba(14, 165, 233, 0.1); border-color: #0ea5e9; color: #0ea5e9;">Use Tool 🚀</a>
@@ -379,101 +340,15 @@
             <span class="badge" style="background: rgba(16, 185, 129, 0.1); color: #10B981; border-color: #10B981; display: inline-block; margin-bottom: 15px;">
                 <i class="fas fa-search"></i> PRIVACY CHECK
             </span>
+            <img src="fingerprint-logo.png" alt="Browser Privacy Auditor" class="app-logo" loading="lazy" width="80" height="80">
             <h3 class="app-title">Browser Privacy Auditor</h3>
             <p class="app-desc">Find out exactly what hardware and browser data your phone is silently leaking to websites, and learn how to stop invisible tracking.</p>
             <a href="fingerprint.html" class="action-btn" style="background: rgba(14, 165, 233, 0.1); border-color: #0ea5e9; color: #0ea5e9;">Use Tool 🚀</a>
         </div>
 
     </div>
-    <div style="text-align: center; margin: 40px auto; padding: 20px; max-width: 500px; background: rgba(30, 41, 59, 0.5); border-radius: 12px; border: 1px solid rgba(14, 165, 233, 0.2); backdrop-filter: blur(5px);">
-    <p style="color: #94a3b8; font-size: 15px; margin-bottom: 15px; font-weight: 600;">
-        <i class="fas fa-rocket" style="color: #0ea5e9; margin-right: 6px;"></i> Tell your friends about Phantomix
-    </p>
-
-        
-    <div style="display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
-        <a href="https://api.whatsapp.com/send?text=Check%20out%20Phantomix!%20A%20free%20ecosystem%20of%20cyber%20and%20privacy%20tools%20like%20Burner%20Notes%20and%20Ciphers.%20Zero%20trackers.%20%F0%9F%94%92%E2%9C%A8%20https://phantomix-dev.github.io" target="_blank" style="background: #25D366; color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-size: 14px; font-weight: 600; display: flex; align-items: center; box-shadow: 0 4px 10px rgba(37, 211, 102, 0.3); transition: 0.3s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
-            <i class="fab fa-whatsapp" style="margin-right: 8px; font-size: 18px;"></i> WhatsApp
-        </a>
-        
-        <a href="https://twitter.com/intent/tweet?text=Just%20found%20Phantomix%20-%20an%20awesome%20ecosystem%20of%20free%20cyber%20tools%20for%20privacy!%20%F0%9F%9B%A1%EF%B8%8F%E2%9A%A1&url=https://phantomix-dev.github.io" target="_blank" style="background: #000000; color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none; border: 1px solid #333; font-size: 14px; font-weight: 600; display: flex; align-items: center; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); transition: 0.3s;" onmouseover="this.style.background='#111'; this.style.transform='scale(1.05)'" onmouseout="this.style.background='#000'; this.style.transform='scale(1)'">
-            <i class="fa-brands fa-x-twitter" style="margin-right: 8px; font-size: 18px;"></i> Post
-        </a>
-    </div>
-</div>
 
     <footer class="phantomix-footer">
-        <div class="footer-content">
-            <div class="footer-brand">
-                <h3><i class="fa-solid fa-gem" style="color: #0ea5e9;"></i> Phantomix</h3>
-                <p>Building the future of digital experience. Fast, secure, and premium. Join the revolution with DiamondMax.</p>
-            </div>
-            <div class="footer-social">
-                <h4>Connect</h4>
-               <div class="social">
-            <a href="https://instagram.com/phantomix.in" target="_blank" aria-label="Visit Phantomix Instagram"><i class="fab fa-instagram" aria-hidden="true"></i></a>
-            <a href="https://www.youtube.com/@Phantomix_SP" target="_blank" aria-label="Visit Phantomix YouTube"><i class="fab fa-youtube" aria-hidden="true"></i></a>
-            <a href="https://whatsapp.com/channel/0029VaAQ8ww7dmei9QiQVd2m" target="_blank" aria-label="Join Phantomix WhatsApp"><i class="fab fa-whatsapp" aria-hidden="true"></i></a>
-            <a href="https://t.me/diamondmax_india" target="_blank" aria-label="Join Phantomix Telegram"><i class="fab fa-telegram" aria-hidden="true"></i></a>
-        </div>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2026 Phantomix. All rights reserved.</p>
-            <p>Made with <span style="color: #ef4444; animation: pulse 1.5s infinite;">❤</span> in India by Shrikant Prajapati and Ranjan Gupta</p>
-        </div>
-    </footer>
-    <script>
-        setTimeout(() => {
-            console.clear();
-            console.log(
-                "%c💎 PHANTOMIX ECOSYSTEM", 
-                "color: #0ea5e9; font-size: 30px; font-weight: 900; text-shadow: 0px 0px 15px rgba(14, 165, 233, 0.6); font-family: sans-serif;"
-            );
-            console.log(
-                "%cWait... are you a developer looking under the hood? 👀", 
-                "color: #10B981; font-size: 16px; font-weight: bold; margin-top: 10px;"
-            );
-            console.log(
-                "%cWelcome to the backend of the new web. If you love clean code and privacy, you are in the right place. Enjoy the tools!", 
-                "color: #94A3B8; font-size: 14px; margin-top: 5px; line-height: 1.5;"
-            );
-        }, 1000);
-    </script>
-   <button id="scrollTopBtn" aria-label="Scroll back to top of the page" style="display: none; position: fixed; bottom: 30px; right: 30px; z-index: 999; font-size: 18px; border: none; outline: none; background-color: rgba(14, 165, 233, 0.1); color: #0ea5e9; cursor: pointer; width: 50px; height: 50px; border-radius: 50%; border: 1px solid #0ea5e9; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(14, 165, 233, 0.3); backdrop-filter: blur(5px);">
-        <i class="fas fa-arrow-up" aria-hidden="true"></i>
-    </button>
-
-    <script>
-        // Button Logic
-        let mybutton = document.getElementById("scrollTopBtn");
-
-        // Scroll karne par button dikhao
-        window.onscroll = function() {
-            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
-                mybutton.style.display = "block";
-            } else {
-                mybutton.style.display = "none";
-            }
-        };
-
-        // Click karne par smooth scroll to top
-        mybutton.addEventListener("click", function() {
-            window.scrollTo({
-                top: 0,
-                behavior: "smooth"
-            });
-        });
-
-        // Hover Effect
-        mybutton.addEventListener("mouseover", function() {
-            this.style.backgroundColor = "#0ea5e9";
-            this.style.color = "white";
-        });
-        mybutton.addEventListener("mouseout", function() {
-            this.style.backgroundColor = "rgba(14, 165, 233, 0.1)";
-            this.style.color = "#0ea5e9";
-        });
-    </script>
+        </footer>
 </body>
 </html>
