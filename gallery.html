@@ -73,36 +73,49 @@
             background: #0ea5e9; color: #ffffff; border-color: #0ea5e9; box-shadow: 0 0 15px rgba(14, 165, 233, 0.4);
         }
 
-        /* Gallery Grid Layout */
+        /* 🚀 MASONRY FEED LAYOUT (Instagram/Pinterest Style) */
         .gallery-grid {
-            display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 25px; max-width: 1200px; margin: 0 auto 60px; padding: 0 20px; box-sizing: border-box;
+            column-count: 3; /* Desktop par 3 columns */
+            column-gap: 25px;
+            max-width: 1200px; margin: 0 auto 60px; padding: 0 20px;
+            box-sizing: border-box;
         }
+        
         .gallery-item {
             background: rgba(30, 41, 59, 0.6); border: 1px solid rgba(51, 65, 85, 0.5);
             border-radius: 14px; overflow: hidden; transition: all 0.4s ease;
-            display: flex; flex-direction: column; cursor: pointer; text-decoration: none;
+            display: block; 
+            break-inside: avoid; /* Ensure card doesn't cut in half between columns */
+            margin-bottom: 25px;
         }
-        .gallery-item:hover { transform: translateY(-6px); border-color: #0ea5e9; box-shadow: 0 10px 30px rgba(14, 165, 233, 0.2); }
-        .gallery-img-wrapper { width: 100%; height: 200px; overflow: hidden; background: #020617; position: relative; }
-        .gallery-img-wrapper img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
-        .gallery-item:hover .gallery-img-wrapper img { transform: scale(1.08); }
+        .gallery-item:hover { border-color: #0ea5e9; box-shadow: 0 10px 30px rgba(14, 165, 233, 0.2); }
         
-        .gallery-info { padding: 18px; text-align: left; display: flex; flex-direction: column; flex-grow: 1; }
-        .gallery-tag { font-size: 10px; font-weight: 700; color: #0ea5e9; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+        /* Auto-Resizing Image Wrapper */
+        .gallery-img-wrapper { width: 100%; height: auto; background: #020617; }
+        .gallery-img-wrapper img { width: 100%; height: auto; display: block; }
+        
+        .gallery-info { padding: 18px; text-align: left; }
+        .gallery-tag { font-size: 10px; font-weight: 700; color: #0ea5e9; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; display: block; }
         .gallery-title { font-size: 16px; color: #f8fafc; margin: 0 0 6px 0; font-weight: 600; }
         .gallery-desc { color: #94a3b8; font-size: 12px; margin: 0; line-height: 1.5; }
 
         /* Footer */
         .phantomix-footer { background: #020617; border-top: 1px solid rgba(14, 165, 233, 0.2); padding: 30px 5%; margin-top: auto; font-size: 13px; color: #64748b; text-align: center; }
 
-        /* Mobile Layout */
-        @media (max-width: 768px) {
+        /* 📱 Responsive Mobile Feed (1 Column like Instagram) */
+        @media (max-width: 900px) {
+            .gallery-grid { column-count: 2; }
+        }
+        @media (max-width: 600px) {
             body { padding-top: 80px; }
             .phantomix-navbar { height: 60px; padding: 0 15px; }
             .nav-logo { font-size: 16px; }
             .gallery-header h1 { font-size: 26px; }
-            .gallery-grid { grid-template-columns: 1fr; gap: 18px; padding: 0 15px; }
+            
+            /* Pure 1-column vertical feed for mobile */
+            .gallery-grid { column-count: 1; padding: 0 15px; }
+            .gallery-item { margin-bottom: 20px; }
+            
             .filter-container { gap: 8px; }
             .filter-btn { padding: 6px 14px; font-size: 12px; }
         }
@@ -164,24 +177,21 @@
                 : allGalleryData.filter(item => item.category === filter);
 
             if(filteredItems.length === 0) {
-                grid.innerHTML = "<p style='color:#94a3b8; grid-column: 1/-1;'>No media found in this category.</p>";
+                grid.innerHTML = "<p style='color:#94a3b8;'>No media found in this category.</p>";
                 return;
             }
 
             filteredItems.forEach(item => {
-                // Yahan a tag use kiya hai jisse photo directly new tab (_blank) me khulegi
-                const card = document.createElement('a');
+                // Yahan a tag hata kar wapas div kar diya hai kyunki ab click ki zaroorat nahi
+                const card = document.createElement('div');
                 card.className = 'gallery-item';
-                card.href = item.image_url;
-                card.target = '_blank'; // Opens in new tab
-                card.rel = 'noopener noreferrer'; // Security best practice
 
                 card.innerHTML = `
                     <div class="gallery-img-wrapper">
                         <img src="${item.image_url}" alt="${item.title}" loading="lazy">
                     </div>
                     <div class="gallery-info">
-                        <span class="gallery-tag"><i class="fas fa-external-link-alt"></i> ${item.category.toUpperCase()}</span>
+                        <span class="gallery-tag"><i class="fas fa-layer-group"></i> ${item.category.toUpperCase()}</span>
                         <h3 class="gallery-title">${item.title}</h3>
                         <p class="gallery-desc">${item.description || ''}</p>
                     </div>
