@@ -126,7 +126,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     
     <script>
-        // 1. Supabase Connection Set Karein (Clash Fix)
+    // 1. Supabase Connection Set Karein (Clash Fix)
 const url = "https://pekmsttmosuzcvielala.supabase.co";
 const key = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBla21zdHRtb3N1emN2aWVsYWxhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODM0MjY4NDUsImV4cCI6MjA5OTAwMjg0NX0.D0akjMO2d5sYhgbSy8IIFJT4sPHGO_Lm9r1YMWM_uUc";
 
@@ -138,7 +138,7 @@ async function createNote() {
     const message = document.getElementById('secret-message').value;
     
     if (!message) {
-        alert("Pehle koi secret message toh likho, CEO Sahab!");
+        alert("Please type your message first!");
         return;
     }
 
@@ -155,9 +155,15 @@ async function createNote() {
         const noteId = data[0].id;
         const link = window.location.origin + window.location.pathname + "?note=" + noteId;
         
+        // YAHAN COPY AUR SHARE KE BUTTONS ADD KIYE GAYE HAIN
         document.getElementById('link-box').innerHTML = `
-            Transmission Ready! Send this link: <br><br>
-            <a href="${link}" target="_blank" style="color:#00ff00; text-decoration:underline;">${link}</a>
+            <p>Transmission Ready! Send this link:</p>
+            <input type="text" id="generatedLink" value="${link}" readonly style="width: 100%; padding: 8px; margin-bottom: 10px; background: #222; color: #00ff00; border: 1px solid #00ff00; border-radius: 4px;">
+            <br>
+            <div style="display: flex; gap: 10px; margin-top: 10px;">
+                <button onclick="copyLink()" id="copyBtn" style="padding: 8px 15px; cursor: pointer; background-color: #007bff; color: white; border: none; border-radius: 4px; font-weight: bold;">Copy Link</button>
+                <button onclick="shareLink()" id="shareBtn" style="padding: 8px 15px; cursor: pointer; background-color: #28a745; color: white; border: none; border-radius: 4px; font-weight: bold;">Share Link</button>
+            </div>
         `;
         document.getElementById('secret-message').value = "";
     }
@@ -193,8 +199,41 @@ async function checkUrlForNote() {
     }
 }
 
-window.onload = checkUrlForNote;
+// 4. Copy aur Share Functions (Naye Add Kiye Gaye Hain)
+function copyLink() {
+    const linkInput = document.getElementById("generatedLink");
+    navigator.clipboard.writeText(linkInput.value).then(() => {
+        const copyBtn = document.getElementById("copyBtn");
+        copyBtn.innerText = "Copied! ✔";
+        copyBtn.style.backgroundColor = "#20c997";
+        setTimeout(() => {
+            copyBtn.innerText = "Copy Link";
+            copyBtn.style.backgroundColor = "#007bff";
+        }, 2000);
+    }).catch(err => {
+        console.error("Error in copying text: ", err);
+        alert("Copy fail ho gaya, kripya manually copy karein.");
+    });
+}
 
+function shareLink() {
+    const linkInput = document.getElementById("generatedLink").value;
+    if (navigator.share) {
+        navigator.share({
+            title: 'Secret Burner Note',
+            text: 'I sent you a self-destructing secret message. Open it carefully:',
+            url: linkInput
+        }).then(() => {
+            console.log('Successfully shared');
+        }).catch((error) => {
+            console.log('Error sharing', error);
+        });
+    } else {
+        alert("Aapka browser direct share support nahi karta. Kripya link copy karke share karein.");
+    }
+}
+
+window.onload = checkUrlForNote;
     </script>
     <footer class="phantomix-footer">
         <div class="footer-content">
