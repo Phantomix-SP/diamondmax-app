@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phantom-Wormhole | Secure P2P</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://unpkg.com/peerjs@1.5.2/dist/peerjs.min.js"></script>
+    
+    <style>
+        ::selection { background-color: #8b5cf6; color: #ffffff; }
+        body {
+            background-color: #020617; color: #ffffff;
+            font-family: 'Poppins', sans-serif;
+            margin: 0; padding: 20px;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            min-height: 95vh; overflow-x: hidden;
+        }
+
+        /* Background Animation */
+        .wormhole-bg {
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 600px; height: 600px; background: radial-gradient(circle, rgba(139,92,246,0.1) 0%, rgba(2,6,23,0) 70%);
+            border-radius: 50%; z-index: -1; animation: pulse 4s infinite alternate;
+        }
+        @keyframes pulse { 0% { transform: translate(-50%, -50%) scale(1); } 100% { transform: translate(-50%, -50%) scale(1.2); } }
+
+        .app-container {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 16px; padding: 30px; width: 100%; max-width: 450px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5); backdrop-filter: blur(10px);
+            text-align: center;
+        }
+
+        h2 { margin: 0 0 10px 0; color: #f8fafc; font-size: 24px; }
+        h2 span { color: #8b5cf6; }
+        p.subtitle { color: #94a3b8; font-size: 13px; margin-bottom: 25px; }
+
+        .code-display {
+            background: #020617; border: 1px dashed #8b5cf6; padding: 15px;
+            border-radius: 8px; font-family: 'JetBrains Mono', monospace;
+            font-size: 20px; color: #8b5cf6; font-weight: bold; margin-bottom: 20px;
+            letter-spacing: 2px;
+        }
+
+        .input-group { margin-bottom: 20px; text-align: left; }
+        label { font-size: 12px; color: #cbd5e1; font-weight: 600; text-transform: uppercase; }
+        input[type="text"] {
+            width: 100%; padding: 12px; margin-top: 8px; background: #020617;
+            border: 1px solid #334155; color: #fff; border-radius: 8px;
+            font-family: 'JetBrains Mono', monospace; box-sizing: border-box; text-align: center;
+        }
+
+        .action-btn {
+            width: 100%; padding: 14px; background: linear-gradient(135deg, #8b5cf6, #6d28d9);
+            color: #fff; border: none; border-radius: 8px; font-size: 15px; font-weight: 700;
+            cursor: pointer; transition: 0.3s;
+        }
+        .action-btn:hover { box-shadow: 0 0 20px rgba(139, 92, 246, 0.4); transform: translateY(-2px); }
+        .action-btn:disabled { background: #334155; color: #64748b; cursor: not-allowed; box-shadow: none; transform: none; }
+
+        /* Transfer Section */
+        #transferSection { display: none; margin-top: 20px; border-top: 1px solid #334155; padding-top: 20px; }
+        .file-upload-wrapper {
+            background: #020617; border: 1px dashed #334155; padding: 20px;
+            border-radius: 8px; margin-bottom: 15px;
+        }
+        input[type="file"] { color: #94a3b8; font-size: 12px; }
+        
+        .status-msg { margin-top: 15px; font-size: 13px; font-weight: 600; color: #10b981; }
+        .download-box { margin-top: 15px; }
+        .download-box a { color: #8b5cf6; text-decoration: none; font-weight: bold; font-size: 14px; }
+        .download-box a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+
+    <div class="wormhole-bg"></div>
+
+    <div class="app-container">
+        <h2>Phantom <span>Wormhole</span></h2>
+        <p class="subtitle"><i class="fas fa-shield-alt"></i> Zero-Server Peer-to-Peer Transfer</p>
+
+        <div id="connectSection">
+            <p style="font-size: 12px; color: #94a3b8; text-align: left; margin: 0 0 5px 0;">Your Device ID:</p>
+            <div class="code-display" id="myPeerId">Generating...</div>
+
+            <div class="input-group">
+                <label>Connect to Device ID</label>
+                <input type="text" id="targetPeerId" placeholder="Paste ID here...">
+            </div>
+
+            <button class="action-btn" id="connectBtn" onclick="connectToPeer()"><i class="fas fa-link"></i> Establish Wormhole</button>
+            <div id="connStatus" class="status-msg" style="color: #0ea5e9;"></div>
+        </div>
+
+        <div id="transferSection">
+            <h3 style="font-size: 16px; margin: 0 0 15px 0; color: #10b981;"><i class="fas fa-check-circle"></i> Wormhole Connected!</h3>
+            
+            <div class="file-upload-wrapper">
+                <input type="file" id="fileInput">
+            </div>
+            
+            <button class="action-btn" onclick="sendFile()"><i class="fas fa-paper-plane"></i> Send File Securely</button>
+            
+            <div id="transferStatus" class="status-msg"></div>
+            
+            <div class="download-box" id="downloadArea"></div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize PeerJS
+        const peer = new Peer();
+        let conn;
+
+        // Generate ID
+        peer.on('open', (id) => {
+            document.getElementById('myPeerId').innerText = id;
+        });
+
+        // Listen for incoming connection
+        peer.on('connection', (connection) => {
+            conn = connection;
+            setupConnection();
+        });
+
+        // Connect to another peer
+        function connectToPeer() {
+            const targetId = document.getElementById('targetPeerId').value.trim();
+            if (!targetId) { alert("Enter a valid Device ID"); return; }
+            
+            document.getElementById('connStatus').innerText = "Initiating connection...";
+            conn = peer.connect(targetId);
+            conn.on('open', () => {
+                setupConnection();
+            });
+        }
+
+        // Setup successful connection UI
+        function setupConnection() {
+            document.getElementById('connectSection').style.display = 'none';
+            document.getElementById('transferSection').style.display = 'block';
+
+            // Listen for incoming data (files)
+            conn.on('data', (data) => {
+                if(data.file && data.filename) {
+                    receiveFile(data.file, data.filename, data.filetype);
+                }
+            });
+        }
+
+        // Send File Logic
+        function sendFile() {
+            const fileInput = document.getElementById('fileInput');
+            const file = fileInput.files[0];
+            const status = document.getElementById('transferStatus');
+
+            if (!file) { alert("Please select a file first."); return; }
+
+            status.style.color = "#0ea5e9";
+            status.innerText = "Encrypting & Sending via Wormhole...";
+
+            // Send via WebRTC DataChannel
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                const arrayBuffer = event.target.result;
+                conn.send({
+                    file: arrayBuffer,
+                    filename: file.name,
+                    filetype: file.type
+                });
+                status.style.color = "#10b981";
+                status.innerText = "File transmitted successfully! 🚀";
+            };
+            reader.readAsArrayBuffer(file);
+        }
+
+        // Receive File Logic
+        function receiveFile(arrayBuffer, filename, filetype) {
+            const status = document.getElementById('transferStatus');
+            const downloadArea = document.getElementById('downloadArea');
+            
+            status.style.color = "#10b981";
+            status.innerText = "Incoming file received! 📦";
+
+            const blob = new Blob([arrayBuffer], { type: filetype });
+            const url = URL.createObjectURL(blob);
+
+            downloadArea.innerHTML = `
+                <div style="background: rgba(16, 185, 129, 0.1); padding: 15px; border-radius: 8px; border: 1px solid rgba(16, 185, 129, 0.3);">
+                    <p style="margin: 0 0 10px 0; font-size: 13px; color: #cbd5e1;">Received: <strong>${filename}</strong></p>
+                    <a href="${url}" download="${filename}" class="action-btn" style="display:inline-block; padding: 10px; background: #10b981;"><i class="fas fa-download"></i> Save to Device</a>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>
