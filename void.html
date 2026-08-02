@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Void | Phantomix</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        ::selection { background: #ef4444; color: #fff; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+        
+        body { 
+            background-color: #020617; 
+            color: #cbd5e1; 
+            font-family: 'JetBrains Mono', monospace; 
+            margin: 0; 
+            padding: 40px 10%; 
+            display: flex; 
+            flex-direction: column; 
+            height: 100vh; 
+            box-sizing: border-box; 
+            overflow: hidden; 
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px dashed #334155;
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+        }
+
+        .brand { color: #64748b; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; }
+        .brand span { color: #0ea5e9; font-weight: bold; }
+        
+        h1 { color: #f8fafc; margin: 0; font-size: 28px; text-transform: uppercase; letter-spacing: 4px; }
+        
+        .warning-box {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #ef4444;
+            padding: 10px 15px;
+            font-size: 12px;
+            font-weight: bold;
+            border-radius: 6px;
+            text-transform: uppercase;
+        }
+
+        .status-indicator { font-weight: bold; font-size: 14px; transition: color 0.3s ease; }
+
+        textarea { 
+            flex-grow: 1; 
+            background: transparent; 
+            border: none; 
+            color: #f8fafc; 
+            font-family: inherit; 
+            font-size: 18px; 
+            line-height: 1.6;
+            outline: none; 
+            resize: none; 
+            transition: color 1.5s ease; 
+            width: 100%; 
+        }
+        
+        textarea::placeholder { color: #334155; }
+        
+        /* The Danger Phase */
+        .danger-mode { color: #ef4444 !important; text-shadow: 0 0 10px rgba(239,68,68,0.5); }
+        
+        .word-count { text-align: right; font-size: 12px; color: #64748b; margin-top: 10px; }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div>
+            <div class="brand">Built by <span>Phantomix</span></div>
+            <h1>The Void</h1>
+        </div>
+        <div class="warning-box">
+            ⚠️ WARNING: KEEP TYPING.<br>STOPPING FOR 15 SECONDS WILL PERMANENTLY DESTROY YOUR TEXT.
+        </div>
+    </div>
+
+    <div id="status" class="status-indicator" style="color: #64748b;">WAITING FOR INPUT...</div>
+    
+    <textarea id="editor" placeholder="Start typing your ideas... Do not stop."></textarea>
+    
+    <div id="wordCount" class="word-count">Words: 0</div>
+
+    <script>
+        const editor = document.getElementById('editor');
+        const status = document.getElementById('status');
+        const wordCountDisplay = document.getElementById('wordCount');
+        
+        let warningTimer;
+        let destroyTimer;
+
+        // Count words
+        function updateWordCount() {
+            const text = editor.value.trim();
+            const words = text === "" ? 0 : text.split(/\s+/).length;
+            wordCountDisplay.innerText = `Words: ${words}`;
+        }
+
+        // Timer Logic
+        function resetTimers() {
+            clearTimeout(warningTimer);
+            clearTimeout(destroyTimer);
+            
+            editor.classList.remove('danger-mode');
+            
+            if (editor.value.trim() !== "") {
+                status.innerText = "🟢 FLOW STATE ACTIVE";
+                status.style.color = "#10b981";
+
+                // 7 seconds of inactivity -> Warning
+                warningTimer = setTimeout(() => {
+                    editor.classList.add('danger-mode');
+                    status.innerText = "🔴 CRITICAL: TYPE NOW OR LOSE EVERYTHING!";
+                    status.style.color = "#ef4444";
+                }, 7000); 
+
+                // 15 seconds of inactivity -> Boom!
+                destroyTimer = setTimeout(() => {
+                    editor.value = "";
+                    editor.classList.remove('danger-mode');
+                    status.innerText = "💀 DATA DESTROYED. START OVER.";
+                    status.style.color = "#64748b";
+                    updateWordCount();
+                }, 15000);
+            } else {
+                status.innerText = "WAITING FOR INPUT...";
+                status.style.color = "#64748b";
+            }
+            
+            updateWordCount();
+        }
+
+        editor.addEventListener('input', resetTimers);
+    </script>
+
+</body>
+</html>
