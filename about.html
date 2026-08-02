@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Us | Phantomix Ecosystem</title>
+    <title>About Phantomix | The Digital Ecosystem</title>
     
     <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/phantomix-dev/phantomix-dev.github.io/main/assets/favicon.png">
-    <meta name="description" content="Learn about Phantomix, our vision, and the leadership team building the future of zero-server SaaS ecosystems.">
+    <meta name="description" content="Discover the story behind Phantomix. We build zero-server, ad-free, and privacy-first web utilities for the modern digital era.">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -63,85 +63,60 @@
         .nav-btn:hover { background: #0ea5e9; color: white; box-shadow: 0 0 15px rgba(14, 165, 233, 0.4); }
 
         /* 📄 ABOUT CONTAINER */
-        .main-wrapper { flex-grow: 1; display: flex; justify-content: center; padding: 40px 20px; }
-        
-        .about-container {
-            max-width: 1000px; width: 100%;
-        }
+        .main-wrapper { flex-grow: 1; display: flex; justify-content: center; padding: 50px 20px; }
+        .about-container { max-width: 900px; width: 100%; }
 
         /* Hero Section */
-        .hero-section {
+        .hero-section { text-align: center; margin-bottom: 60px; }
+        .hero-section h1 { font-size: 46px; color: #ffffff; margin: 0 0 15px 0; letter-spacing: -1px; line-height: 1.2; }
+        .hero-section h1 span { color: #0ea5e9; }
+        .hero-section p { font-size: 18px; color: #94a3b8; margin: 0 auto; line-height: 1.6; }
+
+        /* Text Blocks */
+        .text-block { background: rgba(15, 23, 42, 0.4); padding: 40px; border-radius: 16px; border: 1px solid rgba(51, 65, 85, 0.5); margin-bottom: 40px; line-height: 1.8; font-size: 16px; }
+        .text-block h2 { color: #f8fafc; font-size: 28px; margin-top: 0; margin-bottom: 20px; display: flex; align-items: center; gap: 12px; }
+        .text-block h2 i { color: #0ea5e9; font-size: 24px; }
+        .text-block p { margin-bottom: 20px; }
+        .text-block p:last-child { margin-bottom: 0; }
+
+        /* Philosophy Grid */
+        .philosophy-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-bottom: 50px; }
+        .phil-card { background: rgba(15, 23, 42, 0.6); padding: 30px; border-radius: 16px; border: 1px solid rgba(14, 165, 233, 0.2); transition: 0.3s; }
+        .phil-card:hover { border-color: #0ea5e9; background: rgba(15, 23, 42, 0.9); box-shadow: 0 10px 30px rgba(0,0,0,0.3); transform: translateY(-5px); }
+        .phil-card i { font-size: 28px; color: #0ea5e9; margin-bottom: 15px; }
+        .phil-card h3 { color: #f8fafc; font-size: 20px; margin: 0 0 10px 0; }
+        .phil-card p { font-size: 14px; line-height: 1.7; margin: 0; color: #94a3b8; }
+
+        /* DiamondMax Highlight */
+        .diamondmax-highlight {
+            background: linear-gradient(135deg, rgba(14, 165, 233, 0.1), rgba(59, 130, 246, 0.05));
+            padding: 40px; border-radius: 16px; border: 1px dashed #0ea5e9;
             text-align: center; margin-bottom: 50px;
         }
-        .hero-section h1 { font-size: 42px; color: #ffffff; margin: 0 0 15px 0; letter-spacing: -1px; }
-        .hero-section h1 span { color: #0ea5e9; }
-        .hero-section p { font-size: 18px; color: #94a3b8; max-width: 700px; margin: 0 auto; line-height: 1.6; }
+        .diamondmax-highlight h2 { color: #ffffff; font-size: 32px; margin: 0 0 15px 0; }
+        .diamondmax-highlight p { font-size: 16px; color: #cbd5e1; max-width: 700px; margin: 0 auto 25px auto; line-height: 1.8; }
+        .launch-badge { display: inline-block; background: #0ea5e9; color: white; padding: 8px 20px; border-radius: 30px; font-weight: 700; font-size: 14px; letter-spacing: 1px; }
 
-        /* Grid Sections: Mission & Vision */
-        .mission-vision-grid {
-            display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-bottom: 50px;
-        }
-        .mv-card {
-            background: rgba(15, 23, 42, 0.6); padding: 30px; border-radius: 16px;
-            border: 1px solid rgba(14, 165, 233, 0.2); transition: 0.3s;
-        }
-        .mv-card:hover { border-color: #0ea5e9; background: rgba(15, 23, 42, 0.9); box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
-        .mv-card i { font-size: 32px; color: #0ea5e9; margin-bottom: 20px; }
-        .mv-card h3 { color: #f8fafc; font-size: 22px; margin: 0 0 10px 0; }
-        .mv-card p { font-size: 15px; line-height: 1.7; margin: 0; }
-
-        /* Core Values */
-        .values-section {
-            background: rgba(14, 165, 233, 0.05); padding: 40px; border-radius: 16px;
-            border: 1px dashed rgba(14, 165, 233, 0.3); margin-bottom: 50px; text-align: center;
-        }
-        .values-section h3 { color: #ffffff; font-size: 26px; margin: 0 0 25px 0; }
-        .skills-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
-        .skill-tag {
-            background: rgba(14, 165, 233, 0.1); color: #0ea5e9;
-            padding: 10px 22px; border-radius: 30px; font-size: 14px; font-weight: 600;
-            border: 1px solid rgba(14, 165, 233, 0.3); transition: 0.3s;
-        }
-        .skill-tag:hover { background: #0ea5e9; color: #fff; transform: translateY(-3px); box-shadow: 0 5px 15px rgba(14, 165, 233, 0.4); }
-
-        /* Leadership Team */
-        .team-section { margin-bottom: 40px; }
-        .section-title { text-align: center; font-size: 32px; color: #ffffff; margin-bottom: 40px; }
-        .team-grid {
-            display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px;
-        }
-        .team-card {
-            background: rgba(15, 23, 42, 0.8); border: 1px solid #334155; border-radius: 16px;
-            padding: 30px 20px; text-align: center; transition: all 0.4s ease;
-        }
-        .team-card:hover { border-color: #0ea5e9; transform: translateY(-10px); box-shadow: 0 15px 40px rgba(14, 165, 233, 0.15); }
-        .team-avatar {
-            width: 80px; height: 80px; background: linear-gradient(135deg, #0ea5e9, #3b82f6);
-            border-radius: 50%; display: flex; justify-content: center; align-items: center;
-            margin: 0 auto 20px auto; color: white; font-size: 32px; font-weight: bold;
-        }
-        .team-card h4 { color: #f8fafc; font-size: 20px; margin: 0 0 5px 0; }
-        .team-card .role { color: #0ea5e9; font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 15px; }
-        .team-card p { font-size: 14px; color: #94a3b8; line-height: 1.6; margin: 0; }
+        /* Team Link Section */
+        .team-link-section { text-align: center; margin-top: 20px; margin-bottom: 40px; padding: 40px; background: rgba(15, 23, 42, 0.4); border-radius: 16px; border: 1px solid rgba(51, 65, 85, 0.5); }
+        .team-link-section h3 { color: #f8fafc; font-size: 24px; margin: 0 0 15px 0; }
+        .team-link-section p { color: #94a3b8; margin: 0 0 25px 0; }
+        .action-btn { display: inline-block; padding: 14px 30px; background: linear-gradient(135deg, #0ea5e9, #3b82f6); color: #fff; text-decoration: none; border-radius: 8px; font-size: 16px; font-weight: 700; transition: 0.3s; }
+        .action-btn:hover { box-shadow: 0 0 20px rgba(14, 165, 233, 0.4); transform: translateY(-2px); }
 
         /* 🛑 FOOTER */
-        .phantomix-footer {
-            background: #020617; border-top: 1px solid rgba(14, 165, 233, 0.2);
-            padding: 30px 5%; margin-top: auto; font-size: 13px; color: #64748b;
-            text-align: center; width: 100%; box-sizing: border-box;
-        }
+        .phantomix-footer { background: #020617; border-top: 1px solid rgba(14, 165, 233, 0.2); padding: 30px 5%; margin-top: auto; font-size: 13px; color: #64748b; text-align: center; width: 100%; box-sizing: border-box; }
 
         /* Mobile Responsiveness */
-        @media (max-width: 900px) {
-            .mission-vision-grid { grid-template-columns: 1fr; }
-            .team-grid { grid-template-columns: 1fr 1fr; }
+        @media (max-width: 768px) {
+            .philosophy-grid { grid-template-columns: 1fr; }
+            .hero-section h1 { font-size: 36px; }
         }
         @media (max-width: 600px) {
             .phantomix-navbar { padding: 0 15px; }
             .nav-logo { font-size: 16px; }
             .nav-btn { padding: 6px 12px; font-size: 12px; }
-            .hero-section h1 { font-size: 32px; }
-            .team-grid { grid-template-columns: 1fr; }
+            .text-block, .diamondmax-highlight { padding: 25px; }
         }
     </style>
 </head>
@@ -150,8 +125,8 @@
     <nav class="phantomix-navbar">
         <a href="index.html" class="nav-logo"><i class="fa-solid fa-gem" style="color: #0ea5e9; margin-right: 8px;"></i> Phantomix</a>
         <div class="nav-actions">
+            <a href="team.html" class="nav-btn" style="color: #cbd5e1; border-color: #334155; background: transparent;"><i class="fas fa-users"></i> Team</a>
             <a href="apps.html" class="nav-btn"><i class="fas fa-th-large"></i> App Hub</a>
-            <a href="index.html" class="nav-btn"><i class="fas fa-arrow-left"></i> Home</a>
         </div>
     </nav>
 
@@ -160,66 +135,61 @@
             
             <div class="hero-section">
                 <h1>Redefining the <span>Digital Ecosystem</span></h1>
-                <p>We are a forward-thinking tech startup based in India, dedicated to building modern, scalable, and beautifully designed digital utilities without compromising user privacy.</p>
+                <p>Welcome to Phantomix. We are engineering the next generation of web utilities focused entirely on user privacy, raw performance, and zero-server architecture.</p>
             </div>
 
-            <div class="mission-vision-grid">
-                <div class="mv-card">
-                    <i class="fas fa-rocket"></i>
-                    <h3>Our Mission</h3>
-                    <p>To transform complex technical workflows into elegant, lightning-fast, and secure web applications. We believe high-tier productivity tools should be accessible, ad-free, and seamlessly integrated.</p>
+            <div class="text-block">
+                <h2><i class="fas fa-bolt"></i> The Phantomix Origin</h2>
+                <p>The modern web is broken. Simple tasks like compressing a PDF, sharing a file, or formatting code shouldn't require you to upload your personal data to unknown third-party servers. Users are tired of aggressive advertisements, paywalls, and hidden data tracking in everyday utilities.</p>
+                <p>That is exactly why <strong>Phantomix</strong> was born. We are a forward-thinking tech startup based in India with a single radical idea: <em>What if we build hardcore, scalable digital tools that run entirely inside the user's browser?</em> By leveraging advanced frontend architectures and WebRTC, we bring the processing power directly to your device.</p>
+            </div>
+
+            <div class="philosophy-grid">
+                <div class="phil-card">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>Zero-Server Privacy</h3>
+                    <p>Your data is yours. Our flagship tools like Phantom-Wormhole and Phantom Shrink process everything locally. No cloud uploads, no database storage, no tracking.</p>
                 </div>
-                <div class="mv-card">
-                    <i class="fas fa-eye"></i>
-                    <h3>Our Vision (DiamondMax)</h3>
-                    <p>Engineering the future with our upcoming flagship ecosystem, <strong>DiamondMax</strong>. Designed with a sleek premium UI and powered by robust security architecture, aiming for an exclusive global launch.</p>
+                <div class="phil-card">
+                    <i class="fas fa-ban"></i>
+                    <h3>100% Ad-Free</h3>
+                    <p>Clutter ruins the user experience. The Phantomix ecosystem is strictly ad-free, ensuring you stay in the flow-state without visual distractions.</p>
+                </div>
+                <div class="phil-card">
+                    <i class="fas fa-palette"></i>
+                    <h3>Premium Aesthetics</h3>
+                    <p>Utility doesn't have to be ugly. We believe in pixel-perfect design. From smooth glassmorphism to dynamic scaling, our UI is crafted for professionals.</p>
+                </div>
+                <div class="phil-card">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <h3>Lightning Fast</h3>
+                    <p>By eliminating server round-trips, our apps execute at the speed of your device. Instant compression, real-time editing, and immediate peer-to-peer transfers.</p>
                 </div>
             </div>
 
-            <div class="values-section">
-                <h3>Our Core DNA</h3>
-                <div class="skills-container">
-                    <span class="skill-tag">Zero-Server Architecture</span>
-                    <span class="skill-tag">Premium UI/UX Design</span>
-                    <span class="skill-tag">WebRTC Security</span>
-                    <span class="skill-tag">Data Privacy First</span>
-                    <span class="skill-tag">Tech Entrepreneurship</span>
-                </div>
+            <div class="diamondmax-highlight">
+                <h2><i class="fa-solid fa-gem" style="color: #0ea5e9;"></i> Project DiamondMax</h2>
+                <p>While Phantomix provides the foundational utilities, we are silently engineering our ultimate masterpiece: <strong>DiamondMax</strong>. Envisioned as a highly secure, premium ecosystem powered by advanced encryption and robust backend architectures (including secure PostgreSQL vaults), DiamondMax is being built to completely revolutionize how professionals interact with digital assets.</p>
+                <div class="launch-badge">Global Launch Targeted: 2028</div>
             </div>
 
-            <div class="team-section">
-                <h2 class="section-title">The Leadership Team</h2>
-                <div class="team-grid">
-                    
-                    <div class="team-card">
-                        <div class="team-avatar">S</div>
-                        <h4>Shrikant Prajapati</h4>
-                        <div class="role">Founder & CEO</div>
-                        <p>The visionary driving Phantomix. Expert in tech entrepreneurship, product strategy, and scaling digital ecosystems for the modern web.</p>
-                    </div>
+            <div class="text-block">
+                <h2><i class="fas fa-code"></i> Our Technical Edge</h2>
+                <p>We don't just use standard web development practices; we push the boundaries of what browsers can do. The Phantomix ecosystem utilizes cutting-edge web technologies, including native WebRTC for direct peer-to-peer data channels, advanced Canvas APIs for heavy local image/PDF processing, and highly optimized JavaScript execution paradigms.</p>
+                <p>Every line of code is written with scalability and security in mind, ensuring that whether you are on a high-end desktop or a mobile device, the Phantomix experience remains uncompromising.</p>
+            </div>
 
-                    <div class="team-card">
-                        <div class="team-avatar">R</div>
-                        <h4>Ranjan Gupta</h4>
-                        <div class="role">Co-Founder & Lead Architect</div>
-                        <p>The technical mastermind behind the code. Specializes in robust backend architecture, WebRTC, and executing zero-server solutions.</p>
-                    </div>
-
-                    <div class="team-card">
-                        <div class="team-avatar">N</div>
-                        <h4>Nany Raghav</h4>
-                        <div class="role">VP of Brand Experience</div>
-                        <p>The creative force ensuring every pixel matters. Leads UI/UX aesthetics, user journeys, and the overall premium feel of the Phantomix brand.</p>
-                    </div>
-
-                </div>
+            <div class="team-link-section">
+                <h3>The Minds Behind The Code</h3>
+                <p>Phantomix is built by a passionate leadership team of designers, architects, and visionaries.</p>
+                <a href="team.html" class="action-btn"><i class="fas fa-users"></i> Meet The Phantomix Team</a>
             </div>
 
         </div>
     </div>
 
     <footer class="phantomix-footer">
-        <p>&copy; 2026 Phantomix. All rights reserved. Built with passion by Shrikant Prajapati & Ranjan Gupta.</p>
+        <p>&copy; 2026 Phantomix. All rights reserved. Built with passion by Shrikant Prajapati, Ranjan Gupta, and Nany Raghav.</p>
     </footer>
 
 </body>
