@@ -157,6 +157,36 @@
             .badge { top: 20px; right: 20px; }
         }
 
+        /* =========================================
+   THE VOID - DANGER CARD STYLING
+========================================= */
+.danger-card {
+    border: 1px solid rgba(239, 68, 68, 0.3) !important;
+    transition: all 0.4s ease;
+}
+
+.danger-card:hover {
+    border-color: #ef4444 !important;
+    box-shadow: 0 15px 40px rgba(239, 68, 68, 0.25) !important;
+    transform: translateY(-5px);
+}
+
+.danger-card:hover .app-icon {
+    transform: rotate(15deg) scale(1.1);
+}
+
+.badge-danger {
+    background: #ef4444;
+    color: #ffffff;
+    font-size: 10px;
+    padding: 3px 8px;
+    border-radius: 12px;
+    vertical-align: middle;
+    margin-left: 8px;
+    letter-spacing: 0.5px;
+    font-weight: 700;
+}
+
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #0f172a; }
         ::-webkit-scrollbar-thumb { background: rgba(14, 165, 233, 0.5); border-radius: 10px; }
@@ -335,6 +365,16 @@
             <p class="app-desc">Turn your private text into unreadable secret codes before sending them to friends. Only your trusted circle can decode them back.</p>
             <a href="encoder.html" class="action-btn" style="background: rgba(14, 165, 233, 0.1); border-color: #0ea5e9; color: #0ea5e9;">Use Tool 🚀</a>
         </div>
+
+        <a href="void.html" class="app-card danger-card">
+    <div class="app-icon" style="color: #ef4444; background: rgba(239, 68, 68, 0.1);">
+        <i class="fas fa-radiation"></i>
+    </div>
+    <div class="app-info">
+        <h3>The Void <span class="badge-danger">HARDCORE</span></h3>
+        <p>Extreme flow-state editor. Stop typing for 15 seconds, and your text is destroyed forever. Use at your own risk.</p>
+    </div>
+</a>
 
         <div class="app-card">
             <span class="badge" style="background: rgba(16, 185, 129, 0.1); color: #10B981; border-color: #10B981; display: inline-block; margin-bottom: 15px;">
