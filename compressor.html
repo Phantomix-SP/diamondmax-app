@@ -21,7 +21,7 @@
         body {
             background-color: #020617; color: #ffffff;
             font-family: 'Poppins', sans-serif;
-            margin: 0; padding: 0; padding-top: 80px; /* Space for Navbar */
+            margin: 0; padding: 0; padding-top: 80px; 
             display: flex; flex-direction: column; min-height: 100vh;
         }
 
@@ -41,8 +41,6 @@
             font-size: 14px; font-weight: 600; transition: all 0.3s ease;
         }
         .nav-btn:hover { background: #0ea5e9; color: white; box-shadow: 0 0 15px rgba(14, 165, 233, 0.4); }
-        
-        /* Support Button Variant */
         .btn-support { color: #10b981; border-color: #10b981; background: rgba(16, 185, 129, 0.1); }
         .btn-support:hover { background: #10b981; color: white; box-shadow: 0 0 15px rgba(16, 185, 129, 0.4); }
 
@@ -54,7 +52,18 @@
         .app-container {
             background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(14, 165, 233, 0.3);
             border-radius: 16px; padding: 30px; width: 100%; max-width: 500px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.5); text-align: center;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5); text-align: center; position: relative;
+        }
+
+        /* 🚀 Share Button Style */
+        .share-btn {
+            position: absolute; top: 20px; right: 20px; background: rgba(139, 92, 246, 0.1);
+            color: #8b5cf6; border: 1px solid rgba(139, 92, 246, 0.4); border-radius: 50%;
+            width: 35px; height: 35px; display: flex; justify-content: center; align-items: center;
+            cursor: pointer; transition: all 0.3s ease; font-size: 14px;
+        }
+        .share-btn:hover {
+            background: #8b5cf6; color: white; box-shadow: 0 0 15px rgba(139, 92, 246, 0.5); transform: scale(1.1);
         }
 
         h2 { margin: 0 0 5px 0; color: #f8fafc; font-size: 26px; }
@@ -92,7 +101,6 @@
         /* Footer */
         .phantomix-footer { background: #020617; border-top: 1px solid rgba(14, 165, 233, 0.2); padding: 30px 5%; margin-top: auto; font-size: 13px; color: #64748b; text-align: center; width: 100%; box-sizing: border-box; }
 
-        /* Mobile Adjustments */
         @media (max-width: 600px) {
             .phantomix-navbar { padding: 0 15px; }
             .nav-logo { font-size: 16px; }
@@ -105,13 +113,17 @@
     <nav class="phantomix-navbar">
         <a href="index.html" class="nav-logo"><i class="fa-solid fa-gem" style="color: #0ea5e9; margin-right: 8px;"></i> Phantomix</a>
         <div class="nav-actions">
-            <a href="https://whatsapp.com/channel/0029VaAQ8ww7dmei9QiQVd2m" target="_blank" aria-label="Support Phantomix WhatsApp" class="nav-btn btn-support"><i class="fab fa-whatsapp"></i> Support</a>
+            <a href="https://wa.me/918168350829?text=Hi%20Shrikant!%20I%20need%20help%20with%20the%20Phantom%20Shrink%20tool." class="nav-btn btn-support"><i class="fab fa-whatsapp"></i> Support</a>
             <a href="apps.html" class="nav-btn"><i class="fas fa-arrow-left"></i> Back to Hub</a>
         </div>
     </nav>
 
     <div class="main-wrapper">
         <div class="app-container">
+            <button class="share-btn" onclick="shareCompressorTool()" title="Share Tool">
+                <i class="fas fa-share-alt"></i>
+            </button>
+
             <h2>Phantom <span>Shrink</span></h2>
             <p class="subtitle"><i class="fas fa-file-pdf"></i> Zero-Server PDF & Image Compressor</p>
 
@@ -162,6 +174,23 @@
         const statusMsg = document.getElementById('statusMsg');
 
         let originalFile = null;
+
+        // 🚀 Share Function Logic
+        function shareCompressorTool() {
+            const shareData = {
+                title: 'Phantom Shrink | Secure PDF & Image Compressor',
+                text: 'Compress your PDF files and photos instantly without uploading them to any server. 100% Secure & Fast!',
+                url: window.location.href // Automatically grabs your live URL
+            };
+
+            if (navigator.share) {
+                navigator.share(shareData).catch(err => console.log('Error sharing:', err));
+            } else {
+                navigator.clipboard.writeText(shareData.url).then(() => {
+                    alert('Link copied to clipboard! Share it with your friends.');
+                });
+            }
+        }
 
         function formatBytes(bytes) {
             if (bytes === 0) return '0 Bytes';
@@ -225,6 +254,9 @@
                     ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
                     
                     canvas.toBlob((blob) => {
+                        statusMsg.innerText = `✅ Success! New Size: ${formatBytes(blob.size)}`;
+                        statusMsg.style.color = "#10b981";
+                        
                         triggerDownload(blob, `compressed_${file.name}`);
                     }, 'image/jpeg', quality);
                 };
