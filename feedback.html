@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Support Hub | Phantomix</title>
+    
+    <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/phantomix-dev/phantomix-dev.github.io/main/assets/favicon.png">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        ::selection { background-color: #0ea5e9; color: #ffffff; }
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #020617; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #0ea5e9; }
+
+        body {
+            background-color: #020617; color: #cbd5e1;
+            font-family: 'Poppins', sans-serif;
+            margin: 0; padding: 0; padding-top: 80px; 
+            display: flex; flex-direction: column; min-height: 100vh;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Navbar */
+        .phantomix-navbar {
+            position: fixed; top: 0; left: 0; width: 100%; height: 70px;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 0 5%; background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(12px); border-bottom: 1px solid rgba(14, 165, 233, 0.2);
+            z-index: 1000; box-sizing: border-box;
+        }
+        .nav-logo { font-size: 20px; font-weight: 700; color: white; display: flex; align-items: center; text-decoration: none; }
+        .nav-actions { display: flex; gap: 12px; }
+        .nav-btn {
+            background: rgba(14, 165, 233, 0.1); color: #0ea5e9; padding: 8px 18px;
+            border: 1px solid #0ea5e9; border-radius: 6px; text-decoration: none;
+            font-size: 14px; font-weight: 600; transition: 0.3s;
+        }
+        .nav-btn:hover { background: #0ea5e9; color: white; box-shadow: 0 0 15px rgba(14, 165, 233, 0.4); }
+
+        /* Main Wrapper */
+        .main-wrapper { flex-grow: 1; display: flex; justify-content: center; align-items: flex-start; padding: 40px 20px; }
+        
+        .support-container {
+            background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(14, 165, 233, 0.3);
+            border-radius: 16px; width: 100%; max-width: 600px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5); overflow: hidden;
+        }
+
+        /* Header & Tabs */
+        .support-header { padding: 30px 30px 20px 30px; text-align: center; }
+        .support-header h2 { margin: 0 0 5px 0; color: #f8fafc; font-size: 28px; }
+        .support-header h2 span { color: #0ea5e9; }
+        .support-header p { margin: 0; font-size: 14px; color: #94a3b8; }
+
+        .tab-container { display: flex; border-bottom: 1px solid #334155; }
+        .tab-btn {
+            flex: 1; background: transparent; color: #94a3b8; border: none;
+            padding: 15px; font-size: 15px; font-weight: 600; font-family: 'Poppins', sans-serif;
+            cursor: pointer; transition: 0.3s; position: relative;
+        }
+        .tab-btn:hover { color: #f8fafc; background: rgba(255, 255, 255, 0.02); }
+        .tab-btn.active { color: #0ea5e9; }
+        .tab-btn.active::after {
+            content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 3px; background: #0ea5e9;
+        }
+
+        /* Form Sections */
+        .form-section { padding: 30px; display: none; animation: fadeIn 0.3s; }
+        .form-section.active { display: block; }
+
+        .input-group { margin-bottom: 20px; text-align: left; }
+        .input-group label { display: block; font-size: 13px; font-weight: 600; color: #cbd5e1; margin-bottom: 8px; }
+        .input-group input, .input-group select, .input-group textarea {
+            width: 100%; padding: 14px; background: rgba(2, 6, 23, 0.6); border: 1px solid #334155;
+            color: #f8fafc; border-radius: 8px; font-family: 'Poppins', sans-serif; font-size: 14px;
+            outline: none; box-sizing: border-box; transition: 0.3s;
+        }
+        .input-group textarea { resize: vertical; min-height: 120px; }
+        .input-group input:focus, .input-group select:focus, .input-group textarea:focus { border-color: #0ea5e9; box-shadow: 0 0 10px rgba(14, 165, 233, 0.1); }
+
+        /* Star Rating */
+        .star-rating { display: flex; gap: 10px; font-size: 28px; color: #334155; cursor: pointer; margin-bottom: 20px; justify-content: center; }
+        .star-rating i { transition: 0.2s; }
+        .star-rating i.hovered, .star-rating i.selected { color: #eab308; text-shadow: 0 0 15px rgba(234, 179, 8, 0.4); }
+
+        .action-btn {
+            width: 100%; padding: 15px; background: linear-gradient(135deg, #0ea5e9, #3b82f6);
+            color: #fff; border: none; border-radius: 8px; font-size: 16px; font-weight: 700;
+            cursor: pointer; transition: 0.3s; font-family: 'Poppins', sans-serif;
+        }
+        .action-btn:hover { box-shadow: 0 0 20px rgba(14, 165, 233, 0.4); transform: translateY(-2px); }
+
+        .success-msg { display: none; text-align: center; color: #10b981; font-weight: 600; margin-top: 15px; font-size: 14px; background: rgba(16, 185, 129, 0.1); padding: 10px; border-radius: 8px; border: 1px solid rgba(16, 185, 129, 0.3); }
+
+        /* Footer */
+        .phantomix-footer { background: #020617; border-top: 1px solid rgba(14, 165, 233, 0.2); padding: 30px 5%; margin-top: auto; font-size: 13px; color: #64748b; text-align: center; width: 100%; box-sizing: border-box; }
+
+    </style>
+</head>
+<body>
+
+    <nav class="phantomix-navbar">
+        <a href="index.html" class="nav-logo"><i class="fa-solid fa-gem" style="color: #0ea5e9; margin-right: 8px;"></i> Phantomix</a>
+        <div class="nav-actions">
+            <a href="apps.html" class="nav-btn"><i class="fas fa-arrow-left"></i> Back to Hub</a>
+        </div>
+    </nav>
+
+    <div class="main-wrapper">
+        <div class="support-container">
+            <div class="support-header">
+                <h2>Phantomix <span>Support</span></h2>
+                <p>Help us build the perfect ecosystem.</p>
+            </div>
+
+            <div class="tab-container">
+                <button class="tab-btn active" onclick="switchTab('feedbackTab', this)"><i class="fas fa-star"></i> Rate Us</button>
+                <button class="tab-btn" onclick="switchTab('issueTab', this)"><i class="fas fa-bug"></i> Report Issue</button>
+            </div>
+
+            <div id="feedbackTab" class="form-section active">
+                <div style="text-align: center; margin-bottom: 10px; color: #f8fafc; font-weight: 500;">How was your experience?</div>
+                <div class="star-rating" id="starContainer">
+                    <i class="fas fa-star" data-val="1"></i>
+                    <i class="fas fa-star" data-val="2"></i>
+                    <i class="fas fa-star" data-val="3"></i>
+                    <i class="fas fa-star" data-val="4"></i>
+                    <i class="fas fa-star" data-val="5"></i>
+                </div>
+                
+                <div class="input-group">
+                    <label>Your Feedback (Optional)</label>
+                    <textarea id="feedbackText" placeholder="Tell us what you love or what we can improve..."></textarea>
+                </div>
+                
+                <button class="action-btn" onclick="submitForm('feedback')">Submit Feedback</button>
+                <div class="success-msg" id="feedbackSuccess"><i class="fas fa-check-circle"></i> Thank you! Your feedback fuels DiamondMax.</div>
+            </div>
+
+            <div id="issueTab" class="form-section">
+                <div class="input-group">
+                    <label>Category</label>
+                    <select id="issueCategory">
+                        <option value="bug">🐛 Bug / Error</option>
+                        <option value="ui">🎨 UI / Design Glitch</option>
+                        <option value="feature">💡 Feature Request</option>
+                        <option value="other">⚙️ Other</option>
+                    </select>
+                </div>
+                
+                <div class="input-group">
+                    <label>Issue Title</label>
+                    <input type="text" id="issueTitle" placeholder="E.g., Compressor not working on mobile">
+                </div>
+
+                <div class="input-group">
+                    <label>Detailed Description</label>
+                    <textarea id="issueDesc" placeholder="Please describe the issue, what device you are using, and how to reproduce it..."></textarea>
+                </div>
+                
+                <button class="action-btn" onclick="submitForm('issue')">Submit Report</button>
+                <div class="success-msg" id="issueSuccess"><i class="fas fa-check-circle"></i> Report submitted! Our tech team is on it.</div>
+            </div>
+
+        </div>
+    </div>
+
+    <footer class="phantomix-footer">
+        <p>&copy; 2026 Phantomix. All rights reserved. Built with passion.</p>
+    </footer>
+
+    <script>
+        // Tab Switching Logic
+        function switchTab(tabId, btnElement) {
+            document.querySelectorAll('.form-section').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+            
+            document.getElementById(tabId).classList.add('active');
+            btnElement.classList.add('active');
+        }
+
+        // Star Rating Logic
+        let currentRating = 0;
+        const stars = document.querySelectorAll('.star-rating i');
+        
+        stars.forEach(star => {
+            star.addEventListener('mouseover', function() {
+                const val = this.getAttribute('data-val');
+                stars.forEach(s => {
+                    if(s.getAttribute('data-val') <= val) s.classList.add('hovered');
+                    else s.classList.remove('hovered');
+                });
+            });
+
+            star.addEventListener('mouseout', function() {
+                stars.forEach(s => s.classList.remove('hovered'));
+            });
+
+            star.addEventListener('click', function() {
+                currentRating = this.getAttribute('data-val');
+                stars.forEach(s => {
+                    if(s.getAttribute('data-val') <= currentRating) s.classList.add('selected');
+                    else s.classList.remove('selected');
+                });
+            });
+        });
+
+        // 🚀 Real Form Submission Logic (Webhook Ready)
+        async function submitForm(type) {
+            let payload = {};
+            let btn, successMsg;
+
+            // 1. Data Collection & Validation
+            if (type === 'feedback') {
+                if(currentRating === 0) { alert("Please select a star rating first!"); return; }
+                
+                payload = {
+                    formType: "Feedback",
+                    rating: `${currentRating} Stars`,
+                    message: document.getElementById('feedbackText').value || "No text provided"
+                };
+                
+                btn = document.querySelector('#feedbackTab .action-btn');
+                successMsg = document.getElementById('feedbackSuccess');
+                
+            } else if (type === 'issue') {
+                const title = document.getElementById('issueTitle').value;
+                const desc = document.getElementById('issueDesc').value;
+                const category = document.getElementById('issueCategory').options[document.getElementById('issueCategory').selectedIndex].text;
+
+                if(title.trim() === "" || desc.trim() === "") { alert("Please fill in both the title and description."); return; }
+                
+                payload = {
+                    formType: "Issue Report",
+                    category: category,
+                    title: title,
+                    description: desc
+                };
+                
+                btn = document.querySelector('#issueTab .action-btn');
+                successMsg = document.getElementById('issueSuccess');
+            }
+
+            // 2. UI Loading State
+            const originalText = btn.innerText;
+            btn.innerText = "Processing...";
+            btn.disabled = true;
+            btn.style.opacity = "0.7";
+
+            // 3. API Request (To Your Backend/Webhook)
+            const WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbw4r5LM0L1i9sKRm_ztKHjnYZtQWZKvHjIoownCM90Qr0osNuY3BOLQ-jl-b9iyw_PRRQ/exec"; 
+
+            try {
+                const response = await fetch(WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                
+                if(!response.ok) throw new Error("Network response was not ok");
+                */
+
+                // Simulated network delay for now
+                await new Promise(resolve => setTimeout(resolve, 1000));
+
+                // 4. Success UI
+                btn.style.display = 'none';
+                successMsg.style.display = 'block';
+
+            } catch (error) {
+                console.error("Error submitting form:", error);
+                alert("Something went wrong. Please try again later.");
+                btn.innerText = originalText;
+                btn.disabled = false;
+                btn.style.opacity = "1";
+            }
+        }
+    </script>
+</body>
+</html>
