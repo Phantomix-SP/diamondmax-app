@@ -266,7 +266,31 @@
             transform: translateY(-5px);
             background: rgba(30, 41, 59, 0.9);
         }
-        .feature-icon { font-size: 40px; margin-bottom: 15px; }
+        .feature-icon{
+
+width:80px;
+
+height:80px;
+
+margin:0 auto 20px;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+border-radius:20px;
+
+font-size:34px;
+
+background:linear-gradient(135deg,#0ea5e9,#2563eb);
+
+color:white;
+
+box-shadow:0 15px 30px rgba(14,165,233,.30);
+
+}
         .feature-card h3 { margin-bottom: 10px; color: #f8fafc; }
         .feature-card p { color: #cbd5e1; font-size: 14px; line-height: 1.6; margin: 0; }
 
@@ -590,6 +614,142 @@
             color: #cbd5e1;
         }
 
+        /* ========================= */
+/* DiamondMax Vision Section */
+/* ========================= */
+
+.vision-section{
+
+padding:90px 20px;
+
+max-width:1200px;
+
+margin:auto;
+
+}
+
+.section-title{
+
+max-width:760px;
+
+margin:auto;
+
+margin-bottom:60px;
+
+}
+
+.section-tag{
+
+display:inline-block;
+
+padding:8px 18px;
+
+border:1px solid rgba(14,165,233,.35);
+
+background:rgba(14,165,233,.08);
+
+border-radius:50px;
+
+font-size:13px;
+
+font-weight:700;
+
+letter-spacing:1px;
+
+color:#38bdf8;
+
+margin-bottom:18px;
+
+}
+
+.section-title h2{
+
+font-size:42px;
+
+margin-bottom:18px;
+
+}
+
+.section-title p{
+
+color:#94a3b8;
+
+line-height:1.8;
+
+}
+
+.vision-grid{
+
+display:grid;
+
+grid-template-columns:repeat(3,1fr);
+
+gap:30px;
+
+margin-top:30px;
+
+}
+
+.vision-card{
+
+background:rgba(15,23,42,.65);
+
+border:1px solid rgba(14,165,233,.15);
+
+padding:35px;
+
+border-radius:20px;
+
+transition:.35s;
+
+backdrop-filter:blur(10px);
+
+}
+
+.vision-card:hover{
+
+transform:translateY(-10px);
+
+border-color:#0ea5e9;
+
+box-shadow:0 20px 40px rgba(14,165,233,.15);
+
+}
+
+.vision-card i{
+
+font-size:42px;
+
+color:#38bdf8;
+
+margin-bottom:20px;
+
+}
+
+.vision-card h3{
+
+margin-bottom:12px;
+
+}
+
+.vision-card p{
+
+color:#94a3b8;
+
+line-height:1.7;
+
+}
+
+@media(max-width:900px){
+
+.vision-grid{
+
+grid-template-columns:1fr;
+
+}
+
+}
+
         /* FAQ Section Styling */
         .faq-container {
             display: flex;
@@ -645,110 +805,6 @@
         /* Scroll Reveal Animation */
         .scroll-reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s ease; }
         .scroll-reveal.visible { opacity: 1; transform: translateY(0); }
-
-        /* Diamond-Vault Password Generator Styling */
-        .vault-container {
-            background: rgba(15, 23, 42, 0.7);
-            border: 1px solid rgba(14, 165, 233, 0.3);
-            border-radius: 15px;
-            padding: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            text-align: left;
-        }
-        .password-display-box {
-            background: rgba(15, 23, 42, 0.9);
-            border: 1px solid #334155;
-            padding: 15px 20px;
-            border-radius: 8px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 25px;
-            font-family: monospace;
-            font-size: 20px;
-            color: #0ea5e9;
-            letter-spacing: 2px;
-            word-break: break-all;
-        }
-        .copy-btn {
-            background: none;
-            border: none;
-            color: #94a3b8;
-            font-size: 20px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        .copy-btn:hover { color: #10b981; transform: scale(1.1); }
-        .phantom-slider {
-            width: 100%;
-            cursor: pointer;
-            accent-color: #0ea5e9;
-            margin-bottom: 25px;
-        }
-        .checkbox-group {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            margin-bottom: 25px;
-        }
-        .custom-checkbox {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: #cbd5e1;
-            font-size: 14px;
-            cursor: pointer;
-        }
-        .custom-checkbox input { accent-color: #0ea5e9; width: 16px; height: 16px; cursor: pointer; }
-        .generate-btn {
-            width: 100%;
-            padding: 15px;
-            background: linear-gradient(135deg, #0ea5e9, #3b82f6);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        .generate-btn:hover {
-            box-shadow: 0 0 20px rgba(14, 165, 233, 0.4);
-            transform: translateY(-2px);
-        }
-                /* --- Password Strength Meter Styling --- */
-        .strength-meter-container {
-            margin-bottom: 20px;
-            background: rgba(2, 6, 23, 0.5);
-            padding: 15px;
-            border-radius: 8px;
-            border: 1px solid rgba(51, 65, 85, 0.5);
-        }
-        .strength-labels {
-            display: flex;
-            justify-content: space-between;
-            font-size: 12px;
-            font-weight: bold;
-            margin-bottom: 8px;
-            color: #94a3b8;
-        }
-        .strength-bar-bg {
-            width: 100%;
-            height: 6px;
-            background: #020617;
-            border-radius: 10px;
-            overflow: hidden;
-        }
-        .strength-bar-fill {
-            height: 100%;
-            width: 0%;
-            border-radius: 10px;
-            transition: all 0.4s ease;
-        }
-        .text-weak { color: #ef4444; }
-        .text-medium { color: #f59e0b; }
-        .text-strong { color: #10b981; }
-
 
         /* --- Premium Sticky Navbar --- */
         .phantomix-navbar {
@@ -917,112 +973,7 @@
         @media (max-width: 480px) {
             .share-tools { flex-direction: column; }
         }
-
-        /* --- Phantomix Terminal Styling --- */
-        .terminal-container {
-            background: #020617;
-            border: 1px solid rgba(16, 185, 129, 0.3);
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
-            text-align: left;
-            font-family: 'Courier New', Courier, monospace;
-        }
-        .terminal-header {
-            display: flex;
-            justify-content: space-between;
-            border-bottom: 1px dashed rgba(16, 185, 129, 0.4);
-            padding-bottom: 10px;
-            margin-bottom: 20px;
-            font-size: 14px;
-        }
-        .timer {
-            color: #ef4444;
-            font-weight: bold;
-            animation: pulse 1s infinite;
-        }
-        .word-display {
-            font-size: 24px;
-            color: #10b981;
-            margin-bottom: 20px;
-            letter-spacing: 2px;
-            min-height: 30px;
-        }
-        .terminal-input {
-            width: 100%;
-            background: transparent;
-            border: none;
-            border-bottom: 2px solid #334155;
-            color: white;
-            font-size: 20px;
-            font-family: inherit;
-            padding: 5px 0;
-            outline: none;
-            transition: border-color 0.3s ease;
-        }
-        .terminal-input:focus { border-bottom-color: #10b981; }
-        .terminal-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 25px;
-        }
-        .score-board { color: #cbd5e1; font-size: 18px; }
-        .terminal-btn {
-            background: rgba(16, 185, 129, 0.1);
-            color: #10b981;
-            border: 1px solid #10b981;
-            padding: 8px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-family: inherit;
-            font-weight: bold;
-            transition: all 0.3s ease;
-        }
-        .terminal-btn:hover {
-            background: #10b981;
-            color: #020617;
-            box-shadow: 0 0 15px rgba(16, 185, 129, 0.5);
-        }
-
-        /* --- Live Stats Counter Styling --- */
-        .hero-stats {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            margin-top: 40px;
-        }
-        .stat-box {
-            background: rgba(15, 23, 42, 0.5);
-            border: 1px solid rgba(14, 165, 233, 0.2);
-            padding: 15px 25px;
-            border-radius: 12px;
-            text-align: center;
-            backdrop-filter: blur(5px);
-            transition: transform 0.3s ease;
-        }
-        .stat-box:hover {
-            transform: translateY(-5px);
-            border-color: rgba(14, 165, 233, 0.6);
-        }
-        .stat-box h3 {
-            font-size: 32px;
-            color: #0ea5e9;
-            margin: 0;
-            text-shadow: 0 0 15px rgba(14, 165, 233, 0.5);
-            font-family: 'Poppins', sans-serif;
-        }
-        .stat-box p {
-            color: #94a3b8;
-            font-size: 14px;
-            margin: 5px 0 0 0;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        @media (max-width: 600px) {
-            .hero-stats { flex-direction: column; gap: 15px; }
-        }
-
+        
         /* --- Premium Interactive Footer Styling --- */
         .phantomix-footer {
             background: #020617;
@@ -1110,53 +1061,7 @@
             .footer-content { flex-direction: column; }
             .footer-bottom { flex-direction: column; text-align: center; justify-content: center; }
         }
-        /* --- Live Network Status Styling --- */
-        .status-container {
-            background: rgba(15, 23, 42, 0.6);
-            border: 1px solid rgba(14, 165, 233, 0.2);
-            padding: 20px;
-            border-radius: 12px;
-            text-align: left;
-            backdrop-filter: blur(10px);
-        }
-
-        .status-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 14px;
-        }
-
-        .status-label {
-            color: #64748b;
-        }
-
-        .status-value {
-            font-weight: 600;
-        }
-
-        .status-value.operational {
-            color: #10b981;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .dot-green {
-            width: 8px;
-            height: 8px;
-            background: #10b981;
-            border-radius: 50%;
-            display: inline-block;
-            box-shadow: 0 0 8px #10b981;
-            animation: blink 1.5s infinite;
-        }
-
-        @keyframes blink {
-            0% { opacity: 0.4; }
-            50% { opacity: 1; }
-            100% { opacity: 0.4; }
-        }
+        
         /* --- Live Tech News Ticker Styling --- */
         .news-ticker-container {
             position: fixed;
@@ -1411,30 +1316,7 @@
                 display: none !important;
             }
         }
-        /* --- Monetization & Ad Slots Styling --- */
-        .ad-placeholder-box {
-            background: rgba(2, 6, 23, 0.4);
-            border: 1px dashed rgba(14, 165, 233, 0.3);
-            border-radius: 8px;
-            padding: 20px;
-            position: relative;
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        .ad-tag {
-            position: absolute;
-            top: -10px;
-            left: 20px;
-            background: #0f172a;
-            color: #64748b;
-            font-size: 9px;
-            font-family: monospace;
-            padding: 2px 8px;
-            border: 1px solid rgba(51, 65, 85, 0.5);
-            border-radius: 4px;
-            letter-spacing: 1px;
-        }
+        
         /* --- Presale Tiers Styling --- */
         .tier-card {
             background: rgba(15, 23, 42, 0.6);
@@ -1558,113 +1440,8 @@
         @media (max-width: 768px) {
             .glow-cursor { display: none !important; }
         }
-
-        .vault-gate-card {
-    display: flex;
-    align-items: center;
-    background: linear-gradient(145deg, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.9));
-    border: 1px solid rgba(14, 165, 233, 0.3);
-    border-radius: 16px;
-    padding: 20px 25px;
-    max-width: 600px;
-    margin: 40px auto; /* Page ke center me laane ke liye */
-    text-decoration: none;
-    transition: all 0.4s ease;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-    position: relative;
-    overflow: hidden;
-    backdrop-filter: blur(10px);
-}
-
-.vault-gate-card:hover {
-    transform: translateY(-5px) scale(1.02);
-    border-color: #0ea5e9;
-    box-shadow: 0 15px 40px rgba(14, 165, 233, 0.25);
-}
-
-.vault-icon {
-    background: rgba(14, 165, 233, 0.1);
-    color: #0ea5e9;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 24px;
-    flex-shrink: 0;
-    transition: transform 0.4s ease;
-}
-
-.vault-gate-card:hover .vault-icon {
-    transform: rotate(10deg) scale(1.1);
-}
-
-.vault-content {
-    margin-left: 20px;
-    text-align: left;
-    flex-grow: 1;
-}
-
-.vault-content h3 {
-    margin: 0 0 6px 0;
-    color: #ffffff;
-    font-size: 18px;
-    font-weight: 700;
-    font-family: 'Poppins', sans-serif;
-}
-
-/* "NEW" Tag Style */
-.vault-content .badge {
-    background: #10b981;
-    color: #ffffff;
-    font-size: 10px;
-    padding: 3px 8px;
-    border-radius: 12px;
-    vertical-align: middle;
-    margin-left: 8px;
-    letter-spacing: 0.5px;
-    font-weight: 600;
-}
-
-.vault-content p {
-    margin: 0;
-    color: #94a3b8;
-    font-size: 13px;
-    font-family: 'Poppins', sans-serif;
-    line-height: 1.5;
-}
-
-.vault-arrow {
-    color: #334155;
-    font-size: 20px;
-    transition: all 0.4s ease;
-}
-
-.vault-gate-card:hover .vault-arrow {
-    color: #0ea5e9;
-    transform: translateX(6px);
-}
-
-/* 📱 Mobile Responsiveness */
-@media (max-width: 600px) {
-    .vault-gate-card {
-        flex-direction: column;
-        text-align: center;
-        padding: 25px 20px;
-        margin: 25px 15px; /* Mobile par width set karne ke liye */
-    }
-    .vault-content {
-        margin-left: 0;
-        margin-top: 15px;
-        text-align: center;
-    }
-    .vault-arrow {
-        display: none; /* Mobile par arrow hide kar diya for clean look */
-    }
-}
-
     </style>
+    
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -1692,9 +1469,13 @@
             <li><a href="community.html"><i class="fas fa-users"></i> Community</a></li>
             <li><a href="team.html" style="color: #10b981;"><i class="fas fa-user-astronaut"></i> Team</a></li> 
             <li><a href="#features-section">Features</a></li>
-            <li><a href="#vault-section">Vault</a></li>
-            <li><a href="#terminal-section">Terminal</a></li> 
             <li><a href="#roadmap-section">Roadmap</a></li>
+           <li><a href="#funding-section">
+    Fund
+</a></li>
+           <li><a href="vault.html">
+    <i class="fas fa-shield-keyhole"></i> Vault
+</a></li>
             <li><a href="login.html" style="background: #0ea5e9; color: #020617; padding: 5px 15px; border-radius: 5px; font-weight: bold;"><i class="fas fa-lock"></i> Login</a></li>
         </ul>
         
@@ -1712,8 +1493,7 @@
         <a href="community.html" onclick="toggleMobileMenu()"><i class="fas fa-users"></i> Community</a>
         <a href="team.html" onclick="toggleMobileMenu()"><i class="fas fa-user-astronaut"></i> Team</a>
         <a href="#features-section" onclick="toggleMobileMenu()">Features</a>
-        <a href="#vault-section" onclick="toggleMobileMenu()">Vault</a>
-        <a href="#terminal-section" onclick="toggleMobileMenu()">Terminal</a> 
+        <a href="#funding-section" onclick="toggleMobileMenu()">Funding</a> 
         <a href="#roadmap-section" onclick="toggleMobileMenu()">Roadmap</a>
         <a href="refer.html" onclick="toggleMobileMenu()"><i class="fas fa-gift"></i> Refer & Earn</a>
     </div>
@@ -1740,30 +1520,27 @@
         </div>
 
         <h1 style="font-size: 42px; font-weight: 800; margin: 0 0 15px 0; color: #F3F4F6; line-height: 1.2;">
-            Digital Peace of Mind for <br> <span style="color: #0ea5e9;">Everyday Humans.</span>
+            The Future of Digital Rewards Starts<br> <span style="color: #0ea5e9;">Here.</span>
         </h1>
         <p class="desc" style="color: #9CA3AF; font-size: 16px; line-height: 1.6; margin: 0 auto 30px; max-width: 650px;">
-            Phantomix is a premium ecosystem of privacy tools, secure utilities, and digital solutions. Protect your data, clean your photos, and simplify your digital life without needing a computer science degree.
-        </p>
-
+            DiamondMax is Phantomix's flagship rewards platform, built to deliver premium earning experiences with lightning-fast performance, secure technology, and a beautiful interface. Join early and become part of the future.</p>
         <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; margin-bottom: 40px;">
-            <a href="apps.html" style="background: #0ea5e9; color: white; padding: 12px 24px; border-radius: 8px; font-weight: 600; text-decoration: none; font-size: 15px; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(14, 165, 233, 0.4);">
-                Explore All Tools <i class="fas fa-arrow-right" style="margin-left: 8px;"></i>
-            </a>
+            <a href="#waitlist-section"class="btn">Join DiamondMax Beta</a>
+            <a href="apps.html"class="btn btn-secondary">Explore Ecosystem</a>
         </div>
 
         <div class="hero-stats">
             <div class="stat-box">
-                <h3 class="counter" data-target="1250">0</h3>
+                <h3 class="counter" data-target="125000+">0</h3>
                 <p>Waitlisted Users</p>
             </div>
             <div class="stat-box">
-                <h3 class="counter" data-target="99">0</h3>
+                <h3 class="counter" data-target="99.99%">0</h3>
                 <p>% Uptime Guaranteed</p>
             </div>
             <div class="stat-box">
-                <h3 class="counter" data-target="24">0</h3>
-                <p>Tech Partners</p>
+                <h3 class="counter" data-target="4">0</h3>
+                <p>Team Partners</p>
             </div>
         </div>
         
@@ -1792,6 +1569,75 @@
         </div>
     </div>
 
+    <!-- ========================= -->
+<!-- DiamondMax Vision Section -->
+<!-- ========================= -->
+
+<section class="vision-section scroll-reveal" id="vision-section">
+
+    <div class="section-title">
+        <span class="section-tag">
+            WHY DIAMONDMAX
+        </span>
+
+        <h2>
+            India's Next Premium Rewards Platform
+        </h2>
+
+        <p>
+            DiamondMax isn't just another earning app.
+            It's the flagship product of Phantomix,
+            designed around privacy, speed,
+            premium design and real value.
+        </p>
+    </div>
+
+    <div class="vision-grid">
+
+        <div class="vision-card">
+            <i class="fas fa-bolt"></i>
+
+            <h3>Lightning Fast</h3>
+
+            <p>
+                Instant rewards.
+                Smooth experience.
+                Built for speed.
+            </p>
+        </div>
+
+        <div class="vision-card">
+
+            <i class="fas fa-shield-halved"></i>
+
+            <h3>Privacy First</h3>
+
+            <p>
+                No unnecessary tracking.
+                No spam.
+                No compromises.
+            </p>
+
+        </div>
+
+        <div class="vision-card">
+
+            <i class="fas fa-gem"></i>
+
+            <h3>Premium Experience</h3>
+
+            <p>
+                Beautiful UI.
+                Secure backend.
+                Future-ready architecture.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
     <section class="phantomix-section scroll-reveal" style="padding-top: 20px; padding-bottom: 20px;">
         <p style="color: #64748b; font-size: 14px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px;">Powered By Next-Gen Tech</p>
         
@@ -1805,8 +1651,8 @@
                 <span>Python</span>
             </div>
             <div class="tech-item" title="Figma">
-                <i class="fa-brands fa-figma" style="color: #F24E1E;"></i>
-                <span>Figma</span>
+                <i class="fa-brands fa-supabase" style="color: #F24E1E;"></i>
+                <span>Supabase</span>
             </div>
             <div class="tech-item" title="GitHub">
                 <i class="fa-brands fa-github" style="color: #ffffff;"></i>
@@ -1821,7 +1667,7 @@
     <section class="phantomix-section scroll-reveal" style="max-width: 800px; padding-top: 10px;">
         <div class="analytics-container">
             <div class="analytics-header">
-                <span><i class="fas fa-chart-line" style="color: #0ea5e9;"></i> Diagnostics & Performance</span>
+                <span><i class="fas fa-chart-line" style="color: #0ea5e9;"></i> Infrastructure Status</span>
                 <span id="ping-tag" class="ping-good"><span class="ping-dot"></span> Core Online</span>
             </div>
             <div class="analytics-grid">
@@ -1913,32 +1759,7 @@
             </div>
         </div>
     </section>
-    <section class="phantomix-section scroll-reveal" style="max-width: 600px;" id="terminal-section">
-        <h2>Phantomix <span style="color: #10b981;">Terminal</span></h2>
-        <p style="color: #94a3b8; margin-bottom: 30px;">Test your typing speed. Are you faster than a DiamondMax server?</p>
-
-        <div class="terminal-container">
-            <div class="terminal-header">
-                <span style="color: #cbd5e1;">user@phantomix:~$ ./speed_test.sh</span>
-                <span class="timer" id="time-left">30s</span>
-            </div>
-            
-            <div class="terminal-body">
-                <div class="word-display" id="word-display">Click 'Start' to begin...</div>
-                <input type="text" class="terminal-input" id="type-input" placeholder="Type here..." autocomplete="off" disabled>
-            </div>
-            
-            <div class="terminal-footer">
-                <div class="score-board">
-                    Score: <span id="wpm-score" style="color: #10b981;">0</span> WPM
-                </div>
-                <button class="terminal-btn" id="start-btn" onclick="startTypingTest()">
-                    <i class="fas fa-play"></i> Start Test
-                </button>
-            </div>
-        </div>
-    </section>
-
+    
     <section class="phantomix-section scroll-reveal" style="max-width: 900px;" id="roadmap-section">
         <h2 style="margin-bottom: 5px;">The <span style="color: #0ea5e9;">DiamondMax</span> Journey</h2>
         <p style="color: #94a3b8; margin-bottom: 40px;">Our strategic roadmap to launch.</p>
@@ -1989,93 +1810,71 @@
     </section>
 
     <section class="phantomix-section scroll-reveal" id="features-section">
-        <h2>Why DiamondMax?</h2>
-        <p style="color: #94a3b8;">A revolutionary app built for the modern tech landscape.</p>
-        
-        <div class="features-grid">
-            <div class="feature-card">
-                <div class="feature-icon">⚡</div>
-                <h3>Lightning Fast</h3>
-                <p>Optimized architecture ensures zero lag and blazing fast load times.</p>
+
+    <div class="section-title">
+        <span class="section-tag">
+            WHY CHOOSE DIAMONDMAX
+        </span>
+
+        <h2>Built for the Next Generation</h2>
+
+        <p>
+            DiamondMax combines performance, security and premium design
+            into one seamless experience.
+        </p>
+    </div>
+
+    <div class="features-grid">
+
+        <div class="feature-card">
+
+            <div class="feature-icon">
+                <i class="fas fa-bolt"></i>
             </div>
-            <div class="feature-card">
-                <div class="feature-icon">🎨</div>
-                <h3>Premium UI/UX</h3>
-                <p>A sleek, frameless dark-mode design that feels like the future.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">🔒</div>
-                <h3>Ultra Secure</h3>
-                <p>Advanced data protection keeping your privacy at the forefront.</p>
-            </div>
+
+            <h3>Instant Rewards</h3>
+
+            <p>
+                Complete missions, earn instantly and withdraw
+                without unnecessary waiting.
+            </p>
+
         </div>
-    </section>
 
-    <section class="phantomix-section scroll-reveal" style="max-width: 600px;" id="vault-section">
-        <h2>Phantomix <span style="color: #0ea5e9;">Diamond-Vault</span></h2>
-        <p style="color: #94a3b8; margin-bottom: 30px;">Generate ultra-secure, unbreakable passwords instantly.</p>
+        <div class="feature-card">
 
-        <div class="vault-container">
-            <div class="password-display-box">
-                <span id="generated-password">P#ant0m!x_2026</span>
-                <button class="copy-btn" onclick="copyPassword()" title="Copy Password">
-                    <i class="far fa-copy"></i>
-                </button>
-            </div>
-                        <div class="strength-meter-container">
-                <div class="strength-labels">
-                    <span>SECURITY LEVEL</span>
-                    <span id="strength-text" class="text-weak">WEAK</span>
-                </div>
-                <div class="strength-bar-bg">
-                    <div id="strength-bar" class="strength-bar-fill" style="background: #ef4444; width: 25%;"></div>
-                </div>
+            <div class="feature-icon">
+                <i class="fas fa-shield-halved"></i>
             </div>
 
+            <h3>Privacy First</h3>
 
-            <div class="vault-controls">
-                <div class="slider-group">
-                    <label style="display: flex; justify-content: space-between; color: #cbd5e1; font-size: 14px; margin-bottom: 10px;">
-                        Password Length <span id="length-val" style="color: #0ea5e9; font-weight: bold;">12</span>
-                    </label>
-                    <input type="range" id="pass-length" min="8" max="32" value="12" class="phantom-slider" oninput="document.getElementById('length-val').innerText = this.value">
-                </div>
+            <p>
+                Your data stays protected using secure architecture
+                built with privacy as the default.
+            </p>
 
-                <div class="checkbox-group">
-                    <label class="custom-checkbox">
-                        <input type="checkbox" id="inc-uppercase" checked>
-                        <span class="checkmark"></span> Uppercase (A-Z)
-                    </label>
-                    <label class="custom-checkbox">
-                        <input type="checkbox" id="inc-numbers" checked>
-                        <span class="checkmark"></span> Numbers (0-9)
-                    </label>
-                    <label class="custom-checkbox">
-                        <input type="checkbox" id="inc-symbols" checked>
-                        <span class="checkmark"></span> Symbols (!@#$)
-                    </label>
-                </div>
-
-                <button class="generate-btn" onclick="generatePassword()">
-                    <i class="fas fa-bolt"></i> Generate Secure Password
-                </button>
-                
-                <div class="share-tools" style="display: flex; gap: 10px; margin-top: 15px;">
-                    <button class="share-btn whatsapp" onclick="shareOnWhatsApp()">
-                        <i class="fab fa-whatsapp"></i> Share on WhatsApp
-                    </button>
-                    <button class="share-btn twitter" onclick="shareOnTwitter()">
-                        <i class="fa-brands fa-x-twitter"></i> Share on X
-                    </button>
-                </div>
-            </div>
         </div>
-        <p style="font-size: 12px; color: #64748b; margin-top: 15px; text-align: center;">
-    Want advanced Quantum-Stealth encryption? 
-    <a href="javascript:void(0)" onclick="toggleMonetizeModal(true)" style="color: #0ea5e9; text-decoration: none; font-weight: bold;">Unlock Premium Alpha 🔓</a>
-</p>
-    </section>
 
+        <div class="feature-card">
+
+            <div class="feature-icon">
+                <i class="fas fa-gem"></i>
+            </div>
+
+            <h3>Premium Experience</h3>
+
+            <p>
+                A fast, modern interface designed for users
+                who expect quality.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+    
     <section class="phantomix-section scroll-reveal" style="max-width: 800px;">
         <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(16, 185, 129, 0.3); padding: 25px; border-radius: 12px; text-align: left; position: relative; overflow: hidden; box-shadow: 0 5px 20px rgba(16, 185, 129, 0.1);">
             
@@ -2257,28 +2056,6 @@
         </div>
     </section>
     
-    <section class="phantomix-section scroll-reveal" style="max-width: 600px;">
-        <div class="status-container">
-            <h3 style="margin-top: 0; font-size: 18px; color: #ffffff; display: flex; align-items: center; gap: 10px;">
-                <i class="fas fa-shield-halved" style="color: #0ea5e9;"></i> Phantomix Security Core
-            </h3>
-            <div class="status-grid" style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 15px; margin-top: 20px;">
-                <div class="status-item">
-                    <span class="status-label">Mainframe:</span>
-                    <span class="status-value operational"><span class="dot-green"></span> Operational</span>
-                </div>
-                <div class="status-item">
-                    <span class="status-label">Your Connection:</span>
-                    <span class="status-value encrypted" id="user-connection">Securing...</span>
-                </div>
-                <div class="status-item">
-                    <span class="status-label">Encryption:</span>
-                    <span class="status-value standard">AES-256</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <section class="phantomix-section scroll-reveal" style="margin-bottom: 80px;">
         <div class="investor-container" id="investor-section">
             <h2 style="margin-top: 0; color: #c084fc;">Partner With Phantomix 🚀</h2>
@@ -2286,8 +2063,8 @@
             
             <div class="investor-stats">
                 <div class="stat-box">
-                    <h3 style="margin:0; color:#fff;">Solo</h3>
-                    <p style="margin:0; color:#94a3b8; font-size:12px;">Founder Driven</p>
+                    <h3 style="margin:0; color:#fff;">Lead by Our Team</h3>
+                    <p style="margin:0; color:#94a3b8; font-size:12px;">Phantomix Team</p>
                 </div>
                 <div class="stat-box">
                     <h3 style="margin:0; color:#fff;">Pre-Seed</h3>
@@ -2298,13 +2075,6 @@
             <a href="https://wa.me/918168350829?text=Hi%20Shrikant!%20I'm%20interested%20in%20partnering%20with%20Phantomix/DiamondMax." class="btn btn-investor" target="_blank"><i class="fab fa-whatsapp"></i> Chat on WhatsApp</a>
         </div>
     </section>
-    <div style="text-align: center; margin: 40px auto; padding: 10px;">
-    <a href="https://go.nordvpn.net/aff_c?offer_id=15&aff_id=152599&file_id=23">
-        <img src="https://media.go2speed.org/brand/files/nordvpn/15/300x250v10.gif" width="300" height="250" border="0" style="border-radius: 12px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);" />
-    </a>
-    <img src="https://go.nordvpn.net/aff_i?offer_id=15&file_id=23&aff_id=152599" width="0" height="0" style="position:absolute;visibility:hidden;" border="0" />
-</div>
-
     <a href="mailto:phantomix.00@gmail.com?subject=Support%20Request%20-%20Phantomix" class="floating-support" target="_blank" title="Email Support">
         <i class="fas fa-envelope"></i>
     </a>
@@ -2493,73 +2263,6 @@
             });
         });
 
-        function generatePassword() {
-            const length = document.getElementById('pass-length').value;
-            const incUpper = document.getElementById('inc-uppercase').checked;
-            const incNums = document.getElementById('inc-numbers').checked;
-            const incSyms = document.getElementById('inc-symbols').checked;
-
-            let chars = "abcdefghijklmnopqrstuvwxyz";
-            if (incUpper) chars += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-            if (incNums) chars += "0123456789";
-            if (incSyms) chars += "!@#$%^&*()_+~`|}{[]:;?><,./-=";
-
-            // Agar koi checkbox select nahi kiya, toh default lower case use karega
-            if (chars.length === 0) chars = "abcdefghijklmnopqrstuvwxyz";
-
-            let password = "";
-            for (let i = 0; i < length; i++) {
-                password += chars.charAt(Math.floor(Math.random() * chars.length));
-            }
-
-            document.getElementById('generated-password').innerText = password;
-            updateStrengthMeter(password, length, incUpper, incNums, incSyms);
-        }
-
-        function updateStrengthMeter(password, length, hasUpper, hasNum, hasSym) {
-            const strengthText = document.getElementById('strength-text');
-            const strengthBar = document.getElementById('strength-bar');
-            
-            let score = 0;
-            if (length >= 12) score += 1;
-            if (length >= 16) score += 1;
-            if (hasUpper) score += 1;
-            if (hasNum) score += 1;
-            if (hasSym) score += 1;
-
-            if (score <= 2) {
-                strengthText.innerText = "WEAK";
-                strengthText.className = "text-weak";
-                strengthBar.style.width = "25%";
-                strengthBar.style.background = "#ef4444"; // Red
-                strengthBar.style.boxShadow = "0 0 10px #ef4444";
-            } else if (score === 3 || score === 4) {
-                strengthText.innerText = "GOOD";
-                strengthText.className = "text-medium";
-                strengthBar.style.width = "65%";
-                strengthBar.style.background = "#f59e0b"; // Orange/Yellow
-                strengthBar.style.boxShadow = "0 0 10px #f59e0b";
-            } else {
-                strengthText.innerText = "UNBREAKABLE";
-                strengthText.className = "text-strong";
-                strengthBar.style.width = "100%";
-                strengthBar.style.background = "#10b981"; // Neon Green
-                strengthBar.style.boxShadow = "0 0 15px #10b981";
-            }
-        }
-
-        // 🛠️ The Missing copyPassword() Function - Restored!
-        function copyPassword() {
-            const passText = document.getElementById('generated-password').innerText;
-            navigator.clipboard.writeText(passText).then(() => {
-                showCyberToast("🔒 Password copied securely to mainframe!");
-            });
-        }
-        
-        window.onload = function() {
-            generatePassword();
-        };
-
         // 5. FAQ Accordion Logic
         document.addEventListener('DOMContentLoaded', () => {
             const faqItems = document.querySelectorAll('.faq-item');
@@ -2612,69 +2315,7 @@
                 document.title = originalTitle;
             }
         });
-
-        // 9. Phantomix Terminal Logic
-        const words = ["phantomix", "diamondmax", "startup", "developer", "server", "cyber", "network", "cloud", "security", "innovation", "code", "founder", "speed", "data", "system", "encryption", "stealth"];
         
-        let timeLeft = 30;
-        let timeInterval;
-        let isPlaying = false;
-        let score = 0;
-        let currentWord = "";
-
-        const wordDisplay = document.getElementById("word-display");
-        const typeInput = document.getElementById("type-input");
-        const timeDisplay = document.getElementById("time-left");
-        const scoreDisplay = document.getElementById("wpm-score");
-        const startBtn = document.getElementById("start-btn");
-
-        function startTypingTest() {
-            if(isPlaying) return;
-            isPlaying = true;
-            timeLeft = 30;
-            score = 0;
-            scoreDisplay.innerText = "0";
-            typeInput.disabled = false;
-            typeInput.value = "";
-            typeInput.focus();
-            startBtn.innerText = "Playing...";
-            
-            showNextWord();
-            
-            timeInterval = setInterval(() => {
-                timeLeft--;
-                timeDisplay.innerText = timeLeft + "s";
-                
-                if (timeLeft === 0) {
-                    clearInterval(timeInterval);
-                    endGame();
-                }
-            }, 1000);
-        }
-
-        function showNextWord() {
-            const randomIndex = Math.floor(Math.random() * words.length);
-            currentWord = words[randomIndex];
-            wordDisplay.innerText = currentWord;
-        }
-
-        typeInput.addEventListener("input", () => {
-            if (typeInput.value.trim() === currentWord) {
-                score++;
-                scoreDisplay.innerText = (score * 2); 
-                typeInput.value = "";
-                showNextWord();
-            }
-        });
-
-        function endGame() {
-            isPlaying = false;
-            typeInput.disabled = true;
-            wordDisplay.innerText = "Test Over!";
-            startBtn.innerHTML = '<i class="fas fa-redo"></i> Try Again';
-            timeDisplay.innerText = "0s";
-        }
-
         // 10. Animated Stats Counter Logic
         const counters = document.querySelectorAll('.counter');
         const speed = 100;
@@ -2904,10 +2545,8 @@
                 <h4>Quick Links</h4>
                 <a href="#hero-section">Home</a>
                 <a href="#features-section">Features</a>
-                <a href="team.html" style="color: #0ea5e9; font-weight: bold;">Team Core</a> <a href="#vault-section">Diamond-Vault</a>
+                <a href="team.html" style="color: #0ea5e9; font-weight: bold;">Team Core</a>
                 <a href="apps">Our Apps</a>
-                <a href="#vault-section">Diamond-Vault</a>
-                <a href="#terminal-section">Terminal</a>
                 <a href="#roadmap-section">Roadmap</a>
                 <a href="refer.html">Refer & Earn</a>
             </div>
@@ -2937,19 +2576,7 @@
         <p style="font-size: 18px; margin: 5px 0;">> WELCOME TO THE PHANTOMIX MAINFRAME, ELITE FOUNDER.</p>
         <p style="color: #64748b; font-size: 14px; margin-top: 30px; animation: blink 1s infinite;">[ Access Granted - Automatically closing in 5s... ]</p>
     </div>
-
-    <section class="phantomix-section scroll-reveal" style="max-width: 800px; padding-top: 10px; padding-bottom: 10px;">
-        <div class="ad-placeholder-box">
-            <span class="ad-tag">SPONSORED NODE / ADS</span>
-            <div id="ad-content-area">
-                <p style="color: #64748b; font-size: 14px; margin: 0; font-family: monospace;">
-                    ⚡ Partner with Phantomix. High-traffic developer audience slot available. 
-                    <a href="#investor-section" style="color: #0ea5e9; text-decoration: none; font-weight: bold;">[ Rent This Slot ]</a>
-                </p>
-            </div>
-        </div>
-    </section>
-
+    
     <script>
         setTimeout(() => {
             console.clear();
