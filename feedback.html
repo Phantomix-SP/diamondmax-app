@@ -212,7 +212,7 @@
             });
         });
 
-        // 🚀 Real Form Submission Logic (Webhook Ready)
+        // 🚀 Real Form Submission Logic
         async function submitForm(type) {
             let payload = {};
             let btn, successMsg;
@@ -254,22 +254,17 @@
             btn.disabled = true;
             btn.style.opacity = "0.7";
 
-            // 3. API Request (To Your Backend/Webhook)
+            // 3. API Request (To Google Apps Script)
             const WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbw4r5LM0L1i9sKRm_ztKHjnYZtQWZKvHjIoownCM90Qr0osNuY3BOLQ-jl-b9iyw_PRRQ/exec"; 
 
             try {
+                // Sending data with 'text/plain' to bypass Google CORS strict policies
                 const response = await fetch(WEBHOOK_URL, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
                     body: JSON.stringify(payload)
                 });
                 
-                if(!response.ok) throw new Error("Network response was not ok");
-                */
-
-                // Simulated network delay for now
-                await new Promise(resolve => setTimeout(resolve, 1000));
-
                 // 4. Success UI
                 btn.style.display = 'none';
                 successMsg.style.display = 'block';
