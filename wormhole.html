@@ -220,14 +220,13 @@
 
         // Initialize PeerJS
         function initPeer() {
-            // Using public peerjs server for signaling
             peer = new Peer(myID);
 
             peer.on('open', (id) => {
                 myIdDisplay.innerText = `${id.substring(0,3)} ${id.substring(3)}`;
-                connStatus.innerText = "Node active and waiting for connections.";
+                connStatus.innerText = "Node active. Share PIN or scan QR to connect.";
                 
-                // Generate QR Code
+                // Generate QR Code Instantly
                 new QRCode(qrcodeContainer, {
                     text: id,
                     width: 120, height: 120,
@@ -256,7 +255,7 @@
             });
 
             peer.on('error', (err) => {
-                connStatus.innerText = `Error: ${err.type}`;
+                connStatus.innerText = `Error: ${err.type}. Try reloading.`;
                 connStatus.style.color = "#ef4444";
             });
         }
@@ -310,7 +309,6 @@
             
             const conn = peer.connect(targetId, { reliable: true });
             conn.on('open', () => {
-                // Connection opened, waiting for handshake via 'data' event listener
                 setupActiveConnection(conn);
             });
         }
@@ -334,28 +332,24 @@
             }
         });
 
-        // Handle Multiple File Selection & Sending with Size Limit
+        // ✅ FIXED: Clean Multiple File Upload Logic
         fileInput.addEventListener('change', async (e) => {
             const files = e.target.files;
             if (!files.length || !activeConnection) return;
 
-            // 🚀 Set File Limit (Browser RAM protection)
-            const MAX_SIZE_MB = 500; // User can send files up to 500MB
+            const MAX_SIZE_MB = 500; 
             const MAX_BYTES = MAX_SIZE_MB * 1024 * 1024;
 
             for (let i = 0; i < files.length; i++) {
                 const file = files[i];
 
-                // Size Limit Check
                 if (file.size > MAX_BYTES) {
                     logMsg(`⚠️ Skipped ${file.name}. Size exceeds ${MAX_SIZE_MB}MB limit.`);
-                    connStatus.style.color = "#ef4444";
-                    continue; // Is file ko chhod kar agli file par jao
+                    continue; 
                 }
 
                 logMsg(`Sending ${file.name}...`);
                 
-                // Convert File to ArrayBuffer and Send
                 const reader = new FileReader();
                 reader.onload = function(event) {
                     const arrayBuffer = event.target.result;
@@ -367,22 +361,8 @@
                 };
                 reader.readAsArrayBuffer(file);
 
-                // Ek chota pause taaki multiple files bhete waqt WebRTC buffer jam na ho
                 await new Promise(resolve => setTimeout(resolve, 800));
             }
-        });
-            
-            // Convert File to ArrayBuffer to send reliably over WebRTC
-            const reader = new FileReader();
-            reader.onload = function(event) {
-                const arrayBuffer = event.target.result;
-                activeConnection.send({
-                    file: arrayBuffer,
-                    filename: file.name
-                });
-                logMsg("File sent successfully!", true);
-            };
-            reader.readAsArrayBuffer(file);
         });
 
         function formatBytes(bytes) {
@@ -395,7 +375,6 @@
 
         // Start Peer Node on load
         window.onload = initPeer;
-
     </script>
 </body>
 </html>
