@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phantom-Trade | Gift Card Exchange</title>
+    
+    <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/phantomix-dev/phantomix-dev.github.io/main/assets/favicon.png">
+    <meta name="description" content="Trade your unused gift cards for Crypto or UPI instantly on the Phantomix network.">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Courier+New:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        ::selection { background-color: #f43f5e; color: #ffffff; }
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #020617; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #f43f5e; }
+
+        body {
+            background-color: #020617; color: #ffffff;
+            font-family: 'Poppins', sans-serif;
+            margin: 0; padding: 0; padding-top: 80px; 
+            display: flex; flex-direction: column; min-height: 100vh;
+            background-image: radial-gradient(circle at 50% 10%, rgba(244, 63, 94, 0.05) 0%, transparent 60%);
+        }
+
+        /* Navbar */
+        .phantomix-navbar {
+            position: fixed; top: 0; left: 0; width: 100%; height: 70px;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 0 5%; background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(12px); border-bottom: 1px solid rgba(244, 63, 94, 0.2);
+            z-index: 1000; box-sizing: border-box;
+        }
+        .nav-logo { font-size: 20px; font-weight: 700; color: white; display: flex; align-items: center; text-decoration: none; }
+        .nav-actions { display: flex; gap: 12px; }
+        .nav-btn {
+            background: rgba(244, 63, 94, 0.1); color: #f43f5e; padding: 8px 18px;
+            border: 1px solid #f43f5e; border-radius: 6px; text-decoration: none;
+            font-size: 14px; font-weight: 600; transition: all 0.3s ease;
+        }
+        .nav-btn:hover { background: #f43f5e; color: white; box-shadow: 0 0 15px rgba(244, 63, 94, 0.4); }
+
+        /* Main Container */
+        .main-wrapper { flex-grow: 1; display: flex; justify-content: center; align-items: center; padding: 40px 20px; }
+        
+        .trade-container {
+            background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(244, 63, 94, 0.3);
+            border-radius: 16px; padding: 40px; width: 100%; max-width: 600px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.6); position: relative; overflow: hidden;
+        }
+
+        .header-section { text-align: center; margin-bottom: 30px; }
+        h2 { margin: 0 0 5px 0; color: #f8fafc; font-size: 28px; }
+        h2 span { color: #f43f5e; }
+        p.subtitle { color: #94a3b8; font-size: 14px; margin: 0; }
+
+        /* Brand Selector Grid */
+        .brand-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 25px;
+        }
+        .brand-card {
+            background: rgba(2, 6, 23, 0.6); border: 1px solid #334155; border-radius: 10px;
+            padding: 15px; text-align: center; cursor: pointer; transition: 0.3s;
+            color: #cbd5e1; font-size: 14px; font-weight: 600;
+        }
+        .brand-card i { font-size: 24px; margin-bottom: 8px; display: block; }
+        .brand-card.active {
+            border-color: #f43f5e; background: rgba(244, 63, 94, 0.1); color: #f43f5e;
+            box-shadow: 0 0 15px rgba(244, 63, 94, 0.2);
+        }
+        .brand-card:hover:not(.active) { border-color: #94a3b8; }
+
+        /* Inputs */
+        .input-group { margin-bottom: 20px; }
+        .input-group label { display: block; color: #94a3b8; font-size: 13px; margin-bottom: 8px; font-weight: 500; }
+        .cyber-input {
+            width: 100%; background: rgba(2, 6, 23, 0.8); border: 1px solid #334155;
+            color: #ffffff; padding: 12px 15px; border-radius: 8px; font-size: 15px;
+            font-family: inherit; box-sizing: border-box; outline: none; transition: 0.3s;
+        }
+        .cyber-input:focus { border-color: #f43f5e; box-shadow: 0 0 10px rgba(244, 63, 94, 0.2); }
+        .code-input { font-family: 'Courier New', monospace; font-size: 18px; letter-spacing: 2px; text-transform: uppercase; }
+
+        /* Payout Calculator Box */
+        .payout-box {
+            background: linear-gradient(135deg, rgba(2, 6, 23, 0.9), rgba(15, 23, 42, 0.9));
+            border: 1px dashed #f43f5e; border-radius: 10px; padding: 20px;
+            margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center;
+        }
+        .payout-text { font-size: 14px; color: #cbd5e1; }
+        .payout-rate { font-size: 12px; color: #10b981; margin-top: 5px; }
+        .payout-amount { font-size: 28px; font-weight: 700; color: #f43f5e; font-family: 'Courier New', monospace; }
+
+        .action-btn {
+            width: 100%; padding: 16px; background: linear-gradient(135deg, #f43f5e, #e11d48);
+            color: #fff; border: none; border-radius: 8px; font-size: 16px; font-weight: 700;
+            cursor: pointer; transition: 0.3s; display: flex; justify-content: center; align-items: center; gap: 10px;
+        }
+        .action-btn:hover { box-shadow: 0 0 20px rgba(244, 63, 94, 0.4); transform: translateY(-2px); }
+
+        /* Secure Badge */
+        .secure-badge { text-align: center; margin-top: 15px; font-size: 12px; color: #64748b; }
+        .secure-badge i { color: #10b981; margin-right: 5px; }
+
+        /* Toast */
+        #trade-toast { display: none; position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: #020617; border: 1px solid #10b981; color: #10b981; padding: 12px 24px; border-radius: 30px; font-size: 14px; font-weight: 600; z-index: 10000; box-shadow: 0 0 20px rgba(16, 185, 129, 0.3); }
+
+        /* Footer */
+        .phantomix-footer { background: #020617; border-top: 1px solid rgba(244, 63, 94, 0.2); padding: 30px 5%; margin-top: auto; font-size: 13px; color: #64748b; text-align: center; width: 100%; box-sizing: border-box; }
+        
+        @media (max-width: 600px) { .brand-grid { grid-template-columns: 1fr 1fr; } }
+    </style>
+</head>
+<body>
+
+    <nav class="phantomix-navbar">
+        <a href="index.html" class="nav-logo"><i class="fa-solid fa-gem" style="color: #f43f5e; margin-right: 8px;"></i> Phantomix</a>
+        <div class="nav-actions">
+            <a href="apps.html" class="nav-btn"><i class="fas fa-arrow-left"></i> Back to Hub</a>
+        </div>
+    </nav>
+
+    <div id="trade-toast"><i class="fas fa-check-circle"></i> Trade Request Submitted. Verification Pending!</div>
+
+    <div class="main-wrapper">
+        <div class="trade-container">
+            <div class="header-section">
+                <h2>Phantom <span>Trade</span></h2>
+                <p class="subtitle">Exchange unused gift cards for Crypto or UPI instantly.</p>
+            </div>
+
+            <div class="input-group">
+                <label>1. Select Gift Card Brand</label>
+                <div class="brand-grid">
+                    <div class="brand-card active" onclick="selectBrand(this, 0.85)" data-brand="Amazon">
+                        <i class="fab fa-amazon" style="color: #fbbf24;"></i> Amazon (85%)
+                    </div>
+                    <div class="brand-card" onclick="selectBrand(this, 0.80)" data-brand="Steam">
+                        <i class="fab fa-steam" style="color: #38bdf8;"></i> Steam (80%)
+                    </div>
+                    <div class="brand-card" onclick="selectBrand(this, 0.75)" data-brand="Google Play">
+                        <i class="fab fa-google-play" style="color: #34d399;"></i> Google (75%)
+                    </div>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label>2. Card Value (in USD)</label>
+                <input type="number" id="card-value" class="cyber-input" placeholder="e.g. 100" min="10" oninput="calculatePayout()">
+            </div>
+
+            <div class="payout-box">
+                <div>
+                    <div class="payout-text">Estimated Payout</div>
+                    <div class="payout-rate" id="rate-display">Platform Fee: 15%</div>
+                </div>
+                <div class="payout-amount">$<span id="payout-result">0.00</span></div>
+            </div>
+
+            <div class="input-group">
+                <label>3. Secure Card Code / PIN</label>
+                <input type="text" id="card-code" class="cyber-input code-input" placeholder="XXXX-XXXX-XXXX-XXXX" autocomplete="off" maxlength="20">
+            </div>
+
+            <div class="input-group">
+                <label>4. Payout Method (UPI ID / Crypto Wallet)</label>
+                <input type="text" id="payout-address" class="cyber-input" placeholder="Enter your receiving address">
+            </div>
+
+            <button class="action-btn" onclick="submitTrade()">
+                <i class="fas fa-exchange-alt"></i> Initialize Trade
+            </button>
+            
+            <div class="secure-badge">
+                <i class="fas fa-shield-alt"></i> 256-bit Encrypted Transaction. Checked by Phantomix AI.
+            </div>
+        </div>
+    </div>
+
+    <footer class="phantomix-footer">
+        <p>&copy; 2026 Phantomix. All rights reserved. Built with passion.</p>
+    </footer>
+
+    <script>
+        let currentRate = 0.85; // Default Amazon rate
+        let selectedBrand = "Amazon";
+
+        function selectBrand(element, rate) {
+            // Remove active class from all
+            document.querySelectorAll('.brand-card').forEach(card => card.classList.remove('active'));
+            // Add active class to clicked
+            element.classList.add('active');
+            
+            currentRate = rate;
+            selectedBrand = element.getAttribute('data-brand');
+            
+            const feePercent = Math.round((1 - rate) * 100);
+            document.getElementById('rate-display').innerText = `Platform Fee: ${feePercent}%`;
+            
+            calculatePayout();
+        }
+
+        function calculatePayout() {
+            const valueInput = document.getElementById('card-value').value;
+            const payoutSpan = document.getElementById('payout-result');
+            
+            if (valueInput && valueInput > 0) {
+                const payout = (valueInput * currentRate).toFixed(2);
+                payoutSpan.innerText = payout;
+            } else {
+                payoutSpan.innerText = "0.00";
+            }
+        }
+
+        function submitTrade() {
+            const value = document.getElementById('card-value').value;
+            const code = document.getElementById('card-code').value;
+            const address = document.getElementById('payout-address').value;
+
+            if (!value || !code || !address) {
+                alert("Please fill in all fields to process the trade.");
+                return;
+            }
+
+            // Mock Processing Delay
+            const btn = document.querySelector('.action-btn');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Encrypting Data...';
+            btn.style.pointerEvents = 'none';
+
+            setTimeout(() => {
+                // Show Success Toast
+                const toast = document.getElementById('trade-toast');
+                toast.style.display = 'block';
+                setTimeout(() => { toast.style.display = 'none'; }, 4000);
+
+                // Reset Form
+                document.getElementById('card-value').value = '';
+                document.getElementById('card-code').value = '';
+                document.getElementById('payout-address').value = '';
+                calculatePayout();
+
+                // Reset Button
+                btn.innerHTML = originalText;
+                btn.style.pointerEvents = 'auto';
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
