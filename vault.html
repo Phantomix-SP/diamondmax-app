@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diamond-Vault | Phantomix</title>
+    
+    <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/phantomix-dev/phantomix-dev.github.io/main/assets/favicon.png">
+    <meta name="description" content="Diamond-Vault by Phantomix. Generate ultra-secure, unbreakable passwords offline.">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Courier+New&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        ::selection { background-color: #0ea5e9; color: #ffffff; }
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #020617; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #0ea5e9; }
+
+        body {
+            background-color: #020617; color: #ffffff;
+            font-family: 'Poppins', sans-serif;
+            margin: 0; padding: 0; padding-top: 80px; 
+            display: flex; flex-direction: column; min-height: 100vh;
+            background-image: radial-gradient(circle at 50% 50%, rgba(14, 165, 233, 0.05) 0%, transparent 50%);
+        }
+
+        /* Navbar */
+        .phantomix-navbar {
+            position: fixed; top: 0; left: 0; width: 100%; height: 70px;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 0 5%; background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(12px); border-bottom: 1px solid rgba(14, 165, 233, 0.2);
+            z-index: 1000; box-sizing: border-box;
+        }
+        .nav-logo { font-size: 20px; font-weight: 700; color: white; display: flex; align-items: center; text-decoration: none; }
+        .nav-actions { display: flex; gap: 12px; }
+        .nav-btn {
+            background: rgba(14, 165, 233, 0.1); color: #0ea5e9; padding: 8px 18px;
+            border: 1px solid #0ea5e9; border-radius: 6px; text-decoration: none;
+            font-size: 14px; font-weight: 600; transition: all 0.3s ease;
+        }
+        .nav-btn:hover { background: #0ea5e9; color: white; box-shadow: 0 0 15px rgba(14, 165, 233, 0.4); }
+
+        /* Main App Wrapper */
+        .main-wrapper {
+            flex-grow: 1; display: flex; justify-content: center; align-items: center; padding: 40px 20px;
+        }
+
+        .app-container {
+            background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(14, 165, 233, 0.3);
+            border-radius: 16px; padding: 40px 30px; width: 100%; max-width: 550px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5); text-align: center;
+        }
+
+        h2 { margin: 0 0 5px 0; color: #f8fafc; font-size: 28px; }
+        h2 span { color: #0ea5e9; }
+        p.subtitle { color: #94a3b8; font-size: 14px; margin-bottom: 30px; }
+
+        /* Vault Specific UI */
+        .password-display-box {
+            background: rgba(2, 6, 23, 0.9); border: 1px solid #334155;
+            padding: 20px; border-radius: 8px; display: flex; justify-content: space-between;
+            align-items: center; margin-bottom: 25px; font-family: 'Courier New', monospace;
+            font-size: 22px; color: #0ea5e9; letter-spacing: 2px; word-break: break-all;
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.5);
+        }
+        .copy-btn {
+            background: rgba(14, 165, 233, 0.1); border: 1px solid #0ea5e9; color: #0ea5e9;
+            font-size: 18px; cursor: pointer; transition: 0.3s; padding: 10px 15px; border-radius: 6px;
+        }
+        .copy-btn:hover { background: #0ea5e9; color: white; box-shadow: 0 0 15px rgba(14, 165, 233, 0.4); }
+
+        /* Strength Meter */
+        .strength-meter-container { background: rgba(2, 6, 23, 0.5); padding: 15px; border-radius: 8px; border: 1px solid rgba(51, 65, 85, 0.5); margin-bottom: 25px; text-align: left; }
+        .strength-labels { display: flex; justify-content: space-between; font-size: 12px; font-weight: bold; margin-bottom: 8px; color: #94a3b8; }
+        .strength-bar-bg { width: 100%; height: 6px; background: #020617; border-radius: 10px; overflow: hidden; }
+        .strength-bar-fill { height: 100%; width: 0%; border-radius: 10px; transition: all 0.4s ease; }
+        .text-weak { color: #ef4444; } .text-medium { color: #f59e0b; } .text-strong { color: #10b981; }
+
+        /* Controls */
+        .slider-group { text-align: left; margin-bottom: 25px; }
+        .phantom-slider { width: 100%; cursor: pointer; accent-color: #0ea5e9; }
+        
+        .checkbox-group { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; text-align: left; margin-bottom: 30px; }
+        .custom-checkbox { display: flex; align-items: center; gap: 10px; color: #cbd5e1; font-size: 14px; cursor: pointer; }
+        .custom-checkbox input { accent-color: #0ea5e9; width: 18px; height: 18px; cursor: pointer; }
+
+        .action-btn {
+            width: 100%; padding: 16px; background: linear-gradient(135deg, #0ea5e9, #3b82f6);
+            color: #fff; border: none; border-radius: 8px; font-size: 16px; font-weight: 700;
+            cursor: pointer; transition: 0.3s;
+        }
+        .action-btn:hover { box-shadow: 0 0 20px rgba(14, 165, 233, 0.4); transform: translateY(-2px); }
+
+        /* Toast */
+        #cyber-toast { display: none; position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: #020617; border: 1px solid #10b981; color: #10b981; padding: 12px 24px; border-radius: 30px; font-size: 14px; font-weight: 600; z-index: 10000; box-shadow: 0 0 20px rgba(16, 185, 129, 0.3); }
+
+        /* Footer */
+        .phantomix-footer { background: #020617; border-top: 1px solid rgba(14, 165, 233, 0.2); padding: 30px 5%; margin-top: auto; font-size: 13px; color: #64748b; text-align: center; width: 100%; box-sizing: border-box; }
+        
+        @media (max-width: 600px) { .checkbox-group { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+
+    <nav class="phantomix-navbar">
+        <a href="index.html" class="nav-logo"><i class="fa-solid fa-gem" style="color: #0ea5e9; margin-right: 8px;"></i> Phantomix</a>
+        <div class="nav-actions">
+            <a href="apps.html" class="nav-btn"><i class="fas fa-arrow-left"></i> Back to Hub</a>
+        </div>
+    </nav>
+
+    <div id="cyber-toast"><i class="fas fa-check-circle"></i> Password copied securely!</div>
+
+    <div class="main-wrapper">
+        <div class="app-container">
+            <h2>Diamond <span>Vault</span></h2>
+            <p class="subtitle"><i class="fas fa-shield-alt"></i> Quantum-grade offline password generator</p>
+
+            <div class="password-display-box">
+                <span id="generated-password">Generating...</span>
+                <button class="copy-btn" onclick="copyPassword()" title="Copy to Clipboard">
+                    <i class="far fa-copy"></i>
+                </button>
+            </div>
+
+            <div class="strength-meter-container">
+                <div class="strength-labels">
+                    <span>SECURITY LEVEL</span>
+                    <span id="strength-text" class="text-weak">WEAK</span>
+                </div>
+                <div class="strength-bar-bg">
+                    <div id="strength-bar" class="strength-bar-fill" style="background: #ef4444; width: 25%;"></div>
+                </div>
+            </div>
+
+            <div class="slider-group">
+                <label style="display: flex; justify-content: space-between; color: #cbd5e1; font-size: 14px; margin-bottom: 10px;">
+                    Password Length <span id="length-val" style="color: #0ea5e9; font-weight: bold;">16</span>
+                </label>
+                <input type="range" id="pass-length" min="8" max="64" value="16" class="phantom-slider" oninput="document.getElementById('length-val').innerText = this.value; generatePassword();">
+            </div>
+
+            <div class="checkbox-group">
+                <label class="custom-checkbox">
+                    <input type="checkbox" id="inc-uppercase" checked onchange="generatePassword()">
+                    <span>Uppercase (A-Z)</span>
+                </label>
+                <label class="custom-checkbox">
+                    <input type="checkbox" id="inc-numbers" checked onchange="generatePassword()">
+                    <span>Numbers (0-9)</span>
+                </label>
+                <label class="custom-checkbox">
+                    <input type="checkbox" id="inc-symbols" checked onchange="generatePassword()">
+                    <span>Symbols (!@#$)</span>
+                </label>
+                <label class="custom-checkbox">
+                    <input type="checkbox" id="inc-lowercase" checked disabled>
+                    <span style="opacity: 0.6;">Lowercase (a-z)</span>
+                </label>
+            </div>
+
+            <button class="action-btn" onclick="generatePassword()">
+                <i class="fas fa-bolt"></i> Generate Secure Password
+            </button>
+        </div>
+    </div>
+
+    <footer class="phantomix-footer">
+        <div style="margin-bottom: 15px; display: flex; justify-content: center; gap: 25px;">
+            <a href="support.html" style="color: #10b981; text-decoration: none; font-weight: 600; font-size: 14px;"><i class="fas fa-coffee"></i> Support Us</a>
+            <a href="feedback.html" style="color: #94a3b8; text-decoration: none; font-weight: 600; font-size: 14px;"><i class="fas fa-bug"></i> Feedback & Issues</a>
+        </div>
+        <p style="margin: 0;">&copy; 2026 Phantomix. All rights reserved. Built with passion.</p>
+    </footer>
+
+    <script>
+        function generatePassword() {
+            const length = document.getElementById('pass-length').value;
+            const incUpper = document.getElementById('inc-uppercase').checked;
+            const incNums = document.getElementById('inc-numbers').checked;
+            const incSyms = document.getElementById('inc-symbols').checked;
+
+            let chars = "abcdefghijklmnopqrstuvwxyz";
+            if (incUpper) chars += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            if (incNums) chars += "0123456789";
+            if (incSyms) chars += "!@#$%^&*()_+~`|}{[]:;?><,./-=";
+
+            let password = "";
+            const array = new Uint32Array(length);
+            window.crypto.getRandomValues(array);
+            
+            for (let i = 0; i < length; i++) {
+                password += chars[array[i] % chars.length];
+            }
+
+            document.getElementById('generated-password').innerText = password;
+            updateStrengthMeter(password, length, incUpper, incNums, incSyms);
+        }
+
+        function updateStrengthMeter(password, length, hasUpper, hasNum, hasSym) {
+            const strengthText = document.getElementById('strength-text');
+            const strengthBar = document.getElementById('strength-bar');
+            
+            let score = 0;
+            if (length >= 12) score += 1;
+            if (length >= 16) score += 2;
+            if (hasUpper) score += 1;
+            if (hasNum) score += 1;
+            if (hasSym) score += 1;
+
+            if (score <= 2) {
+                strengthText.innerText = "WEAK";
+                strengthText.className = "text-weak";
+                strengthBar.style.width = "25%";
+                strengthBar.style.background = "#ef4444";
+                strengthBar.style.boxShadow = "0 0 10px #ef4444";
+            } else if (score === 3 || score === 4) {
+                strengthText.innerText = "GOOD";
+                strengthText.className = "text-medium";
+                strengthBar.style.width = "65%";
+                strengthBar.style.background = "#f59e0b";
+                strengthBar.style.boxShadow = "0 0 10px #f59e0b";
+            } else {
+                strengthText.innerText = "UNBREAKABLE";
+                strengthText.className = "text-strong";
+                strengthBar.style.width = "100%";
+                strengthBar.style.background = "#10b981";
+                strengthBar.style.boxShadow = "0 0 15px #10b981";
+            }
+        }
+
+        function copyPassword() {
+            const passText = document.getElementById('generated-password').innerText;
+            navigator.clipboard.writeText(passText).then(() => {
+                const toast = document.getElementById('cyber-toast');
+                toast.style.display = 'block';
+                setTimeout(() => { toast.style.display = 'none'; }, 3000);
+            });
+        }
+
+        // Initialize on load
+        window.onload = generatePassword;
+    </script>
+</body>
+</html>
