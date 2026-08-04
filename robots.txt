@@ -1,4 +1,13 @@
+# ==========================================
+# Phantomix Ecosystem - Search Engine Directives
+# ==========================================
+
 User-agent: *
 Allow: /
 
+# Prevent indexing of backend or system files (if you add them later)
+Disallow: /*.json$
+Disallow: /*.md$
+
+# Provide the Sitemap location to crawlers
 Sitemap: https://phantomix-dev.github.io/sitemap.xml
