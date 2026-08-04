@@ -3,151 +3,144 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Phantomix | Refer & Earn</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <title>Refer & Earn | Phantomix</title>
+    
+    <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/phantomix-dev/phantomix-dev.github.io/main/assets/favicon.png">
+    <meta name="description" content="Phantomix Referral Program. Invite friends and unlock exclusive DiamondMax rewards and badges.">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
     <style>
+        ::selection { background-color: #0ea5e9; color: #ffffff; }
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #020617; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #0ea5e9; }
+
         body {
-            margin: 0; padding: 0; font-family: 'Poppins', sans-serif;
             background-color: #020617; color: #ffffff;
-            display: flex; justify-content: center; align-items: center; min-height: 100vh;
+            font-family: 'Poppins', sans-serif;
+            margin: 0; padding: 0; padding-top: 80px; 
+            display: flex; flex-direction: column; min-height: 100vh;
+            background-image: radial-gradient(circle at 50% 30%, rgba(139, 92, 246, 0.08) 0%, transparent 60%);
         }
-        .refer-box {
-            background: rgba(15, 23, 42, 0.9); border: 1px solid #0ea5e9;
-            border-radius: 20px; padding: 40px 30px; width: 100%; max-width: 420px;
-            text-align: center; box-shadow: 0 10px 40px rgba(14, 165, 233, 0.2);
+
+        /* Navbar */
+        .phantomix-navbar {
+            position: fixed; top: 0; left: 0; width: 100%; height: 70px;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 0 5%; background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(12px); border-bottom: 1px solid rgba(139, 92, 246, 0.2);
+            z-index: 1000; box-sizing: border-box;
         }
-        .title { font-size: 26px; font-weight: 800; color: #f8fafc; margin-bottom: 8px; }
-        .subtitle { color: #94a3b8; font-size: 13px; margin-bottom: 25px; line-height: 1.5; }
+        .nav-logo { font-size: 20px; font-weight: 700; color: white; display: flex; align-items: center; text-decoration: none; }
+        .nav-actions { display: flex; gap: 12px; }
+        .nav-btn {
+            background: rgba(139, 92, 246, 0.1); color: #c084fc; padding: 8px 18px;
+            border: 1px solid #8b5cf6; border-radius: 6px; text-decoration: none;
+            font-size: 14px; font-weight: 600; transition: all 0.3s ease;
+        }
+        .nav-btn:hover { background: #8b5cf6; color: white; box-shadow: 0 0 15px rgba(139, 92, 246, 0.4); }
+
+        /* Main Container */
+        .main-wrapper { flex-grow: 1; display: flex; justify-content: center; align-items: center; padding: 40px 20px; }
         
-        .input-group { text-align: left; margin-bottom: 18px; }
-        .input-group label { display: block; font-size: 12px; color: #0ea5e9; font-weight: 600; margin-bottom: 5px; }
-        .input-group input {
-            width: 100%; padding: 12px 15px; border-radius: 10px;
-            background: rgba(2, 6, 23, 0.6); border: 1px solid rgba(51, 65, 85, 0.8);
-            color: white; font-size: 14px; outline: none; box-sizing: border-box;
+        .refer-card {
+            background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 16px; padding: 40px 30px; width: 100%; max-width: 650px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.6); text-align: center; position: relative;
         }
-        .input-group input:focus { border-color: #0ea5e9; }
-        .input-group input[readonly] { background: rgba(14, 165, 233, 0.1); color: #38bdf8; border-color: rgba(14, 165, 233, 0.4); }
 
-        .btn-submit {
-            width: 100%; padding: 14px; background: #0ea5e9; color: white;
-            border: none; border-radius: 10px; font-weight: bold; font-size: 15px;
-            cursor: pointer; transition: 0.3s; margin-top: 10px;
+        .badge-coming-soon {
+            display: inline-block; background: rgba(245, 158, 11, 0.15); color: #f59e0b;
+            border: 1px solid rgba(245, 158, 11, 0.4); padding: 6px 16px; border-radius: 20px;
+            font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 20px;
         }
-        .btn-submit:hover { background: #0284c7; box-shadow: 0 0 15px rgba(14, 165, 233, 0.4); }
 
-        .generator-section {
-            margin-top: 25px; padding-top: 20px; border-top: 1px dashed rgba(51, 65, 85, 0.8);
+        h2 { margin: 0 0 10px 0; color: #f8fafc; font-size: 32px; }
+        h2 span { color: #c084fc; }
+        p.subtitle { color: #94a3b8; font-size: 15px; margin-bottom: 35px; line-height: 1.6; }
+
+        /* Rewards Tier Preview Grid */
+        .rewards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 20px; margin-bottom: 35px; text-align: left; }
+        .tier-box {
+            background: rgba(2, 6, 23, 0.6); border: 1px solid rgba(51, 65, 85, 0.6);
+            padding: 20px; border-radius: 12px; transition: 0.3s;
         }
+        .tier-box:hover { border-color: #8b5cf6; transform: translateY(-3px); }
+        .tier-box i { font-size: 24px; color: #c084fc; margin-bottom: 12px; }
+        .tier-box h4 { margin: 0 0 5px 0; color: #f8fafc; font-size: 15px; }
+        .tier-box p { margin: 0; color: #94a3b8; font-size: 12px; line-height: 1.5; }
+
+        /* Lock Notice */
+        .lock-notice {
+            background: rgba(2, 6, 23, 0.5); border: 1px dashed rgba(139, 92, 246, 0.3);
+            padding: 20px; border-radius: 10px; font-size: 13px; color: #cbd5e1; margin-bottom: 30px;
+        }
+
+        .action-btn {
+            display: inline-block; width: 100%; padding: 15px; background: linear-gradient(135deg, #8b5cf6, #3b82f6);
+            color: #fff; border: none; border-radius: 8px; font-size: 16px; font-weight: 700;
+            cursor: pointer; transition: 0.3s; text-decoration: none; box-sizing: border-box;
+        }
+        .action-btn:hover { box-shadow: 0 0 20px rgba(139, 92, 246, 0.4); transform: translateY(-2px); }
+
+        /* Footer */
+        .phantomix-footer { background: #020617; border-top: 1px solid rgba(139, 92, 246, 0.2); padding: 30px 5%; margin-top: auto; font-size: 13px; color: #64748b; text-align: center; width: 100%; box-sizing: border-box; }
     </style>
 </head>
 <body>
 
-    <div class="refer-box">
-        <div style="font-size: 40px; color: #0ea5e9; margin-bottom: 10px;">
-            <i class="fas fa-user-plus"></i>
+    <nav class="phantomix-navbar">
+        <a href="index.html" class="nav-logo"><i class="fa-solid fa-gem" style="color: #c084fc; margin-right: 8px;"></i> Phantomix</a>
+        <div class="nav-actions">
+            <a href="apps.html" class="nav-btn"><i class="fas fa-arrow-left"></i> Back to Hub</a>
         </div>
-        
-        <h2 class="title" id="pageHeading">Join via Referral</h2>
-        <p class="subtitle" id="pageSub">Enter your details to register under your inviter's referral code.</p>
+    </nav>
 
-        <form id="referralForm" onsubmit="submitReferral(event)">
-            <div class="input-group">
-                <label><i class="fas fa-tag"></i> REFERRED BY (CODE)</label>
-                <input type="text" id="refCodeInput" placeholder="No referral code detected" required>
+    <div class="main-wrapper">
+        <div class="refer-card">
+            <span class="badge-coming-soon"><i class="fas fa-hourglass-half"></i> Launching In Phase 3</span>
+            <h2>Refer & <span>Earn</span></h2>
+            <p class="subtitle">Invite your circle to the DiamondMax network. Multiply your influence and unlock exclusive founder rewards upon launch.</p>
+
+            <div class="rewards-grid">
+                <div class="tier-box">
+                    <i class="fas fa-user-plus"></i>
+                    <h4>Invite 5 Friends</h4>
+                    <p>Unlock Alpha Tester Badge & Skip Waitlist Line.</p>
+                </div>
+                <div class="tier-box">
+                    <i class="fas fa-crown"></i>
+                    <h4>Invite 15 Friends</h4>
+                    <p>1-Month Free DiamondMax Premium Pass.</p>
+                </div>
+                <div class="tier-box">
+                    <i class="fas fa-gem"></i>
+                    <h4>Invite 50 Friends</h4>
+                    <p>Founder Discord Role + Special Gift Card Vouchers.</p>
+                </div>
             </div>
 
-            <div class="input-group">
-                <label><i class="fas fa-user"></i> YOUR FULL NAME</label>
-                <input type="text" id="userNameInput" placeholder="e.g. Rahul Sharma" required>
+            <div class="lock-notice">
+                <i class="fas fa-shield-cat" style="color: #f59e0b; margin-right: 8px;"></i>
+                <b>Anti-Cheat Engine Active:</b> Verified IP tracking and device fingerprinting will ensure 100% fair reward distribution when the referral engine goes live.
             </div>
 
-            <div class="input-group">
-                <label><i class="fas fa-envelope"></i> YOUR EMAIL ADDRESS</label>
-                <input type="email" id="userEmailInput" placeholder="name@example.com" required>
-            </div>
-
-            <button type="submit" class="btn-submit" id="submitBtn">Submit & Continue 🚀</button>
-        </form>
-
-        <div class="generator-section" id="generatorArea" style="display: none;">
-            <p style="color: #94a3b8; font-size: 13px; margin-bottom: 10px;">Want to invite others? Enter your Name/ID to generate link:</p>
-            <div style="display: flex; gap: 10px;">
-                <input type="text" id="myCodeInput" placeholder="Your Name or ID" style="flex: 1; padding: 10px; border-radius: 8px; background: #020617; border: 1px solid #334155; color: white;">
-                <button onclick="generateLink()" style="background: #8b5cf6; color: white; border: none; padding: 10px 15px; border-radius: 8px; cursor: pointer; font-weight: bold;">Copy Link</button>
-            </div>
+            <a href="index.html#waitlist-section" class="action-btn">
+                <i class="fas fa-rocket" style="margin-right: 8px;"></i> Join Waitlist First
+            </a>
         </div>
-        
-        <a href="index.html" style="display: inline-block; margin-top: 20px; color: #64748b; text-decoration: none; font-size: 13px;"><i class="fas fa-arrow-left"></i> Back to Home</a>
     </div>
 
-    <script>
-         const SUPABASE_URL = "https://pekmsttmosuzcvielala.supabase.co";
-        const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBla21zdHRtb3N1emN2aWVsYWxhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODM0MjY4NDUsImV4cCI6MjA5OTAwMjg0NX0.D0akjMO2d5sYhgbSy8IIFJT4sPHGO_Lm9r1YMWM_uUc";
-       
-        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    <footer class="phantomix-footer">
+        <div style="margin-bottom: 15px; display: flex; justify-content: center; gap: 25px;">
+            <a href="support.html" style="color: #10b981; text-decoration: none; font-weight: 600; font-size: 14px;"><i class="fas fa-coffee"></i> Support Us</a>
+            <a href="feedback.html" style="color: #94a3b8; text-decoration: none; font-weight: 600; font-size: 14px;"><i class="fas fa-bug"></i> Feedback & Issues</a>
+        </div>
+        <p style="margin: 0;">&copy; 2026 Phantomix. All rights reserved. Built with passion.</p>
+    </footer>
 
-        // 1. URL se 'ref' parameter check karna
-        const urlParams = new URLSearchParams(window.location.search);
-        const refCode = urlParams.get('ref');
-
-        const refInput = document.getElementById('refCodeInput');
-        const generatorArea = document.getElementById('generatorArea');
-
-        if (refCode) {
-            // Agar link mein referral code hai (?ref=SHRIKANT)
-            refInput.value = refCode;
-            refInput.setAttribute('readonly', 'true'); // Code lock ho jayega
-        } else {
-            // Agar koi direct refer.html kholta hai
-            document.getElementById('pageHeading').innerText = "Referral Program";
-            document.getElementById('pageSub').innerText = "Share your referral link with friends or enter a referral code manually.";
-            generatorArea.style.display = 'block'; // Link Generator dikhao
-        }
-
-        // 2. Data Supabase mein submit karna
-        async function submitReferral(e) {
-            e.preventDefault();
-            
-            const btn = document.getElementById('submitBtn');
-            btn.innerText = "Registering...";
-            btn.style.opacity = "0.7";
-
-            const referrer = document.getElementById('refCodeInput').value;
-            const name = document.getElementById('userNameInput').value;
-            const email = document.getElementById('userEmailInput').value;
-
-            // Supabase mein insert
-            const { data, error } = await supabase
-                .from('referrals')
-                .insert([
-                    { referrer_code: referrer, new_user_name: name, new_user_email: email }
-                ]);
-
-            if (error) {
-                alert("Error saving referral: " + error.message);
-                btn.innerText = "Submit & Continue 🚀";
-                btn.style.opacity = "1";
-            } else {
-                alert("Registration successful via referral!");
-                // Direct main page par redirect
-                window.location.href = "index.html";
-            }
-        }
-
-        // 3. Apne naam se link generate karke copy karna
-        function generateLink() {
-            const myCode = document.getElementById('myCodeInput').value.trim();
-            if (!myCode) {
-                alert("Please enter your Name or ID first!");
-                return;
-            }
-            const fullLink = `${window.location.origin}${window.location.pathname}?ref=${encodeURIComponent(myCode)}`;
-            navigator.clipboard.writeText(fullLink);
-            alert("Referral link copied to clipboard:\n" + fullLink);
-        }
-    </script>
 </body>
 </html>
