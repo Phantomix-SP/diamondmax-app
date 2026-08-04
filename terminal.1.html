@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terminal Speed Test | Phantomix</title>
+    
+    <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/phantomix-dev/phantomix-dev.github.io/main/assets/favicon.png">
+    <meta name="description" content="Test your typing speed on the Phantomix Terminal. Are you faster than a DiamondMax server?">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Courier+New:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        ::selection { background-color: #10b981; color: #020617; }
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #020617; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #10b981; }
+
+        body {
+            background-color: #020617; color: #ffffff;
+            font-family: 'Poppins', sans-serif;
+            margin: 0; padding: 0; padding-top: 80px; 
+            display: flex; flex-direction: column; min-height: 100vh;
+            background-image: radial-gradient(circle at 50% 50%, rgba(16, 185, 129, 0.05) 0%, transparent 50%);
+        }
+
+        /* Navbar */
+        .phantomix-navbar {
+            position: fixed; top: 0; left: 0; width: 100%; height: 70px;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 0 5%; background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(12px); border-bottom: 1px solid rgba(16, 185, 129, 0.2);
+            z-index: 1000; box-sizing: border-box;
+        }
+        .nav-logo { font-size: 20px; font-weight: 700; color: white; display: flex; align-items: center; text-decoration: none; }
+        .nav-actions { display: flex; gap: 12px; }
+        .nav-btn {
+            background: rgba(16, 185, 129, 0.1); color: #10b981; padding: 8px 18px;
+            border: 1px solid #10b981; border-radius: 6px; text-decoration: none;
+            font-size: 14px; font-weight: 600; transition: all 0.3s ease;
+        }
+        .nav-btn:hover { background: #10b981; color: #020617; box-shadow: 0 0 15px rgba(16, 185, 129, 0.4); }
+
+        /* Main App Wrapper */
+        .main-wrapper {
+            flex-grow: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 40px 20px;
+        }
+
+        .header-text { text-align: center; margin-bottom: 30px; }
+        .header-text h2 { margin: 0 0 5px 0; color: #f8fafc; font-size: 32px; }
+        .header-text h2 span { color: #10b981; text-shadow: 0 0 15px rgba(16, 185, 129, 0.3); }
+        .header-text p { color: #94a3b8; font-size: 15px; margin: 0; }
+
+        /* Terminal UI */
+        .terminal-container {
+            background: rgba(2, 6, 23, 0.95); border: 1px solid rgba(16, 185, 129, 0.4);
+            border-radius: 12px; padding: 30px; width: 100%; max-width: 600px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.8), inset 0 0 20px rgba(16, 185, 129, 0.05);
+            font-family: 'Courier New', Courier, monospace; text-align: left;
+        }
+
+        .terminal-header {
+            display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px dashed rgba(16, 185, 129, 0.3); padding-bottom: 15px; margin-bottom: 25px;
+        }
+        .cmd-text { color: #cbd5e1; font-size: 15px; }
+        .cmd-text span { color: #10b981; }
+        .timer { color: #ef4444; font-weight: bold; font-size: 18px; animation: pulse 1s infinite; }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        .word-display {
+            font-size: 32px; color: #10b981; margin-bottom: 25px; letter-spacing: 3px;
+            min-height: 40px; font-weight: 700; text-align: center;
+            text-shadow: 0 0 10px rgba(16, 185, 129, 0.4);
+        }
+
+        .terminal-input {
+            width: 100%; background: transparent; border: none; border-bottom: 2px solid #334155;
+            color: #ffffff; font-size: 24px; font-family: inherit; padding: 10px 0; outline: none;
+            text-align: center; transition: border-color 0.3s ease; letter-spacing: 2px;
+        }
+        .terminal-input:focus { border-bottom-color: #10b981; }
+        .terminal-input:disabled { opacity: 0.5; }
+
+        .terminal-footer {
+            display: flex; justify-content: space-between; align-items: center; margin-top: 30px;
+        }
+        .score-board { color: #94a3b8; font-size: 20px; font-weight: 600; font-family: 'Poppins', sans-serif; }
+        .score-board span { color: #10b981; font-size: 28px; }
+
+        .action-btn {
+            background: rgba(16, 185, 129, 0.15); color: #10b981; border: 1px solid #10b981;
+            padding: 12px 25px; border-radius: 6px; font-family: 'Poppins', sans-serif;
+            font-weight: 700; font-size: 15px; cursor: pointer; transition: all 0.3s ease;
+        }
+        .action-btn:hover { background: #10b981; color: #020617; box-shadow: 0 0 20px rgba(16, 185, 129, 0.5); }
+
+        /* Footer */
+        .phantomix-footer { background: #020617; border-top: 1px solid rgba(16, 185, 129, 0.2); padding: 30px 5%; margin-top: auto; font-size: 13px; color: #64748b; text-align: center; width: 100%; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        
+        @media (max-width: 600px) {
+            .terminal-header { flex-direction: column; gap: 10px; text-align: center; }
+            .word-display { font-size: 24px; }
+            .terminal-footer { flex-direction: column; gap: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="phantomix-navbar">
+        <a href="index.html" class="nav-logo"><i class="fa-solid fa-gem" style="color: #10b981; margin-right: 8px;"></i> Phantomix</a>
+        <div class="nav-actions">
+            <a href="apps.html" class="nav-btn"><i class="fas fa-arrow-left"></i> Back to Hub</a>
+        </div>
+    </nav>
+
+    <div class="main-wrapper">
+        <div class="header-text">
+            <h2>Phantomix <span>Terminal</span></h2>
+            <p>Prove your speed. Type the code words before the system locks.</p>
+        </div>
+
+        <div class="terminal-container">
+            <div class="terminal-header">
+                <div class="cmd-text"><span>user@phantomix:~$</span> ./speed_test.sh</div>
+                <div class="timer" id="time-left">00:30</div>
+            </div>
+            
+            <div class="word-display" id="word-display">READY_</div>
+            
+            <input type="text" class="terminal-input" id="type-input" placeholder="> Type here..." autocomplete="off" spellcheck="false" disabled>
+            
+            <div class="terminal-footer">
+                <div class="score-board">
+                    Score: <span id="wpm-score">0</span> WPM
+                </div>
+                <button class="action-btn" id="start-btn" onclick="startTypingTest()">
+                    <i class="fas fa-play"></i> Initialize Test
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="phantomix-footer">
+        <p>&copy; 2026 Phantomix. All rights reserved. Built with passion.</p>
+    </footer>
+
+    <script>
+        const words = [
+            "phantomix", "diamondmax", "startup", "developer", "server", "cyber", 
+            "network", "cloud", "security", "innovation", "code", "founder", 
+            "speed", "data", "system", "encryption", "stealth", "mainframe", 
+            "algorithm", "backend", "quantum", "protocol", "node", "firewall", 
+            "latency", "bandwidth", "database", "analytics", "deploy", "terminal"
+        ];
+        
+        let timeLeft = 30;
+        let timeInterval;
+        let isPlaying = false;
+        let score = 0;
+        let currentWord = "";
+
+        const wordDisplay = document.getElementById("word-display");
+        const typeInput = document.getElementById("type-input");
+        const timeDisplay = document.getElementById("time-left");
+        const scoreDisplay = document.getElementById("wpm-score");
+        const startBtn = document.getElementById("start-btn");
+
+        function startTypingTest() {
+            if(isPlaying) return;
+            isPlaying = true;
+            timeLeft = 30;
+            score = 0;
+            scoreDisplay.innerText = "0";
+            typeInput.disabled = false;
+            typeInput.value = "";
+            typeInput.focus();
+            startBtn.innerHTML = "<i class='fas fa-keyboard'></i> Hacking...";
+            startBtn.style.pointerEvents = "none";
+            startBtn.style.opacity = "0.7";
+            
+            showNextWord();
+            
+            timeDisplay.innerText = "00:" + (timeLeft < 10 ? "0" : "") + timeLeft;
+            
+            timeInterval = setInterval(() => {
+                timeLeft--;
+                timeDisplay.innerText = "00:" + (timeLeft < 10 ? "0" : "") + timeLeft;
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timeInterval);
+                    endGame();
+                }
+            }, 1000);
+        }
+
+        function showNextWord() {
+            const randomIndex = Math.floor(Math.random() * words.length);
+            currentWord = words[randomIndex];
+            wordDisplay.innerText = currentWord;
+        }
+
+        typeInput.addEventListener("input", () => {
+            if (!isPlaying) return;
+            
+            // Check if input matches exactly
+            if (typeInput.value.trim().toLowerCase() === currentWord) {
+                score++;
+                // Formula to roughly convert typed words in 30s to Words Per Minute (WPM)
+                scoreDisplay.innerText = (score * 2); 
+                typeInput.value = "";
+                showNextWord();
+            }
+        });
+
+        // Prevent pasting to ensure fair test
+        typeInput.addEventListener("paste", e => e.preventDefault());
+
+        function endGame() {
+            isPlaying = false;
+            typeInput.disabled = true;
+            wordDisplay.innerText = "TEST_COMPLETE";
+            startBtn.innerHTML = '<i class="fas fa-redo"></i> Retry Target';
+            startBtn.style.pointerEvents = "auto";
+            startBtn.style.opacity = "1";
+            timeDisplay.innerText = "00:00";
+        }
+    </script>
+</body>
+</html>
