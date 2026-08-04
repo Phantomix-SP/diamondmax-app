@@ -3,146 +3,124 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Privacy Policy | Phantomix Ecosystem</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <title>Privacy Policy | Phantomix</title>
+    
+    <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/phantomix-dev/phantomix-dev.github.io/main/assets/favicon.png">
+    <meta name="description" content="Official Privacy Policy of Phantomix and DiamondMax. Learn how we protect your data with zero-storage and local-first architecture.">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
     <style>
-        /* 🎨 CUSTOM PHANTOMIX TEXT SELECTION */
-        ::selection {
-            background-color: #0ea5e9; /* Neon Blue */
-            color: #ffffff; /* White Text */
-        }
-        
-        ::-moz-selection {
-            background-color: #0ea5e9;
-            color: #ffffff;
-        }
-        
-        /* ✨ PREMIUM FADE-IN ANIMATION */
+        ::selection { background-color: #0ea5e9; color: #ffffff; }
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #020617; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #0ea5e9; }
+
         body {
-            animation: appLoad 0.8s ease-out forwards;
-            margin: 0; padding: 0; padding-top: 80px;
+            background-color: #020617; color: #cbd5e1;
             font-family: 'Poppins', sans-serif;
-            background-color: #0f172a; color: #f3f4f6;
-            line-height: 1.6;
+            margin: 0; padding: 0; padding-top: 80px; 
+            display: flex; flex-direction: column; min-height: 100vh;
         }
 
-        @keyframes appLoad {
-            0% { opacity: 0; transform: translateY(15px); }
-            100% { opacity: 1; transform: translateY(0); }
-        }
-        
-        /* 📏 SCROLL PROGRESS BAR STYLING */
-        #scroll-progress-bar {
-            position: fixed; top: 0; left: 0; width: 0%; height: 4px;
-            background: linear-gradient(90deg, #0ea5e9, #10b981);
-            box-shadow: 0 0 10px rgba(16, 185, 129, 0.7);
-            z-index: 100000; border-radius: 0 2px 2px 0;
-            transition: width 0.1s ease-out;
-        }
-
+        /* Navbar */
         .phantomix-navbar {
-            position: fixed; top: 0; left: 0; width: 100%; height: 65px;
+            position: fixed; top: 0; left: 0; width: 100%; height: 70px;
             display: flex; justify-content: space-between; align-items: center;
-            padding: 0 5%; box-sizing: border-box;
-            background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(15px);
-            border-bottom: 1px solid rgba(14, 165, 233, 0.2); z-index: 1000;
+            padding: 0 5%; background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(12px); border-bottom: 1px solid rgba(14, 165, 233, 0.2);
+            z-index: 1000; box-sizing: border-box;
         }
-        .nav-logo { font-size: 18px; font-weight: 700; color: white; display: flex; align-items: center; text-decoration: none; }
-        .back-btn {
-            background: rgba(14, 165, 233, 0.1); color: #0ea5e9;
-            padding: 6px 14px; border: 1px solid #0ea5e9; border-radius: 6px;
-            text-decoration: none; font-size: 13px; font-weight: 600; transition: 0.3s;
+        .nav-logo { font-size: 20px; font-weight: 700; color: white; display: flex; align-items: center; text-decoration: none; }
+        .nav-actions { display: flex; gap: 12px; }
+        .nav-btn {
+            background: rgba(14, 165, 233, 0.1); color: #0ea5e9; padding: 8px 18px;
+            border: 1px solid #0ea5e9; border-radius: 6px; text-decoration: none;
+            font-size: 14px; font-weight: 600; transition: all 0.3s ease;
         }
-        .back-btn:hover { background: #0ea5e9; color: white; }
+        .nav-btn:hover { background: #0ea5e9; color: white; box-shadow: 0 0 15px rgba(14, 165, 233, 0.4); }
 
-        .policy-container {
-            max-width: 800px; margin: 40px auto; padding: 0 20px;
-        }
-        h1 { color: #0ea5e9; font-size: 32px; border-bottom: 2px solid rgba(14, 165, 233, 0.2); padding-bottom: 15px; margin-bottom: 30px; }
-        h2 { color: #38bdf8; font-size: 20px; margin-top: 35px; display: flex; align-items: center; gap: 8px;}
-        p, ul { color: #94a3b8; font-size: 15px; }
-        ul { padding-left: 20px; }
-        li { margin-bottom: 10px; }
+        /* Container */
+        .main-wrapper { flex-grow: 1; display: flex; justify-content: center; align-items: flex-start; padding: 40px 20px; }
         
-        .contact-box {
-            background: rgba(30, 41, 59, 0.5); border: 1px solid rgba(51, 65, 85, 0.5);
-            padding: 20px; border-radius: 12px; margin-top: 30px; text-align: center;
+        .policy-container {
+            background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(14, 165, 233, 0.3);
+            border-radius: 16px; padding: 40px; width: 100%; max-width: 800px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5); text-align: left;
         }
 
-        /* 🎚️ CUSTOM CYBER SCROLLBAR */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #0f172a; }
-        ::-webkit-scrollbar-thumb { background: rgba(14, 165, 233, 0.5); border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: rgba(14, 165, 233, 1); }
+        h1 { color: #f8fafc; font-size: 32px; margin-top: 0; margin-bottom: 5px; }
+        h1 span { color: #0ea5e9; }
+        .last-updated { font-size: 13px; color: #64748b; margin-bottom: 30px; border-bottom: 1px solid #334155; padding-bottom: 15px; }
+
+        h3 { color: #38bdf8; font-size: 18px; margin-top: 25px; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+        p, li { font-size: 14px; line-height: 1.7; color: #cbd5e1; }
+        ul { padding-left: 20px; }
+
+        .highlight-box {
+            background: rgba(16, 185, 129, 0.1); border-left: 3px solid #10b981;
+            padding: 15px 20px; border-radius: 6px; margin: 20px 0; color: #e2e8f0; font-size: 14px;
+        }
+
+        /* Footer */
+        .phantomix-footer { background: #020617; border-top: 1px solid rgba(14, 165, 233, 0.2); padding: 30px 5%; margin-top: auto; font-size: 13px; color: #64748b; text-align: center; width: 100%; box-sizing: border-box; }
     </style>
 </head>
 <body>
-    <div id="scroll-progress-bar"></div>
 
     <nav class="phantomix-navbar">
-        <a href="index.html" class="nav-logo">
-            <i class="fa-solid fa-gem" style="color: #0ea5e9; margin-right: 8px;"></i> Phantomix
-        </a>
-        <a href="apps.html" class="back-btn"><i class="fas fa-arrow-left"></i> Tools</a>
+        <a href="index.html" class="nav-logo"><i class="fa-solid fa-gem" style="color: #0ea5e9; margin-right: 8px;"></i> Phantomix</a>
+        <div class="nav-actions">
+            <a href="index.html" class="nav-btn"><i class="fas fa-arrow-left"></i> Back to Home</a>
+        </div>
     </nav>
 
-    <div class="policy-container">
-        <h1>Privacy Policy</h1>
-        <p><strong>Effective Date:</strong> July 2026</p>
-        <p>At Phantomix, we believe that your digital life should be simple, safe, and entirely yours. This Privacy Policy outlines how our tools operate, what data we collect (and what we strictly don't), and how we protect your information across the Phantomix Ecosystem and DiamondMax App.</p>
+    <div class="main-wrapper">
+        <div class="policy-container">
+            <h1>Privacy <span>Policy</span></h1>
+            <div class="last-updated">Effective Date: August 2026 | Phantomix Ecosystem</div>
 
-        <h2><i class="fas fa-microchip"></i> 1. Zero-Data Architecture (Client-Side Tools)</h2>
-        <p>The core philosophy for our utility tools is "Your Data Stays on Your Device."</p>
-        <ul>
-            <li><strong>Photo Privacy Cleaner:</strong> Image processing happens entirely in your browser/device. We do not upload, view, or store your photos on any external servers.</li>
-            <li><strong>Password Vault:</strong> Passwords are generated locally on your machine using standard cryptographic algorithms. They are never transmitted over the internet.</li>
-            <li><strong>Private Note Sender:</strong> Our burner protocols are designed to self-destruct upon reading, ensuring no logs or histories are retained by us.</li>
-        </ul>
+            <div class="highlight-box">
+                <i class="fas fa-user-shield" style="color: #10b981; margin-right: 8px;"></i>
+                <b>Our Core Pledge:</b> Phantomix is engineered with a local-first, zero-storage architecture. Your files, keys, and private data never hit our cloud servers.
+            </div>
 
-        <h2><i class="fas fa-user-lock"></i> 2. Account & Authentication Data</h2>
-        <p>To provide community access and exclusive DiamondMax features, we require account registration.</p>
-        <ul>
-            <li><strong>What we collect:</strong> We collect your Email Address and a securely hashed password when you join our Waitlist or create a Node (Account).</li>
-            <li><strong>How it is protected:</strong> We utilize bank-grade encryption via Supabase (our backend provider). We cannot see your actual password.</li>
-            <li><strong>Data Deletion:</strong> You have the right to request the complete deletion of your account and associated email at any time by contacting our support.</li>
-        </ul>
+            <h3><i class="fas fa-microchip"></i> 1. Local-First Processing Architecture</h3>
+            <p>Our web utilities—including <b>Phantom-Shrink</b> (Image Compressor), <b>Phantom-Morph</b> (Image Converter), <b>Diamond-Vault</b> (Password Generator), and <b>Phantom-Wormhole</b> (P2P File Transfer)—execute code directly inside your web browser using client-side JavaScript and WebRTC.</p>
+            <ul>
+                <li>Your converted or compressed images are never uploaded to any central server.</li>
+                <li>P2P file transfers are direct device-to-device encrypted connections.</li>
+                <li>Password generation uses <code>window.crypto</code> API offline.</li>
+            </ul>
 
-        <h2><i class="fas fa-gamepad"></i> 3. Local Storage (DiamondMax Ecosystem)</h2>
-        <p>For gamified experiences like the DiamondMax Reward Hub, we use your browser's Local Storage to save specific points and progress. This means your operational data lives on your device, minimizing server-side tracking. Clearing your app cache may reset non-synced data.</p>
+            <h3><i class="fas fa-database"></i> 2. Information We Collect</h3>
+            <p>We strictly minimize data collection:</p>
+            <ul>
+                <li><b>Waitlist Email Addresses:</b> If you voluntarily join our early access waitlist, your email is stored securely in our encrypted Supabase database solely for sending product launch updates.</li>
+                <li><b>Diagnostics & Performance:</b> Non-identifiable diagnostic metrics (like server response ping times) may be evaluated locally to monitor system health.</li>
+            </ul>
 
-        <h2><i class="fas fa-chart-line"></i> 4. Third-Party Analytics & Permissions</h2>
-        <p>To understand how users interact with our platform and to improve our tools, we may use basic analytics services. This data is anonymized and aggregated. It does not include personally identifiable information (PII).</p>
-        <p><em>For Android (APK) Users:</em> The DiamondMax app will only request permissions strictly necessary for its functionality (e.g., storage access for saving local files). We do not request unnecessary background tracking permissions.</p>
+            <h3><i class="fas fa-ban"></i> 3. Zero Data Selling</h3>
+            <p>We do not, and will never, sell, rent, or trade user personal data to third-party ad networks or brokers. Phantomix is sustained through direct community support, micro-sponsorships, and future premium passes.</p>
 
-        <h2><i class="fas fa-ban"></i> 5. No Advertising Trackers</h2>
-        <p>We are committed to providing a clean, secure experience. Phantomix does not inject third-party advertising cookies, hidden trackers, or sell your data to marketing agencies.</p>
+            <h3><i class="fas fa-lock"></i> 4. Data Security</h3>
+            <p>All client-server communications (such as submitting feedback or waitlist requests) are transmitted over SSL/TLS (HTTPS) encryption. Data stored in our database uses AES-256 standards.</p>
 
-        <div class="contact-box">
-            <h3 style="color: #0ea5e9; margin-top: 0;">Contact & Support</h3>
-            <p style="margin-bottom: 0;">For data deletion requests, compliance queries, or support regarding the DiamondMax App, please reach out to our team at:</p>
-            <p style="color: #10b981; font-weight: bold; font-size: 18px; margin-top: 10px;">phantomix.00@gmail.com</p>
+            <h3><i class="fas fa-envelope"></i> 5. Your Rights & Support</h3>
+            <p>You can request the deletion of your email from our waitlist database at any time by contacting our support team directly at <b>phantomix.00@gmail.com</b>.</p>
+
         </div>
-
-        <p style="margin-top: 40px; text-align: center; color: #10B981; font-weight: bold;">
-            <i class="fas fa-shield-check"></i> Phantomix: Built for privacy, designed for humans.
-        </p>
     </div>
 
-    <script>
-        // Scroll Progress Bar Logic
-        window.addEventListener('scroll', () => {
-            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            const scrolled = (winScroll / height) * 100;
-            const progressBar = document.getElementById("scroll-progress-bar");
-            if (progressBar) {
-                progressBar.style.width = scrolled + "%";
-            }
-        });
-    </script>
+    <footer class="phantomix-footer">
+        <div style="margin-bottom: 15px; display: flex; justify-content: center; gap: 25px;">
+            <a href="support.html" style="color: #10b981; text-decoration: none; font-weight: 600; font-size: 14px;"><i class="fas fa-coffee"></i> Support Us</a>
+            <a href="feedback.html" style="color: #94a3b8; text-decoration: none; font-weight: 600; font-size: 14px;"><i class="fas fa-bug"></i> Feedback & Issues</a>
+        </div>
+        <p style="margin: 0;">&copy; 2026 Phantomix. All rights reserved. Built with passion.</p>
+    </footer>
+
 </body>
 </html>
