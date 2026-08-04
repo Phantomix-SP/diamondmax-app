@@ -123,7 +123,7 @@
         </div>
     </nav>
 
-    <div id="trade-toast"><i class="fas fa-check-circle"></i> Trade Request Submitted. Verification Pending!</div>
+    <div id="trade-toast"><i class="fas fa-check-circle"></i> Trade Submitted! We usually take 24 hours to take action (sometimes 3-5 working days).</div>
 
     <div class="main-wrapper">
         <div class="trade-container">
@@ -148,8 +148,8 @@
             </div>
 
             <div class="input-group">
-                <label>2. Card Value (in USD)</label>
-                <input type="number" id="card-value" class="cyber-input" placeholder="e.g. 100" min="10" oninput="calculatePayout()">
+               <label>2. Card Value (in INR)</label>
+                <input type="number" id="card-value" class="cyber-input" placeholder="e.g. 1000" min="100" oninput="calculatePayout()">
             </div>
 
             <div class="payout-box">
@@ -157,7 +157,7 @@
                     <div class="payout-text">Estimated Payout</div>
                     <div class="payout-rate" id="rate-display">Platform Fee: 15%</div>
                 </div>
-                <div class="payout-amount">$<span id="payout-result">0.00</span></div>
+                <div class="payout-amount">₹<span id="payout-result">0.00</span></div>
             </div>
 
             <div class="input-group">
@@ -171,8 +171,14 @@
             </div>
 
             <button class="action-btn" onclick="submitTrade()">
-                <i class="fas fa-exchange-alt"></i> Initialize Trade
-            </button>
+    <i class="fas fa-exchange-alt"></i> Initialize Trade
+</button>
+
+<div style="text-align: center; margin-top: 15px;">
+    <a href="support.html" style="color: #94a3b8; font-size: 13px; text-decoration: none; transition: 0.3s;" onmouseover="this.style.color='#f43f5e'" onmouseout="this.style.color='#94a3b8'">
+        <i class="fas fa-headset"></i> Facing an issue or glitch? Contact Support
+    </a>
+</div>
             
             <div class="secure-badge">
                 <i class="fas fa-shield-alt"></i> 256-bit Encrypted Transaction. Checked by Phantomix AI.
@@ -235,7 +241,7 @@
                 // Show Success Toast
                 const toast = document.getElementById('trade-toast');
                 toast.style.display = 'block';
-                setTimeout(() => { toast.style.display = 'none'; }, 4000);
+                setTimeout(() => { toast.style.display = 'none'; }, 8000);
 
                 // Reset Form
                 document.getElementById('card-value').value = '';
