@@ -1859,8 +1859,8 @@
                     <p style="color: #10b981;">0.04% (Optimal)</p>
                 </div>
                 <div class="analytics-card">
-                    <h5>Node Location</h5>
-                    <p style="color: #cbd5e1;">Global Edge</p>
+                    <h5>Connection Status</h5>
+                    <p id="user-connection" style="font-size: 14px;"><i class="fas fa-spinner fa-spin"></i> Checking...</p>
                 </div>
             </div>
         </div>
@@ -2516,9 +2516,10 @@
                 }, 5000);
             }
         });
-        // 12. Live Connection Status Monitor
+       // 12. Live Connection Status Monitor
         function updateConnectionStatus() {
             const connStatus = document.getElementById("user-connection");
+            if (!connStatus) return; // 🛑 ERROR PREVENTER: Agar ID na mile toh crash mat ho
             
             if (navigator.onLine) {
                 // Agar user online hai, toh custom dynamic network speed/type monitor mapping
