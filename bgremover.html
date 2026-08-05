@@ -175,10 +175,10 @@
             try {
                 loadingText.innerText = "Processing via Neural Engine... (Please wait)";
                 
-                // Magic Happens Here (imglyRemoveBackground is loaded from CDN)
+                // Magic Happens Here - Added Explicit Public Path for CDN
                 const imageBlob = await imglyRemoveBackground(file, {
+                    publicPath: "https://unpkg.com/@imgly/background-removal@1.4.3/dist/", // 🔥 THE FIX
                     progress: (key, current, total) => {
-                        // Allows user to see model download progress on very first run
                         if(key.includes("fetch")) {
                             const percent = Math.round((current/total) * 100) || 0;
                             loadingText.innerText = `Downloading AI Model to browser: ${percent}%...`;
@@ -187,7 +187,7 @@
                         }
                     }
                 });
-
+                
                 // Display Result
                 processedBlobURL = URL.createObjectURL(imageBlob);
                 resultImg.src = processedBlobURL;
