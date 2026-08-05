@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phantom-BG | AI Background Remover</title>
+    
+    <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/phantomix-dev/phantomix-dev.github.io/main/assets/favicon.png">
+    <meta name="description" content="100% Private, On-Device AI Background Remover by Phantomix. Zero uploads.">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <script src="https://unpkg.com/@imgly/background-removal@1.4.3/dist/browser/bundle.umd.js"></script>
+
+    <style>
+        ::selection { background-color: #0ea5e9; color: #ffffff; }
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #020617; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #0ea5e9; }
+
+        body {
+            background-color: #020617; color: #ffffff;
+            font-family: 'Poppins', sans-serif;
+            margin: 0; padding: 0; padding-top: 80px; 
+            display: flex; flex-direction: column; min-height: 100vh;
+            background-image: radial-gradient(circle at 50% 10%, rgba(14, 165, 233, 0.05) 0%, transparent 60%);
+        }
+
+        /* Navbar */
+        .phantomix-navbar {
+            position: fixed; top: 0; left: 0; width: 100%; height: 70px;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 0 5%; background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(12px); border-bottom: 1px solid rgba(14, 165, 233, 0.2);
+            z-index: 1000; box-sizing: border-box;
+        }
+        .nav-logo { font-size: 20px; font-weight: 700; color: white; display: flex; align-items: center; text-decoration: none; }
+        .nav-actions { display: flex; gap: 12px; }
+        .nav-btn {
+            background: rgba(14, 165, 233, 0.1); color: #0ea5e9; padding: 8px 18px;
+            border: 1px solid #0ea5e9; border-radius: 6px; text-decoration: none;
+            font-size: 14px; font-weight: 600; transition: all 0.3s ease;
+        }
+        .nav-btn:hover { background: #0ea5e9; color: white; box-shadow: 0 0 15px rgba(14, 165, 233, 0.4); }
+
+        /* Main Container */
+        .main-wrapper { flex-grow: 1; display: flex; justify-content: center; align-items: center; padding: 40px 20px; }
+        
+        .tool-container {
+            background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(14, 165, 233, 0.3);
+            border-radius: 16px; padding: 40px; width: 100%; max-width: 700px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.6); text-align: center;
+        }
+
+        h2 { margin: 0 0 5px 0; color: #f8fafc; font-size: 28px; }
+        h2 span { color: #0ea5e9; }
+        p.subtitle { color: #94a3b8; font-size: 14px; margin-bottom: 30px; }
+
+        /* Upload Area */
+        .upload-area {
+            border: 2px dashed #334155; border-radius: 12px; padding: 50px 20px;
+            background: rgba(2, 6, 23, 0.5); cursor: pointer; transition: 0.3s; position: relative;
+        }
+        .upload-area:hover { border-color: #0ea5e9; background: rgba(14, 165, 233, 0.05); }
+        .upload-area i { font-size: 48px; color: #0ea5e9; margin-bottom: 15px; }
+        .upload-area p { margin: 0; font-size: 16px; font-weight: 600; color: #cbd5e1; }
+        input[type="file"] { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
+
+        /* Preview Area */
+        #previewArea { display: none; margin-top: 30px; }
+        .image-compare {
+            display: flex; gap: 20px; flex-wrap: wrap; justify-content: center;
+        }
+        .img-box { flex: 1; min-width: 250px; background: #020617; padding: 10px; border-radius: 12px; border: 1px solid #334155; }
+        .img-box h4 { margin: 0 0 10px 0; color: #94a3b8; font-size: 13px; text-transform: uppercase; }
+        .img-box img { width: 100%; border-radius: 8px; /* Checkerboard background for transparency */ background: repeating-conic-gradient(#334155 0% 25%, #020617 0% 50%) 50% / 20px 20px; }
+
+        /* Processing Status */
+        #loadingState { display: none; margin-top: 20px; color: #10b981; font-weight: 600; font-size: 14px; }
+        .spinner { animation: spin 1s linear infinite; display: inline-block; margin-right: 8px; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        /* Actions */
+        .action-btn {
+            width: 100%; padding: 15px; background: linear-gradient(135deg, #0ea5e9, #3b82f6);
+            color: #fff; border: none; border-radius: 8px; font-size: 16px; font-weight: 700;
+            cursor: pointer; transition: 0.3s; margin-top: 20px; display: none;
+        }
+        .action-btn:hover { box-shadow: 0 0 20px rgba(14, 165, 233, 0.4); transform: translateY(-2px); }
+
+        .secure-badge { margin-top: 20px; font-size: 12px; color: #64748b; }
+        .secure-badge i { color: #10b981; margin-right: 5px; }
+
+        /* Footer */
+        .phantomix-footer { background: #020617; border-top: 1px solid rgba(14, 165, 233, 0.2); padding: 30px 5%; margin-top: auto; font-size: 13px; color: #64748b; text-align: center; width: 100%; box-sizing: border-box; }
+    </style>
+</head>
+<body>
+
+    <nav class="phantomix-navbar">
+        <a href="index.html" class="nav-logo"><i class="fa-solid fa-gem" style="color: #0ea5e9; margin-right: 8px;"></i> Phantomix</a>
+        <div class="nav-actions">
+            <a href="apps.html" class="nav-btn"><i class="fas fa-arrow-left"></i> Back to Hub</a>
+        </div>
+    </nav>
+
+    <div class="main-wrapper">
+        <div class="tool-container">
+            <h2>Phantom <span>BG-Remover</span></h2>
+            <p class="subtitle">AI-Powered On-Device Background Eraser.</p>
+
+            <div class="upload-area" id="uploadArea">
+                <i class="fas fa-image"></i>
+                <p>Click or Drop Image Here</p>
+                <input type="file" id="imageInput" accept="image/png, image/jpeg, image/webp">
+            </div>
+
+            <div id="loadingState">
+                <i class="fas fa-circle-notch spinner"></i> <span id="loadingText">Initializing Neural Engine... (May take a moment on first run)</span>
+            </div>
+
+            <div id="previewArea">
+                <div class="image-compare">
+                    <div class="img-box">
+                        <h4>Original</h4>
+                        <img id="originalImg" src="" alt="Original Image">
+                    </div>
+                    <div class="img-box">
+                        <h4>Result</h4>
+                        <img id="resultImg" src="" alt="Removed Background">
+                    </div>
+                </div>
+                <button class="action-btn" id="downloadBtn" onclick="downloadResult()"><i class="fas fa-download"></i> Download HD Image</button>
+            </div>
+
+            <div class="secure-badge">
+                <i class="fas fa-shield-alt"></i> 100% Private. Image never leaves your device. Processed locally via WebAssembly.
+            </div>
+        </div>
+    </div>
+
+    <footer class="phantomix-footer">
+        <p>&copy; 2026 Phantomix. All rights reserved. Built with passion.</p>
+    </footer>
+
+    <script>
+        const imageInput = document.getElementById('imageInput');
+        const uploadArea = document.getElementById('uploadArea');
+        const previewArea = document.getElementById('previewArea');
+        const originalImg = document.getElementById('originalImg');
+        const resultImg = document.getElementById('resultImg');
+        const loadingState = document.getElementById('loadingState');
+        const loadingText = document.getElementById('loadingText');
+        const downloadBtn = document.getElementById('downloadBtn');
+
+        let processedBlobURL = null;
+
+        imageInput.addEventListener('change', async (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            // UI Updates
+            uploadArea.style.display = 'none';
+            previewArea.style.display = 'block';
+            loadingState.style.display = 'block';
+            downloadBtn.style.display = 'none';
+            
+            // Show Original Image
+            const originalURL = URL.createObjectURL(file);
+            originalImg.src = originalURL;
+            resultImg.src = ''; // Clear previous
+
+            try {
+                loadingText.innerText = "Processing via Neural Engine... (Please wait)";
+                
+                // Magic Happens Here (imglyRemoveBackground is loaded from CDN)
+                const imageBlob = await imglyRemoveBackground(file, {
+                    progress: (key, current, total) => {
+                        // Allows user to see model download progress on very first run
+                        if(key.includes("fetch")) {
+                            const percent = Math.round((current/total) * 100) || 0;
+                            loadingText.innerText = `Downloading AI Model to browser: ${percent}%...`;
+                        } else {
+                            loadingText.innerText = "Extracting foreground... 🪄";
+                        }
+                    }
+                });
+
+                // Display Result
+                processedBlobURL = URL.createObjectURL(imageBlob);
+                resultImg.src = processedBlobURL;
+                
+                loadingState.style.display = 'none';
+                downloadBtn.style.display = 'block';
+
+            } catch (error) {
+                console.error("AI Error:", error);
+                loadingText.innerText = "❌ Error processing image. Please try a different one.";
+                loadingText.style.color = "#ef4444";
+            }
+        });
+
+        function downloadResult() {
+            if (!processedBlobURL) return;
+            const a = document.createElement('a');
+            a.href = processedBlobURL;
+            a.download = 'Phantom_BG_Removed.png'; // Must be PNG to keep transparency
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+    </script>
+</body>
+</html>
