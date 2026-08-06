@@ -152,9 +152,7 @@
     <footer class="phantomix-footer">
         <p>&copy; 2026 Phantomix. All rights reserved. Built with passion.</p>
     </footer>
-
-            
-                    <script type="module">
+        <script>
         const imageInput = document.getElementById('imageInput');
         const uploadArea = document.getElementById('uploadArea');
         const previewArea = document.getElementById('previewArea');
@@ -169,12 +167,40 @@
 
         let processedBlobURL = null;
 
+        // 🧠 Helper Function: AI Library ko chupke se background mein load karne ke liye
+        function loadAILibrary() {
+            return new Promise((resolve, reject) => {
+                // Agar library pehle se load ho chuki hai, toh wapas wahi de do
+                if (typeof imglyRemoveBackground !== 'undefined') {
+                    resolve(imglyRemoveBackground);
+                    return;
+                }
+                
+                loadingText.innerText = "Downloading Core AI Module... (Please wait)";
+                
+                // Browser mein dynamically script tag inject karna
+                const script = document.createElement('script');
+                script.src = "https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.4.3/dist/browser/bundle.umd.js";
+                
+                script.onload = () => {
+                    if (typeof imglyRemoveBackground !== 'undefined') {
+                        resolve(imglyRemoveBackground);
+                    } else {
+                        reject(new Error("Library loaded but AI engine is missing."));
+                    }
+                };
+                
+                script.onerror = () => reject(new Error("Network blocked the AI Library download."));
+                document.head.appendChild(script);
+            });
+        }
+
         imageInput.addEventListener('change', async (e) => {
             try {
                 const file = e.target.files[0];
                 if (!file) return;
 
-                // 1. FORCE UI TO UPDATE FIRST (No Freeze)
+                // 1. FORCE UI TO UPDATE IMMEDIATELY
                 uploadArea.style.display = 'none';
                 previewArea.style.display = 'block';
                 loadingState.style.display = 'block';
@@ -186,17 +212,17 @@
                 const originalURL = URL.createObjectURL(file);
                 originalImg.src = originalURL;
                 resultImg.src = ''; 
-                loadingText.innerText = "Downloading Core AI Module... (Please wait)";
                 loadingText.style.color = "#10b981";
 
+                // Give browser time to draw UI
                 await new Promise(resolve => setTimeout(resolve, 100));
 
-                // 🔥 THE MAGIC FIX: DYNAMIC IMPORT (Bypasses Browser Blocks)
-                const imglyModule = await import('https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.4.3/+esm');
-                const imglyRemoveBackground = imglyModule.default;
+                // 2. LOAD LIBRARY DYNAMICALLY (Bypasses ESM bugs and Network blocks)
+                const aiEngine = await loadAILibrary();
 
-                // 2. NOW START THE HEAVY AI
-                const imageBlob = await imglyRemoveBackground(file, {
+                // 3. RUN THE AI
+                loadingText.innerText = "Initializing Secure Engine...";
+                const imageBlob = await aiEngine(file, {
                     publicPath: "https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.4.3/dist/",
                     model: "small", 
                     output: { format: "image/png", quality: 0.8 },
@@ -210,7 +236,7 @@
                     }
                 });
                 
-                // 3. SHOW RESULT
+                // 4. SHOW RESULT
                 processedBlobURL = URL.createObjectURL(imageBlob);
                 resultImg.src = processedBlobURL;
                 
@@ -227,15 +253,13 @@
                     <div style="background: rgba(239, 68, 68, 0.1); border: 1px solid #ef4444; padding: 15px; border-radius: 8px; margin-top: 10px; text-align: left;">
                         <h4 style="margin: 0 0 8px 0; color: #ef4444; font-size: 15px;">⚠️ System Halt</h4>
                         <p style="margin: 0; font-size: 13px; color: #cbd5e1;"><b>Error:</b> ${exactError}</p>
-                        <p style="margin: 5px 0 0 0; font-size: 12px; color: #94a3b8;">Try switching from Mobile Data to Wi-Fi, or clear browser cache.</p>
                     </div>
                 `;
                 if (resetBtn) resetBtn.style.display = 'inline-block'; 
             }
         });
 
-        // Attach to window because type="module" limits scope
-        window.resetTool = function() {
+        function resetTool() {
             imageInput.value = ""; 
             uploadArea.style.display = 'block';
             previewArea.style.display = 'none';
@@ -243,7 +267,7 @@
             if (resetBtn) resetBtn.style.display = 'none';
         }
 
-        window.downloadResult = function() {
+        function downloadResult() {
             if (!processedBlobURL) return;
             const a = document.createElement('a');
             a.href = processedBlobURL;
@@ -253,6 +277,7 @@
             document.body.removeChild(a);
         }
     </script>
+
 
 </body>
 </html>
