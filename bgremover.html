@@ -117,8 +117,14 @@
                 <input type="file" id="imageInput" accept="image/png, image/jpeg, image/webp">
             </div>
 
-            <div id="loadingState">
-                <i class="fas fa-circle-notch spinner"></i> <span id="loadingText">Initializing Neural Engine... (May take a moment on first run)</span>
+                        <div id="loadingState">
+                <i class="fas fa-circle-notch spinner" id="loadingSpinner"></i> <span id="loadingText">Initializing Secure Environment...</span>
+                <p id="privacyNotice" style="font-size: 12px; color: #64748b; margin-top: 10px;">
+                    <i class="fas fa-lock"></i> Setting up 100% private on-device processing. This takes a few seconds on the first run, but ensures your photo never leaves your phone!
+                </p>
+                <button id="resetBtn" class="action-btn" style="display: none; background: #334155; margin-top: 15px;" onclick="resetTool()">
+                    <i class="fas fa-redo"></i> Try Again
+                </button>
             </div>
 
             <div id="previewArea">
@@ -145,7 +151,7 @@
         <p>&copy; 2026 Phantomix. All rights reserved. Built with passion.</p>
     </footer>
 
-    <script>
+        <script>
         const imageInput = document.getElementById('imageInput');
         const uploadArea = document.getElementById('uploadArea');
         const previewArea = document.getElementById('previewArea');
@@ -153,6 +159,9 @@
         const resultImg = document.getElementById('resultImg');
         const loadingState = document.getElementById('loadingState');
         const loadingText = document.getElementById('loadingText');
+        const loadingSpinner = document.getElementById('loadingSpinner');
+        const privacyNotice = document.getElementById('privacyNotice');
+        const resetBtn = document.getElementById('resetBtn');
         const downloadBtn = document.getElementById('downloadBtn');
 
         let processedBlobURL = null;
@@ -161,11 +170,14 @@
             const file = e.target.files[0];
             if (!file) return;
 
-            // UI Updates
+            // Start UI State
             uploadArea.style.display = 'none';
             previewArea.style.display = 'block';
             loadingState.style.display = 'block';
             downloadBtn.style.display = 'none';
+            resetBtn.style.display = 'none';
+            if (privacyNotice) privacyNotice.style.display = 'block';
+            if (loadingSpinner) loadingSpinner.style.display = 'inline-block';
             
             // Show Original Image
             const originalURL = URL.createObjectURL(file);
@@ -173,17 +185,21 @@
             resultImg.src = ''; // Clear previous
 
             try {
-                loadingText.innerText = "Processing via Neural Engine... (Please wait)";
+                loadingText.innerText = "Setting up local AI engine... (Please wait)";
+                loadingText.style.color = "#10b981"; // Green color
                 
-                // Magic Happens Here - Added Explicit Public Path for CDN
+                // Magic Happens Here - Mobile Optimized Configuration
                 const imageBlob = await imglyRemoveBackground(file, {
-                    publicPath: "https://unpkg.com/@imgly/background-removal@1.4.3/dist/", // 🔥 THE FIX
+                    publicPath: "https://unpkg.com/@imgly/background-removal@1.4.3/dist/",
+                    model: "small", // Lighter, faster AI model
+                    output: { format: "image/png", quality: 0.8 },
                     progress: (key, current, total) => {
                         if(key.includes("fetch")) {
                             const percent = Math.round((current/total) * 100) || 0;
-                            loadingText.innerText = `Downloading AI Model to browser: ${percent}%...`;
+                            // Replaced "Downloading" with user-friendly text
+                            loadingText.innerText = `Preparing Secure Offline Engine (${percent}%)...`;
                         } else {
-                            loadingText.innerText = "Extracting foreground... 🪄";
+                            loadingText.innerText = "Extracting background... 🪄";
                         }
                     }
                 });
@@ -197,16 +213,30 @@
 
             } catch (error) {
                 console.error("AI Error:", error);
-                loadingText.innerText = "❌ Error processing image. Please try a different one.";
-                loadingText.style.color = "#ef4444";
+                
+                // The Fallback UI (If it crashes/fails)
+                if (loadingSpinner) loadingSpinner.style.display = 'none';
+                if (privacyNotice) privacyNotice.style.display = 'none';
+                loadingText.innerText = "❌ Connection interrupted or file too large.";
+                loadingText.style.color = "#ef4444"; // Red color
+                if (resetBtn) resetBtn.style.display = 'block'; // Give them a way out!
             }
         });
+
+        function resetTool() {
+            // Bring everything back to normal state
+            imageInput.value = ""; 
+            uploadArea.style.display = 'block';
+            previewArea.style.display = 'none';
+            loadingState.style.display = 'none';
+            if (resetBtn) resetBtn.style.display = 'none';
+        }
 
         function downloadResult() {
             if (!processedBlobURL) return;
             const a = document.createElement('a');
             a.href = processedBlobURL;
-            a.download = 'Phantom_BG_Removed.png'; // Must be PNG to keep transparency
+            a.download = 'Phantom_BG_Removed.png'; 
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
