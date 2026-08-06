@@ -64,6 +64,8 @@
         .upload-area:hover { border-color: #0ea5e9; background: rgba(14, 165, 233, 0.05); }
         .upload-area i { font-size: 48px; color: #0ea5e9; margin-bottom: 15px; }
         .upload-area p { margin: 0; font-size: 16px; font-weight: 600; color: #cbd5e1; }
+        
+        /* 🔥 FIX 1: accept="image/*" & onclick reset to prevent Google Photos bug */
         input[type="file"] { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
 
         /* Preview Area */
@@ -71,6 +73,8 @@
         .image-compare { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; }
         .img-box { flex: 1; min-width: 250px; background: #020617; padding: 10px; border-radius: 12px; border: 1px solid #334155; }
         .img-box h4 { margin: 0 0 10px 0; color: #94a3b8; font-size: 13px; text-transform: uppercase; }
+        
+        /* 🔥 FIX 2: min-height 250px so the image container never collapses */
         .img-box img { 
             width: 100%; 
             min-height: 250px; 
@@ -116,13 +120,13 @@
             <div class="upload-area" id="uploadArea">
                 <i class="fas fa-image"></i>
                 <p>Click or Drop Image Here</p>
-                <input type="file" id="imageInput" accept="image/png, image/jpeg, image/webp">
+                <input type="file" id="imageInput" accept="image/*" onclick="this.value=null;">
             </div>
 
             <div id="loadingState">
                 <i class="fas fa-circle-notch spinner" id="loadingSpinner"></i> <span id="loadingText">Initializing Secure Environment...</span>
                 <p id="privacyNotice" style="font-size: 12px; color: #64748b; margin-top: 10px;">
-                    <i class="fas fa-lock"></i> Setting up 100% private on-device processing. This takes a few seconds on the first run, but ensures your photo never leaves your phone!
+                    <i class="fas fa-lock"></i> Setting up private on-device AI. This may take a moment on the first run, ensuring your photo never leaves your phone!
                 </p>
                 <button id="resetBtn" class="action-btn" style="display: none; background: #334155; margin-top: 15px;" onclick="resetTool()">
                     <i class="fas fa-redo"></i> Try Again
@@ -144,7 +148,7 @@
             </div>
 
             <div class="secure-badge">
-                <i class="fas fa-shield-alt"></i> 100% Private. Image never leaves your device. Processed locally via WebAssembly.
+                <i class="fas fa-shield-alt"></i> 100% Private. Processed locally via WebAssembly.
             </div>
         </div>
     </div>
@@ -152,7 +156,8 @@
     <footer class="phantomix-footer">
         <p>&copy; 2026 Phantomix. All rights reserved. Built with passion.</p>
     </footer>
-        <script>
+
+    <script>
         const imageInput = document.getElementById('imageInput');
         const uploadArea = document.getElementById('uploadArea');
         const previewArea = document.getElementById('previewArea');
@@ -167,18 +172,15 @@
 
         let processedBlobURL = null;
 
-        // 🧠 Helper Function: AI Library ko chupke se background mein load karne ke liye
+        // Function to inject AI library secretly after user clicks
         function loadAILibrary() {
             return new Promise((resolve, reject) => {
-                // Agar library pehle se load ho chuki hai, toh wapas wahi de do
                 if (typeof imglyRemoveBackground !== 'undefined') {
                     resolve(imglyRemoveBackground);
                     return;
                 }
                 
                 loadingText.innerText = "Downloading Core AI Module... (Please wait)";
-                
-                // Browser mein dynamically script tag inject karna
                 const script = document.createElement('script');
                 script.src = "https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.4.3/dist/browser/bundle.umd.js";
                 
@@ -186,11 +188,11 @@
                     if (typeof imglyRemoveBackground !== 'undefined') {
                         resolve(imglyRemoveBackground);
                     } else {
-                        reject(new Error("Library loaded but AI engine is missing."));
+                        reject(new Error("AI Library loaded but core engine is missing."));
                     }
                 };
                 
-                script.onerror = () => reject(new Error("Network blocked the AI Library download."));
+                script.onerror = () => reject(new Error("NETWORK_BLOCKED"));
                 document.head.appendChild(script);
             });
         }
@@ -198,7 +200,12 @@
         imageInput.addEventListener('change', async (e) => {
             try {
                 const file = e.target.files[0];
-                if (!file) return;
+                
+                // 🔥 FIX 4: Prevent Silent Crashes if Android OS kills browser background
+                if (!file) {
+                    alert("⚠️ No file selected! If your browser reloaded automatically, please pick a photo from your 'Device Storage' instead of Cloud/Google Photos.");
+                    return;
+                }
 
                 // 1. FORCE UI TO UPDATE IMMEDIATELY
                 uploadArea.style.display = 'none';
@@ -213,15 +220,18 @@
                 originalImg.src = originalURL;
                 resultImg.src = ''; 
                 loadingText.style.color = "#10b981";
+                loadingText.innerText = "Setting up local AI engine...";
 
-                // Give browser time to draw UI
+                // 🔥 FIX 5: Give browser 100ms breathing room to paint UI
                 await new Promise(resolve => setTimeout(resolve, 100));
 
-                // 2. LOAD LIBRARY DYNAMICALLY (Bypasses ESM bugs and Network blocks)
+                // 2. LOAD LIBRARY DYNAMICALLY
                 const aiEngine = await loadAILibrary();
 
                 // 3. RUN THE AI
                 loadingText.innerText = "Initializing Secure Engine...";
+                
+                // 🔥 FIX 6: Mobile optimized model ("small") to prevent RAM crashes
                 const imageBlob = await aiEngine(file, {
                     publicPath: "https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.4.3/dist/",
                     model: "small", 
@@ -248,13 +258,31 @@
                 if (loadingSpinner) loadingSpinner.style.display = 'none';
                 if (privacyNotice) privacyNotice.style.display = 'none';
                 
-                const exactError = error.message ? error.message : "Unknown Error";
-                loadingText.innerHTML = `
-                    <div style="background: rgba(239, 68, 68, 0.1); border: 1px solid #ef4444; padding: 15px; border-radius: 8px; margin-top: 10px; text-align: left;">
-                        <h4 style="margin: 0 0 8px 0; color: #ef4444; font-size: 15px;">⚠️ System Halt</h4>
-                        <p style="margin: 0; font-size: 13px; color: #cbd5e1;"><b>Error:</b> ${exactError}</p>
-                    </div>
-                `;
+                const exactError = error.message || "Unknown Error";
+                
+                // 🔥 FIX 7: Smart Error Handling UI
+                if (exactError === "NETWORK_BLOCKED" || exactError.includes("fetch")) {
+                    loadingText.innerHTML = `
+                        <div style="background: rgba(239, 68, 68, 0.1); border: 1px solid #ef4444; padding: 15px; border-radius: 8px; margin-top: 10px; text-align: left;">
+                            <h4 style="margin: 0 0 8px 0; color: #ef4444; font-size: 15px;"><i class="fas fa-shield-virus"></i> Network Block Detected</h4>
+                            <p style="margin: 0; font-size: 13px; color: #cbd5e1;">Your browser prevented the AI engine from downloading. Check if you have:</p>
+                            <ul style="margin: 8px 0 12px 20px; font-size: 13px; color: #f8fafc; padding: 0;">
+                                <li>An active <b>Ad-Blocker</b></li>
+                                <li>A strict <b>VPN</b> or <b>Private DNS</b></li>
+                            </ul>
+                            <p style="margin: 0; font-size: 13px; color: #10b981; font-weight: bold;">Fix: Please pause them and try again.</p>
+                        </div>
+                    `;
+                } else {
+                    loadingText.innerHTML = `
+                        <div style="background: rgba(239, 68, 68, 0.1); border: 1px solid #ef4444; padding: 15px; border-radius: 8px; margin-top: 10px; text-align: left;">
+                            <h4 style="margin: 0 0 8px 0; color: #ef4444; font-size: 15px;">⚠️ Processing Failed</h4>
+                            <p style="margin: 0; font-size: 13px; color: #cbd5e1;"><b>Error:</b> ${exactError}</p>
+                            <p style="margin: 5px 0 0 0; font-size: 12px; color: #94a3b8;">Try using a smaller image or clearing browser cache.</p>
+                        </div>
+                    `;
+                }
+                
                 if (resetBtn) resetBtn.style.display = 'inline-block'; 
             }
         });
@@ -277,7 +305,5 @@
             document.body.removeChild(a);
         }
     </script>
-
-
 </body>
 </html>
