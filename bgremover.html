@@ -11,8 +11,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
-    <script src="https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.4.3/dist/browser/bundle.umd.js"></script>
-
     <style>
         ::selection { background-color: #0ea5e9; color: #ffffff; }
         ::-webkit-scrollbar { width: 10px; }
@@ -70,19 +68,18 @@
 
         /* Preview Area */
         #previewArea { display: none; margin-top: 30px; }
-        .image-compare {
-            display: flex; gap: 20px; flex-wrap: wrap; justify-content: center;
-        }
+        .image-compare { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; }
         .img-box { flex: 1; min-width: 250px; background: #020617; padding: 10px; border-radius: 12px; border: 1px solid #334155; }
         .img-box h4 { margin: 0 0 10px 0; color: #94a3b8; font-size: 13px; text-transform: uppercase; }
-                 .img-box img { 
+        .img-box img { 
             width: 100%; 
-            min-height: 250px; /* 🔥 THE FIX: Forces the box to stay visible */
-            object-fit: contain; /* 🔥 Prevents image from stretching */
+            min-height: 250px; /* Forces visibility */
+            object-fit: contain; 
             border-radius: 8px; 
             background: repeating-conic-gradient(#334155 0% 25%, #020617 0% 50%) 50% / 20px 20px; 
         }
-       /* Processing Status */
+
+        /* Processing Status */
         #loadingState { display: none; margin-top: 20px; color: #10b981; font-weight: 600; font-size: 14px; }
         .spinner { animation: spin 1s linear infinite; display: inline-block; margin-right: 8px; }
         @keyframes spin { 100% { transform: rotate(360deg); } }
@@ -122,7 +119,7 @@
                 <input type="file" id="imageInput" accept="image/png, image/jpeg, image/webp">
             </div>
 
-                        <div id="loadingState">
+            <div id="loadingState">
                 <i class="fas fa-circle-notch spinner" id="loadingSpinner"></i> <span id="loadingText">Initializing Secure Environment...</span>
                 <p id="privacyNotice" style="font-size: 12px; color: #64748b; margin-top: 10px;">
                     <i class="fas fa-lock"></i> Setting up 100% private on-device processing. This takes a few seconds on the first run, but ensures your photo never leaves your phone!
@@ -156,7 +153,9 @@
         <p>&copy; 2026 Phantomix. All rights reserved. Built with passion.</p>
     </footer>
 
-            <script>
+    <script type="module">
+        import imglyRemoveBackground from "https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.4.3/+esm";
+
         const imageInput = document.getElementById('imageInput');
         const uploadArea = document.getElementById('uploadArea');
         const previewArea = document.getElementById('previewArea');
@@ -187,15 +186,15 @@
             // Show Original Image
             const originalURL = URL.createObjectURL(file);
             originalImg.src = originalURL;
-            resultImg.src = ''; // Clear previous
+            resultImg.src = ''; 
 
             try {
                 loadingText.innerText = "Setting up local AI engine... (Please wait)";
                 loadingText.style.color = "#10b981"; 
                 
-                // Magic Happens Here - Changed CDN to jsdelivr for better WASM support
+                // Process Image
                 const imageBlob = await imglyRemoveBackground(file, {
-                    publicPath: "https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.4.3/dist/", // 🔥 CHANGED CDN
+                    publicPath: "https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.4.3/dist/",
                     model: "small", 
                     output: { format: "image/png", quality: 0.8 },
                     progress: (key, current, total) => {
@@ -218,21 +217,19 @@
             } catch (error) {
                 console.error("AI Error:", error);
                 
-                // The Fallback UI with REAL ERROR LOGGING
                 if (loadingSpinner) loadingSpinner.style.display = 'none';
                 if (privacyNotice) privacyNotice.style.display = 'none';
                 
-                // Print the exact technical error to the screen
                 const exactError = error.message ? error.message : "Browser blocked the AI model.";
                 loadingText.innerHTML = `❌ <b>System Halt:</b> ${exactError}`;
                 loadingText.style.color = "#ef4444"; 
                 
                 if (resetBtn) resetBtn.style.display = 'block'; 
             }
-        }); // 🔥 THE FIX: Yeh bracket miss ho gaya tha pichli baar!
+        });
 
-        function resetTool() {
-            // Bring everything back to normal state
+        // Attach functions to window because type="module" isolates scope
+        window.resetTool = function() {
             imageInput.value = ""; 
             uploadArea.style.display = 'block';
             previewArea.style.display = 'none';
@@ -240,7 +237,7 @@
             if (resetBtn) resetBtn.style.display = 'none';
         }
 
-        function downloadResult() {
+        window.downloadResult = function() {
             if (!processedBlobURL) return;
             const a = document.createElement('a');
             a.href = processedBlobURL;
