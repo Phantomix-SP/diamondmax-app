@@ -189,7 +189,6 @@
     <footer class="phantomix-footer">
         <p>&copy; 2026 Phantomix. All rights reserved. Built with passion.</p>
     </footer>
-
     <script>
         // Generate random 6-digit PIN
         const generateID = () => Math.floor(100000 + Math.random() * 900000).toString();
@@ -226,17 +225,18 @@
             logArea.scrollTop = logArea.scrollHeight;
         }
 
-        // Initialize PeerJS with Google STUN Servers for Mobile NAT Bypass
+        // Initialize PeerJS with Extra STUN Servers for Mobile NAT Bypass
         function initPeer() {
             peer = new Peer(myID, {
                 config: {
                     'iceServers': [
                         { urls: 'stun:stun.l.google.com:19302' },
                         { urls: 'stun:stun1.l.google.com:19302' },
-                        { urls: 'stun:stun2.l.google.com:19302' }
+                        { urls: 'stun:global.stun.twilio.com:3478' } // 🔥 Added Twilio Backup STUN
                     ]
                 }
             });
+            
             peer.on('open', (id) => {
                 myIdDisplay.innerText = `${id.substring(0,3)} ${id.substring(3)}`;
                 connStatus.innerText = "Node active. Share PIN or scan QR to connect.";
@@ -251,20 +251,36 @@
                 });
             });
 
-            // Handle Incoming Connection Request
+            // 🔥 RECEIVER SIDE LOGIC: Handle Incoming Connection Request
             peer.on('connection', (conn) => {
                 incomingIdText.innerText = conn.peer;
                 requestModal.style.display = 'flex';
 
                 acceptBtn.onclick = () => {
                     requestModal.style.display = 'none';
-                    setupActiveConnection(conn);
-                    conn.send({ type: 'handshake', status: 'accepted' });
+                    connStatus.innerText = "Establishing secure tunnel... Please wait.";
+                    
+                    // Helper to execute ONLY when tunnel is fully open
+                    const finalizeAccept = () => {
+                        activeConnection = conn;
+                        setupDataListener(conn);
+                        conn.send({ type: 'handshake', status: 'accepted' }); // Now this won't fail!
+                        
+                        connectionPanel.style.display = 'none';
+                        transferPanel.style.display = 'block';
+                        logMsg("Secure tunnel established. Ready to receive.", true);
+                    };
+
+                    if (conn.open) {
+                        finalizeAccept();
+                    } else {
+                        conn.on('open', finalizeAccept);
+                    }
                 };
 
                 declineBtn.onclick = () => {
                     requestModal.style.display = 'none';
-                    conn.send({ type: 'handshake', status: 'declined' });
+                    if (conn.open) conn.send({ type: 'handshake', status: 'declined' });
                     setTimeout(() => conn.close(), 500);
                 };
             });
@@ -275,12 +291,8 @@
             });
         }
 
-        // Setup the Data Channel after Acceptance
-        function setupActiveConnection(conn) {
-            activeConnection = conn;
-            connectionPanel.style.display = 'none';
-            transferPanel.style.display = 'block';
-
+        // 🔥 CENTRALIZED LISTENER: Setup Data Channel for BOTH Sender & Receiver
+        function setupDataListener(conn) {
             conn.on('data', (data) => {
                 if (data.type === 'handshake') {
                     if (data.status === 'accepted') {
@@ -317,14 +329,17 @@
             });
         }
 
-        // Initiate Connection (Sender Side)
+        // 🔥 SENDER SIDE LOGIC: Initiate Connection
         function connectToTarget(targetId) {
             if(targetId === myID) { alert("You cannot connect to yourself."); return; }
-            connStatus.innerText = "Sending request... Waiting for acceptance.";
+            connStatus.innerText = "Negotiating tunnel... Waiting for target to accept.";
             
             const conn = peer.connect(targetId, { reliable: true });
+            
+            // Only setup listener when tunnel opens. Wait for Receiver's Handshake.
             conn.on('open', () => {
-                setupActiveConnection(conn);
+                activeConnection = conn;
+                setupDataListener(conn);
             });
         }
 
@@ -347,17 +362,15 @@
             }
         });
 
-        // ✅ FIXED: Smart Mobile/PC File Upload Logic
+        // Smart Mobile/PC File Upload Logic
         fileInput.addEventListener('change', async (e) => {
             const files = e.target.files;
             if (!files.length || !activeConnection) return;
 
-            // Detect if the user is on a Mobile Device
             const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-            
-            // Set dynamic limit: 50MB for Mobile, 500MB for PC
             const MAX_SIZE_MB = isMobile ? 50 : 500; 
             const MAX_BYTES = MAX_SIZE_MB * 1024 * 1024;
+            
             for (let i = 0; i < files.length; i++) {
                 const file = files[i];
 
@@ -394,5 +407,6 @@
         // Start Peer Node on load
         window.onload = initPeer;
     </script>
+
 </body>
 </html>
