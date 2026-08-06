@@ -172,7 +172,7 @@
 
         let processedBlobURL = null;
 
-        // Function to inject AI library secretly after user clicks
+            // 🧠 Helper Function: AI Library ko Multi-CDN Fallback ke sath load karna
         function loadAILibrary() {
             return new Promise((resolve, reject) => {
                 if (typeof imglyRemoveBackground !== 'undefined') {
@@ -180,27 +180,45 @@
                     return;
                 }
                 
-                loadingText.innerText = "Downloading Core AI Module... (Please wait)";
-                const script = document.createElement('script');
-                script.src = "https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.4.3/dist/browser/bundle.umd.js";
+                loadingText.innerText = "Connecting to Core Servers... (Please wait)";
                 
-                script.onload = () => {
-                    if (typeof imglyRemoveBackground !== 'undefined') {
-                        resolve(imglyRemoveBackground);
-                    } else {
-                        reject(new Error("AI Library loaded but core engine is missing."));
+                // Humare paas 2 servers hain. Ek fail hoga toh doosra try karega.
+                const cdns = [
+                    "https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.4.3/dist/browser/bundle.umd.js",
+                    "https://unpkg.com/@imgly/background-removal@1.4.3/dist/browser/bundle.umd.js"
+                ];
+                let currentCdn = 0;
+
+                function tryNextCDN() {
+                    if (currentCdn >= cdns.length) {
+                        reject(new Error("NETWORK_BLOCKED"));
+                        return;
                     }
-                };
-                
-                script.onerror = () => reject(new Error("NETWORK_BLOCKED"));
-                document.head.appendChild(script);
+
+                    const script = document.createElement('script');
+                    script.src = cdns[currentCdn];
+                    
+                    script.onload = () => {
+                        if (typeof imglyRemoveBackground !== 'undefined') {
+                            resolve(imglyRemoveBackground);
+                        } else {
+                            reject(new Error("AI engine missing in downloaded file."));
+                        }
+                    };
+                    
+                    script.onerror = () => {
+                        console.warn(`Server ${currentCdn + 1} blocked by network. Switching to backup...`);
+                        currentCdn++;
+                        tryNextCDN(); // Pehla block hua toh doosra try karo
+                    };
+                    
+                    document.head.appendChild(script);
+                }
+
+                tryNextCDN();
             });
         }
 
-        imageInput.addEventListener('change', async (e) => {
-            try {
-                const file = e.target.files[0];
-                
                 // 🔥 FIX 4: Prevent Silent Crashes if Android OS kills browser background
                 if (!file) {
                     alert("⚠️ No file selected! If your browser reloaded automatically, please pick a photo from your 'Device Storage' instead of Cloud/Google Photos.");
