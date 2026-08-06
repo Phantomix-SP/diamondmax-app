@@ -156,7 +156,7 @@
         <p>&copy; 2026 Phantomix. All rights reserved. Built with passion.</p>
     </footer>
 
-        <script>
+            <script>
         const imageInput = document.getElementById('imageInput');
         const uploadArea = document.getElementById('uploadArea');
         const previewArea = document.getElementById('previewArea');
@@ -189,7 +189,7 @@
             originalImg.src = originalURL;
             resultImg.src = ''; // Clear previous
 
-                        try {
+            try {
                 loadingText.innerText = "Setting up local AI engine... (Please wait)";
                 loadingText.style.color = "#10b981"; 
                 
@@ -229,7 +229,7 @@
                 
                 if (resetBtn) resetBtn.style.display = 'block'; 
             }
-
+        }); // 🔥 THE FIX: Yeh bracket miss ho gaya tha pichli baar!
 
         function resetTool() {
             // Bring everything back to normal state
@@ -250,5 +250,6 @@
             document.body.removeChild(a);
         }
     </script>
+
 </body>
 </html>
