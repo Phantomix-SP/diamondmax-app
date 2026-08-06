@@ -11,8 +11,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
-    <script src="https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.4.3/dist/browser/bundle.umd.js"></script>
-
     <style>
         ::selection { background-color: #0ea5e9; color: #ffffff; }
         ::-webkit-scrollbar { width: 10px; }
@@ -155,7 +153,8 @@
         <p>&copy; 2026 Phantomix. All rights reserved. Built with passion.</p>
     </footer>
 
-            <script>
+            
+                    <script type="module">
         const imageInput = document.getElementById('imageInput');
         const uploadArea = document.getElementById('uploadArea');
         const previewArea = document.getElementById('previewArea');
@@ -175,7 +174,7 @@
                 const file = e.target.files[0];
                 if (!file) return;
 
-                // 1. FORCE UI TO UPDATE FIRST
+                // 1. FORCE UI TO UPDATE FIRST (No Freeze)
                 uploadArea.style.display = 'none';
                 previewArea.style.display = 'block';
                 loadingState.style.display = 'block';
@@ -187,17 +186,16 @@
                 const originalURL = URL.createObjectURL(file);
                 originalImg.src = originalURL;
                 resultImg.src = ''; 
-                loadingText.innerText = "Setting up local AI engine... (Please wait)";
+                loadingText.innerText = "Downloading Core AI Module... (Please wait)";
                 loadingText.style.color = "#10b981";
 
-                // 🔥 THE MAGIC FIX: Give browser 100ms to draw the loading screen before freezing the CPU
                 await new Promise(resolve => setTimeout(resolve, 100));
 
-                // 2. NOW START THE HEAVY AI
-                if (typeof imglyRemoveBackground === 'undefined') {
-                    throw new Error("Library not loaded. Check internet or adblock.");
-                }
+                // 🔥 THE MAGIC FIX: DYNAMIC IMPORT (Bypasses Browser Blocks)
+                const imglyModule = await import('https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.4.3/+esm');
+                const imglyRemoveBackground = imglyModule.default;
 
+                // 2. NOW START THE HEAVY AI
                 const imageBlob = await imglyRemoveBackground(file, {
                     publicPath: "https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.4.3/dist/",
                     model: "small", 
@@ -205,7 +203,7 @@
                     progress: (key, current, total) => {
                         if(key.includes("fetch")) {
                             const percent = Math.round((current/total) * 100) || 0;
-                            loadingText.innerText = `Downloading AI Model (${percent}%)...`;
+                            loadingText.innerText = `Loading Secure Offline Engine (${percent}%)...`;
                         } else {
                             loadingText.innerText = "Extracting background... 🪄";
                         }
@@ -229,13 +227,15 @@
                     <div style="background: rgba(239, 68, 68, 0.1); border: 1px solid #ef4444; padding: 15px; border-radius: 8px; margin-top: 10px; text-align: left;">
                         <h4 style="margin: 0 0 8px 0; color: #ef4444; font-size: 15px;">⚠️ System Halt</h4>
                         <p style="margin: 0; font-size: 13px; color: #cbd5e1;"><b>Error:</b> ${exactError}</p>
+                        <p style="margin: 5px 0 0 0; font-size: 12px; color: #94a3b8;">Try switching from Mobile Data to Wi-Fi, or clear browser cache.</p>
                     </div>
                 `;
                 if (resetBtn) resetBtn.style.display = 'inline-block'; 
             }
         });
 
-        function resetTool() {
+        // Attach to window because type="module" limits scope
+        window.resetTool = function() {
             imageInput.value = ""; 
             uploadArea.style.display = 'block';
             previewArea.style.display = 'none';
@@ -243,7 +243,7 @@
             if (resetBtn) resetBtn.style.display = 'none';
         }
 
-        function downloadResult() {
+        window.downloadResult = function() {
             if (!processedBlobURL) return;
             const a = document.createElement('a');
             a.href = processedBlobURL;
@@ -253,6 +253,6 @@
             document.body.removeChild(a);
         }
     </script>
-                
+
 </body>
 </html>
