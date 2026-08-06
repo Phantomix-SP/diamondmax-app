@@ -11,6 +11,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
+    <script src="https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.4.3/dist/browser/bundle.umd.js"></script>
+
     <style>
         ::selection { background-color: #0ea5e9; color: #ffffff; }
         ::-webkit-scrollbar { width: 10px; }
@@ -73,7 +75,7 @@
         .img-box h4 { margin: 0 0 10px 0; color: #94a3b8; font-size: 13px; text-transform: uppercase; }
         .img-box img { 
             width: 100%; 
-            min-height: 250px; /* Forces visibility */
+            min-height: 250px; 
             object-fit: contain; 
             border-radius: 8px; 
             background: repeating-conic-gradient(#334155 0% 25%, #020617 0% 50%) 50% / 20px 20px; 
@@ -153,9 +155,7 @@
         <p>&copy; 2026 Phantomix. All rights reserved. Built with passion.</p>
     </footer>
 
-    <script type="module">
-        import imglyRemoveBackground from "https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.4.3/+esm";
-
+        <script>
         const imageInput = document.getElementById('imageInput');
         const uploadArea = document.getElementById('uploadArea');
         const previewArea = document.getElementById('previewArea');
@@ -183,16 +183,19 @@
             if (privacyNotice) privacyNotice.style.display = 'block';
             if (loadingSpinner) loadingSpinner.style.display = 'inline-block';
             
-            // Show Original Image
             const originalURL = URL.createObjectURL(file);
             originalImg.src = originalURL;
             resultImg.src = ''; 
 
             try {
+                // 🔥 THE SMART DETECTION: Agar library load nahi hui, matlab network ne block kiya hai
+                if (typeof imglyRemoveBackground === 'undefined') {
+                    throw new Error("NETWORK_BLOCKED");
+                }
+
                 loadingText.innerText = "Setting up local AI engine... (Please wait)";
                 loadingText.style.color = "#10b981"; 
                 
-                // Process Image
                 const imageBlob = await imglyRemoveBackground(file, {
                     publicPath: "https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.4.3/dist/",
                     model: "small", 
@@ -207,7 +210,6 @@
                     }
                 });
                 
-                // Display Result
                 processedBlobURL = URL.createObjectURL(imageBlob);
                 resultImg.src = processedBlobURL;
                 
@@ -220,16 +222,25 @@
                 if (loadingSpinner) loadingSpinner.style.display = 'none';
                 if (privacyNotice) privacyNotice.style.display = 'none';
                 
-                const exactError = error.message ? error.message : "Browser blocked the AI model.";
-                loadingText.innerHTML = `❌ <b>System Halt:</b> ${exactError}`;
-                loadingText.style.color = "#ef4444"; 
+                // 🔥 THE BEAUTIFUL ERROR ALERT BOX
+                loadingText.innerHTML = `
+                    <div style="background: rgba(239, 68, 68, 0.1); border: 1px solid #ef4444; padding: 15px; border-radius: 8px; margin-top: 10px; text-align: left;">
+                        <h4 style="margin: 0 0 8px 0; color: #ef4444; font-size: 15px;"><i class="fas fa-shield-virus"></i> Network Block Detected</h4>
+                        <p style="margin: 0; font-size: 13px; color: #cbd5e1;">Your browser prevented the AI engine from loading. This usually happens if you have:</p>
+                        <ul style="margin: 8px 0 12px 20px; font-size: 13px; color: #f8fafc; padding: 0;">
+                            <li>An active <b>Ad-Blocker</b> (e.g., Brave Shields)</li>
+                            <li>A strict <b>VPN</b> connection</li>
+                            <li>A <b>Private DNS</b> (e.g., AdGuard)</li>
+                        </ul>
+                        <p style="margin: 0; font-size: 13px; color: #10b981; font-weight: bold;"><i class="fas fa-lightbulb"></i> Fix: Please pause them temporarily and try again.</p>
+                    </div>
+                `;
                 
-                if (resetBtn) resetBtn.style.display = 'block'; 
+                if (resetBtn) resetBtn.style.display = 'inline-block'; 
             }
         });
 
-        // Attach functions to window because type="module" isolates scope
-        window.resetTool = function() {
+        function resetTool() {
             imageInput.value = ""; 
             uploadArea.style.display = 'block';
             previewArea.style.display = 'none';
@@ -237,7 +248,7 @@
             if (resetBtn) resetBtn.style.display = 'none';
         }
 
-        window.downloadResult = function() {
+        function downloadResult() {
             if (!processedBlobURL) return;
             const a = document.createElement('a');
             a.href = processedBlobURL;
