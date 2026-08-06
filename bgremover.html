@@ -216,29 +216,28 @@
                 loadingState.style.display = 'none';
                 downloadBtn.style.display = 'block';
 
-            } catch (error) {
+                        } catch (error) {
                 console.error("AI Error:", error);
                 
                 if (loadingSpinner) loadingSpinner.style.display = 'none';
                 if (privacyNotice) privacyNotice.style.display = 'none';
                 
-                // 🔥 THE BEAUTIFUL ERROR ALERT BOX
-                loadingText.innerHTML = `
-                    <div style="background: rgba(239, 68, 68, 0.1); border: 1px solid #ef4444; padding: 15px; border-radius: 8px; margin-top: 10px; text-align: left;">
-                        <h4 style="margin: 0 0 8px 0; color: #ef4444; font-size: 15px;"><i class="fas fa-shield-virus"></i> Network Block Detected</h4>
-                        <p style="margin: 0; font-size: 13px; color: #cbd5e1;">Your browser prevented the AI engine from loading. This usually happens if you have:</p>
-                        <ul style="margin: 8px 0 12px 20px; font-size: 13px; color: #f8fafc; padding: 0;">
-                            <li>An active <b>Ad-Blocker</b> (e.g., Brave Shields)</li>
-                            <li>A strict <b>VPN</b> connection</li>
-                            <li>A <b>Private DNS</b> (e.g., AdGuard)</li>
-                        </ul>
-                        <p style="margin: 0; font-size: 13px; color: #10b981; font-weight: bold;"><i class="fas fa-lightbulb"></i> Fix: Please pause them temporarily and try again.</p>
-                    </div>
-                `;
+                const exactError = error.message ? error.message : "Unknown Browser Error";
+                
+                if (exactError === "NETWORK_BLOCKED") {
+                    loadingText.innerHTML = `<span style="color:#ef4444;">❌ Main Library Blocked by Network.</span>`;
+                } else {
+                    // Yeh aapko phone ka ASLI error dikhayega
+                    loadingText.innerHTML = `
+                        <div style="background: rgba(239, 68, 68, 0.1); border: 1px solid #ef4444; padding: 15px; border-radius: 8px; margin-top: 10px; text-align: left;">
+                            <h4 style="margin: 0 0 8px 0; color: #ef4444; font-size: 15px;">⚠️ Core System Failed</h4>
+                            <p style="margin: 0; font-size: 13px; color: #cbd5e1;"><b>Error:</b> ${exactError}</p>
+                        </div>
+                    `;
+                }
                 
                 if (resetBtn) resetBtn.style.display = 'inline-block'; 
             }
-        });
 
         function resetTool() {
             imageInput.value = ""; 
