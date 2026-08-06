@@ -75,9 +75,14 @@
         }
         .img-box { flex: 1; min-width: 250px; background: #020617; padding: 10px; border-radius: 12px; border: 1px solid #334155; }
         .img-box h4 { margin: 0 0 10px 0; color: #94a3b8; font-size: 13px; text-transform: uppercase; }
-        .img-box img { width: 100%; border-radius: 8px; /* Checkerboard background for transparency */ background: repeating-conic-gradient(#334155 0% 25%, #020617 0% 50%) 50% / 20px 20px; }
-
-        /* Processing Status */
+                 .img-box img { 
+            width: 100%; 
+            min-height: 250px; /* 🔥 THE FIX: Forces the box to stay visible */
+            object-fit: contain; /* 🔥 Prevents image from stretching */
+            border-radius: 8px; 
+            background: repeating-conic-gradient(#334155 0% 25%, #020617 0% 50%) 50% / 20px 20px; 
+        }
+       /* Processing Status */
         #loadingState { display: none; margin-top: 20px; color: #10b981; font-weight: 600; font-size: 14px; }
         .spinner { animation: spin 1s linear infinite; display: inline-block; margin-right: 8px; }
         @keyframes spin { 100% { transform: rotate(360deg); } }
