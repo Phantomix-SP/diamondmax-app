@@ -155,7 +155,7 @@
         <p>&copy; 2026 Phantomix. All rights reserved. Built with passion.</p>
     </footer>
 
-        <script>
+            <script>
         const imageInput = document.getElementById('imageInput');
         const uploadArea = document.getElementById('uploadArea');
         const previewArea = document.getElementById('previewArea');
@@ -171,31 +171,33 @@
         let processedBlobURL = null;
 
         imageInput.addEventListener('change', async (e) => {
-            const file = e.target.files[0];
-            if (!file) return;
-
-            // Start UI State
-            uploadArea.style.display = 'none';
-            previewArea.style.display = 'block';
-            loadingState.style.display = 'block';
-            downloadBtn.style.display = 'none';
-            resetBtn.style.display = 'none';
-            if (privacyNotice) privacyNotice.style.display = 'block';
-            if (loadingSpinner) loadingSpinner.style.display = 'inline-block';
-            
-            const originalURL = URL.createObjectURL(file);
-            originalImg.src = originalURL;
-            resultImg.src = ''; 
-
             try {
-                // 🔥 THE SMART DETECTION: Agar library load nahi hui, matlab network ne block kiya hai
+                const file = e.target.files[0];
+                if (!file) return;
+
+                // 1. FORCE UI TO UPDATE FIRST
+                uploadArea.style.display = 'none';
+                previewArea.style.display = 'block';
+                loadingState.style.display = 'block';
+                downloadBtn.style.display = 'none';
+                if (resetBtn) resetBtn.style.display = 'none';
+                if (privacyNotice) privacyNotice.style.display = 'block';
+                if (loadingSpinner) loadingSpinner.style.display = 'inline-block';
+                
+                const originalURL = URL.createObjectURL(file);
+                originalImg.src = originalURL;
+                resultImg.src = ''; 
+                loadingText.innerText = "Setting up local AI engine... (Please wait)";
+                loadingText.style.color = "#10b981";
+
+                // 🔥 THE MAGIC FIX: Give browser 100ms to draw the loading screen before freezing the CPU
+                await new Promise(resolve => setTimeout(resolve, 100));
+
+                // 2. NOW START THE HEAVY AI
                 if (typeof imglyRemoveBackground === 'undefined') {
-                    throw new Error("NETWORK_BLOCKED");
+                    throw new Error("Library not loaded. Check internet or adblock.");
                 }
 
-                loadingText.innerText = "Setting up local AI engine... (Please wait)";
-                loadingText.style.color = "#10b981"; 
-                
                 const imageBlob = await imglyRemoveBackground(file, {
                     publicPath: "https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.4.3/dist/",
                     model: "small", 
@@ -203,41 +205,35 @@
                     progress: (key, current, total) => {
                         if(key.includes("fetch")) {
                             const percent = Math.round((current/total) * 100) || 0;
-                            loadingText.innerText = `Preparing Secure Offline Engine (${percent}%)...`;
+                            loadingText.innerText = `Downloading AI Model (${percent}%)...`;
                         } else {
                             loadingText.innerText = "Extracting background... 🪄";
                         }
                     }
                 });
                 
+                // 3. SHOW RESULT
                 processedBlobURL = URL.createObjectURL(imageBlob);
                 resultImg.src = processedBlobURL;
                 
                 loadingState.style.display = 'none';
                 downloadBtn.style.display = 'block';
 
-                        } catch (error) {
+            } catch (error) {
                 console.error("AI Error:", error);
-                
                 if (loadingSpinner) loadingSpinner.style.display = 'none';
                 if (privacyNotice) privacyNotice.style.display = 'none';
                 
-                const exactError = error.message ? error.message : "Unknown Browser Error";
-                
-                if (exactError === "NETWORK_BLOCKED") {
-                    loadingText.innerHTML = `<span style="color:#ef4444;">❌ Main Library Blocked by Network.</span>`;
-                } else {
-                    // Yeh aapko phone ka ASLI error dikhayega
-                    loadingText.innerHTML = `
-                        <div style="background: rgba(239, 68, 68, 0.1); border: 1px solid #ef4444; padding: 15px; border-radius: 8px; margin-top: 10px; text-align: left;">
-                            <h4 style="margin: 0 0 8px 0; color: #ef4444; font-size: 15px;">⚠️ Core System Failed</h4>
-                            <p style="margin: 0; font-size: 13px; color: #cbd5e1;"><b>Error:</b> ${exactError}</p>
-                        </div>
-                    `;
-                }
-                
+                const exactError = error.message ? error.message : "Unknown Error";
+                loadingText.innerHTML = `
+                    <div style="background: rgba(239, 68, 68, 0.1); border: 1px solid #ef4444; padding: 15px; border-radius: 8px; margin-top: 10px; text-align: left;">
+                        <h4 style="margin: 0 0 8px 0; color: #ef4444; font-size: 15px;">⚠️ System Halt</h4>
+                        <p style="margin: 0; font-size: 13px; color: #cbd5e1;"><b>Error:</b> ${exactError}</p>
+                    </div>
+                `;
                 if (resetBtn) resetBtn.style.display = 'inline-block'; 
             }
+        });
 
         function resetTool() {
             imageInput.value = ""; 
@@ -257,6 +253,6 @@
             document.body.removeChild(a);
         }
     </script>
-
+                
 </body>
 </html>
