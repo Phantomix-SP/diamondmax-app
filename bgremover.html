@@ -184,19 +184,18 @@
             originalImg.src = originalURL;
             resultImg.src = ''; // Clear previous
 
-            try {
+                        try {
                 loadingText.innerText = "Setting up local AI engine... (Please wait)";
-                loadingText.style.color = "#10b981"; // Green color
+                loadingText.style.color = "#10b981"; 
                 
-                // Magic Happens Here - Mobile Optimized Configuration
+                // Magic Happens Here - Changed CDN to jsdelivr for better WASM support
                 const imageBlob = await imglyRemoveBackground(file, {
-                    publicPath: "https://unpkg.com/@imgly/background-removal@1.4.3/dist/",
-                    model: "small", // Lighter, faster AI model
+                    publicPath: "https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.4.3/dist/", // 🔥 CHANGED CDN
+                    model: "small", 
                     output: { format: "image/png", quality: 0.8 },
                     progress: (key, current, total) => {
                         if(key.includes("fetch")) {
                             const percent = Math.round((current/total) * 100) || 0;
-                            // Replaced "Downloading" with user-friendly text
                             loadingText.innerText = `Preparing Secure Offline Engine (${percent}%)...`;
                         } else {
                             loadingText.innerText = "Extracting background... 🪄";
@@ -214,14 +213,18 @@
             } catch (error) {
                 console.error("AI Error:", error);
                 
-                // The Fallback UI (If it crashes/fails)
+                // The Fallback UI with REAL ERROR LOGGING
                 if (loadingSpinner) loadingSpinner.style.display = 'none';
                 if (privacyNotice) privacyNotice.style.display = 'none';
-                loadingText.innerText = "❌ Connection interrupted or file too large.";
-                loadingText.style.color = "#ef4444"; // Red color
-                if (resetBtn) resetBtn.style.display = 'block'; // Give them a way out!
+                
+                // Print the exact technical error to the screen
+                const exactError = error.message ? error.message : "Browser blocked the AI model.";
+                loadingText.innerHTML = `❌ <b>System Halt:</b> ${exactError}`;
+                loadingText.style.color = "#ef4444"; 
+                
+                if (resetBtn) resetBtn.style.display = 'block'; 
             }
-        });
+
 
         function resetTool() {
             // Bring everything back to normal state
