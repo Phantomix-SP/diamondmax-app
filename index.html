@@ -13,7 +13,7 @@
     <link rel="icon" type="image/png" href="logo.png">
     <link rel="apple-touch-icon" href="logo.png">
     <link rel="manifest" href="manifest.json">
-    <script type="application/ld+json">
+        <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@graph": [
@@ -55,7 +55,6 @@
             "priceCurrency": "INR"
           },
           "description": "DiamondMax is a premium reward ecosystem developed by Phantomix. Users complete missions and watch premium video ads to earn PS tokens, redeemable via UPI (Direct to Bank), Amazon Gift Cards, and Google Play Codes.",
-          "releaseDate": "2028-01-01",
           "publisher": {
             "@type": "Organization",
             "@id": "https://phantomix-dev.github.io/#organization"
@@ -64,6 +63,7 @@
       ]
     }
     </script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Phantomix | DiamondMax</title>
@@ -1724,8 +1724,7 @@
     <div class="top-left-nav">
         <a href="about.html" class="nav-link">About Phantomix</a>
     </div>
-
-    <div class="hero-section" id="hero-section" style="text-align: center; padding: 40px 20px;">
+<div class="hero-section" id="hero-section" style="text-align: center; padding: 40px 20px;">
         
         <div style="display: flex; justify-content: center; margin-bottom: 20px;">
            <img src="logo.png" alt="Phantomix Logo" class="logo-img" fetchpriority="high" onerror="this.style.display='none'" style="display: block; margin: 0;">
@@ -1763,8 +1762,16 @@
             </div>
         </div>
         
-        <p style="color: #94a3b8; margin-top: 30px; margin-bottom: 5px;">🚀 Official Launch Countdown</p>
-        <div id="timer" style="font-size: 24px; color: #10B981; font-weight: bold; margin-bottom: 20px;">Calculating...</div>
+        <!-- 🔥 CHANGES START HERE: Timer Removed, Stealth Badge Added 🔥 -->
+        <div style="margin-top: 40px; margin-bottom: 20px;">
+            <div style="display: inline-block; background: rgba(14, 165, 233, 0.1); border: 1px solid #0ea5e9; color: #0ea5e9; padding: 10px 24px; border-radius: 30px; font-size: 14px; font-weight: 600; letter-spacing: 1px; box-shadow: 0 0 15px rgba(14, 165, 233, 0.2);">
+                <i class="fas fa-flask" style="margin-right: 5px;"></i> DIAMONDMAX IN ACTIVE R&D
+            </div>
+            <p style="color: #94a3b8; font-size: 14px; margin-top: 15px;">Development phase extended to engineer a revolutionary reward architecture. Stay tuned.</p>
+        </div>
+        <!-- 🔥 CHANGES END HERE 🔥 -->
+
+</div>
 
         <a href="gallery.html" class="vault-gate-card">
     <div class="vault-icon">
@@ -1944,15 +1951,40 @@
         <p style="color: #94a3b8; margin-bottom: 40px;">Our strategic roadmap to launch.</p>
         
         <div class="roadmap-container">
-            <div class="roadmap-item completed">
-                <div class="roadmap-marker">
-                    <i class="fas fa-check"></i>
+                        <div class="roadmap-container">
+                
+                <!-- Phase 1: Completed -->
+                <div class="roadmap-item completed">
+                    <div class="roadmap-marker"><i class="fas fa-check"></i></div>
+                    <div class="roadmap-content">
+                        <div class="roadmap-date">Phase 1: Architecture</div>
+                        <h4>Core Concept & Ecosystem Design</h4>
+                        <p style="font-size: 13px; color: #94a3b8; margin-top: 5px;">Finalized the reward mechanics, UI/UX wireframes, and strict security protocols.</p>
+                    </div>
                 </div>
-                <div class="roadmap-content">
-                    <h3 style="margin: 0 0 5px; color: #10b981;">Phase 1: Foundation</h3>
-                    <div class="roadmap-date">Q1 2026</div>
-                    <p style="margin: 0; color: #cbd5e1; font-size: 14px;">Core system architecture design, UI/UX prototyping, and securing base infrastructure.</p>
+
+                <!-- Phase 2: Current (In Active R&D) -->
+                <div class="roadmap-item current">
+                    <div class="roadmap-marker"><div class="pulse-dot"></div></div>
+                    <div class="roadmap-content">
+                        <div class="roadmap-date">Phase 2: R&D & Engineering</div>
+                        <h4>Advanced System Development</h4>
+                        <p style="font-size: 13px; color: #94a3b8; margin-top: 5px;">Currently building highly secure backend tunnels and immersive frontend experiences. Timeline extended for ultimate quality assurance.</p>
+                    </div>
                 </div>
+
+                <!-- Phase 3: Upcoming -->
+                <div class="roadmap-item upcoming">
+                    <div class="roadmap-marker"></div>
+                    <div class="roadmap-content">
+                        <div class="roadmap-date">Phase 3: Closed Alpha</div>
+                        <h4>Private Testing Phase</h4>
+                        <p style="font-size: 13px; color: #94a3b8; margin-top: 5px;">Waitlist members will receive exclusive early access to hunt bugs and test features before the public launch.</p>
+                    </div>
+                </div>
+
+            </div>
+
             </div>
 
             <div class="roadmap-item current">
