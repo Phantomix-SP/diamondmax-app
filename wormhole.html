@@ -24,6 +24,10 @@
     <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
 
     <style>
+        /* 🚀 THE ULTIMATE GHOST SPACE FIX */
+        html, body { width: 100%; max-width: 100vw; overflow-x: hidden !important; }
+        * { box-sizing: border-box; }
+
         ::selection { background-color: #0ea5e9; color: #ffffff; }
         ::-webkit-scrollbar { width: 10px; }
         ::-webkit-scrollbar-track { background: #020617; }
@@ -199,7 +203,7 @@
         let html5QrcodeScanner = null;
 
         // ==========================================
-        // 🔥 ADVANCED FILE CHUNKING ENGINE
+        // 🔥 ADVANCED FILE CHUNKING ENGINE (1GB)
         // ==========================================
         const CHUNK_SIZE = 64 * 1024; // 64KB per chunk (Best for Mobile)
         let incomingFileInfo = null;
@@ -233,14 +237,30 @@
             logArea.scrollTop = logArea.scrollHeight;
         }
 
-        // Initialize PeerJS with Extra STUN Servers for Mobile NAT Bypass
+        // ==========================================
+        // 🚀 THE BULLETPROOF ICE SERVERS (STUN + TURN)
+        // ==========================================
         function initPeer() {
             peer = new Peer(myID, {
                 config: {
                     'iceServers': [
+                        // Google & Cloudflare STUN (Finds Public IP)
                         { urls: 'stun:stun.l.google.com:19302' },
                         { urls: 'stun:stun1.l.google.com:19302' },
-                        { urls: 'stun:global.stun.twilio.com:3478' } // 🔥 Added Twilio Backup STUN
+                        { urls: 'stun:stun2.l.google.com:19302' },
+                        { urls: 'stun:stun.cloudflare.com:3478' },
+                        
+                        // 🔥 THE MAGIC: Public TURN Server (Bypasses Strict Jio/Airtel/Wi-Fi Blockers)
+                        {
+                            urls: 'turn:openrelay.metered.ca:80',
+                            username: 'openrelayproject',
+                            credential: 'openrelayproject'
+                        },
+                        {
+                            urls: 'turn:openrelay.metered.ca:443',
+                            username: 'openrelayproject',
+                            credential: 'openrelayproject'
+                        }
                     ]
                 }
             });
@@ -249,7 +269,6 @@
                 myIdDisplay.innerText = `${id.substring(0,3)} ${id.substring(3)}`;
                 connStatus.innerText = "Node active. Share PIN or scan QR to connect.";
                 
-                // Generate QR Code Instantly
                 new QRCode(qrcodeContainer, {
                     text: id,
                     width: 120, height: 120,
@@ -259,7 +278,7 @@
                 });
             });
 
-            // 🔥 RECEIVER SIDE LOGIC: Handle Incoming Connection Request
+            // Handle Incoming Connection Request
             peer.on('connection', (conn) => {
                 incomingIdText.innerText = conn.peer;
                 requestModal.style.display = 'flex';
@@ -293,12 +312,13 @@
             });
 
             peer.on('error', (err) => {
-                connStatus.innerText = `Error: ${err.type}. Try reloading.`;
+                connStatus.innerText = `Error: ${err.type}. Connection blocked or failed.`;
                 connStatus.style.color = "#ef4444";
+                console.error(err);
             });
         }
 
-        // 🔥 CENTRALIZED LISTENER: Handle Chunked Data
+        // Handle Chunked Data
         function setupDataListener(conn) {
             conn.on('data', (data) => {
                 if (data.type === 'handshake') {
@@ -313,7 +333,6 @@
                     return;
                 }
 
-                // 1. File Metadata (Header) received
                 if (data.type === 'header') {
                     incomingFileInfo = data;
                     incomingFileData = [];
@@ -322,12 +341,10 @@
                     return;
                 }
 
-                // 2. File Chunk received
                 if (data.type === 'chunk') {
                     incomingFileData.push(data.chunk);
                     bytesReceived += data.chunk.byteLength;
                     
-                    // Update progress occasionally
                     if (incomingFileData.length % 100 === 0) {
                         let percent = Math.round((bytesReceived / incomingFileInfo.filesize) * 100);
                         logMsg(`Downloading... ${percent}%`);
@@ -335,7 +352,6 @@
                     return;
                 }
 
-                // 3. EOF (End of File) received
                 if (data.type === 'eof') {
                     logMsg(`Processing and saving file...`, true);
                     const blob = new Blob(incomingFileData);
@@ -350,7 +366,6 @@
                     
                     logMsg("✅ File downloaded successfully!", true);
                     
-                    // Clean up RAM
                     incomingFileInfo = null;
                     incomingFileData = []; 
                 }
@@ -362,7 +377,7 @@
             });
         }
 
-        // 🔥 SENDER SIDE LOGIC: Initiate Connection
+        // Initiate Connection
         function connectToTarget(targetId) {
             if(targetId === myID) { alert("You cannot connect to yourself."); return; }
             connStatus.innerText = "Negotiating tunnel... Waiting for target to accept.";
@@ -380,7 +395,7 @@
             if (id.length === 6) connectToTarget(id);
         });
 
-        // QR Code Scanner Implementation
+        // QR Code Scanner
         scanBtn.addEventListener('click', () => {
             readerDiv.style.display = 'block';
             if(!html5QrcodeScanner) {
@@ -394,12 +409,11 @@
             }
         });
 
-        // 🔥 SENDER SIDE LOGIC: Read & Send Chunks (1GB Limit)
+        // Read & Send Chunks (1GB Limit)
         fileInput.addEventListener('change', async (e) => {
             const files = e.target.files;
             if (!files.length || !activeConnection) return;
 
-            // Limit increased to 1000MB (1GB) for mobile!
             const MAX_SIZE_MB = 1000; 
             const MAX_BYTES = MAX_SIZE_MB * 1024 * 1024;
             
@@ -413,19 +427,16 @@
 
                 logMsg(`Preparing to send ${file.name}...`);
                 
-                // Send File Header First
                 activeConnection.send({
                     type: 'header',
                     filename: file.name,
                     filesize: file.size
                 });
 
-                // Start Chunking Process
                 let offset = 0;
                 const reader = new FileReader();
 
                 reader.onload = function(e) {
-                    // Send the chunk
                     activeConnection.send({
                         type: 'chunk',
                         chunk: e.target.result
@@ -433,16 +444,14 @@
                     
                     offset += e.target.result.byteLength;
                     
-                    // Show progress occasionally
                     if (offset % (CHUNK_SIZE * 50) === 0 || offset >= file.size) {
                         let percent = Math.round((offset / file.size) * 100);
                         logMsg(`Sending... ${percent}%`);
                     }
 
                     if (offset < file.size) {
-                        readNextChunk(); // Read next piece
+                        readNextChunk(); 
                     } else {
-                        // Send End of File signal
                         activeConnection.send({ type: 'eof' });
                         logMsg(`✅ ${file.name} sent successfully!`, true);
                     }
@@ -453,10 +462,7 @@
                     reader.readAsArrayBuffer(slice);
                 };
 
-                // Start reading first chunk
                 readNextChunk();
-                
-                // Wait before sending next file (if multiple files selected)
                 await new Promise(resolve => setTimeout(resolve, 1000));
             }
         });
@@ -469,7 +475,6 @@
             return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
         }
 
-        // Start Peer Node on load
         window.onload = initPeer;
     </script>
 
