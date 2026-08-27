@@ -317,29 +317,42 @@
             box-shadow: 0 4px 15px rgba(14, 165, 233, 0.3);
         }
         .btn:hover { box-shadow: 0 6px 20px rgba(14, 165, 233, 0.6); transform: translateY(-2px); }
-
-        /* Investor Section Styling */
+        /* Investor Section Styling Fix */
         .investor-container {
             background: rgba(30, 41, 59, 0.6);
             backdrop-filter: blur(15px);
-            padding: 50px 30px;
+            padding: 40px 15px; /* Side padding kam kar di taaki text ko jagah mile */
             border-radius: 15px;
             border: 1px solid #8b5cf6;
             box-shadow: 0 0 30px rgba(139, 92, 246, 0.15);
             margin-top: 40px;
+            box-sizing: border-box;
+            width: 100%;
         }
+        
+        /* Box ke andar ke text ka glowing error theek kiya */
+        .investor-stats .stat-box h3 {
+            font-size: 20px !important; /* Font size chota kiya */
+            text-shadow: none !important; /* Bekaar glow hata diya */
+            color: #ffffff !important;
+            letter-spacing: 0.5px;
+        }
+        
         .investor-stats {
             display: flex;
             justify-content: center;
-            gap: 20px;
+            gap: 15px;
             margin-bottom: 30px;
         }
-        .stat-box {
+        
+        .investor-stats .stat-box {
             background: rgba(15, 23, 42, 0.8);
-            padding: 15px 25px;
-            border-radius: 8px;
-            border: 1px solid #334155;
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            flex: 1;
         }
+
         .btn-investor {
             background: linear-gradient(135deg, #8b5cf6, #c084fc);
             box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
