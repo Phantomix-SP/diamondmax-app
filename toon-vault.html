@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phantom Toon-Vault | Animated Database</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- SheetJS for Live Excel Processing -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+    <style>
+        /* Base Reset & Ghost Space Fix */
+        html, body { width: 100%; overflow-x: hidden; margin: 0; padding: 0; }
+        * { box-sizing: border-box; }
+
+        body {
+            background-color: #020617; 
+            color: #ffffff;
+            font-family: 'Poppins', sans-serif;
+            padding-top: 80px;
+            background-image: radial-gradient(circle at top, rgba(14, 165, 233, 0.1), transparent 60%);
+        }
+
+        /* Custom Premium Scrollbar */
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #020617; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #0ea5e9; }
+
+        /* Premium Navbar */
+        .phantomix-navbar {
+            position: fixed; top: 0; left: 0; width: 100%; height: 70px;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 0 5%; background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(15px); border-bottom: 1px solid rgba(14, 165, 233, 0.2);
+            z-index: 1000;
+        }
+        .nav-logo { font-size: 22px; font-weight: 700; color: white; text-decoration: none; display: flex; align-items: center; letter-spacing: 1px;}
+        .nav-btn { 
+            background: linear-gradient(135deg, rgba(14, 165, 233, 0.1), rgba(59, 130, 246, 0.1)); 
+            color: #0ea5e9; padding: 10px 22px; border: 1px solid #0ea5e9; 
+            border-radius: 8px; text-decoration: none; font-size: 14px; font-weight: 600; transition: all 0.3s ease; 
+        }
+        .nav-btn:hover { background: #0ea5e9; color: white; box-shadow: 0 0 20px rgba(14, 165, 233, 0.5); }
+
+        /* Hero Section */
+        .hero-section { text-align: center; padding: 50px 20px 30px; }
+        .hero-section h1 { font-size: 42px; font-weight: 800; margin: 0 0 10px; color: #f8fafc; }
+        .hero-section h1 span { color: #8b5cf6; }
+        .hero-section p { color: #94a3b8; font-size: 16px; max-width: 600px; margin: 0 auto; line-height: 1.6; }
+
+        /* Search & Filter Bar */
+        .search-container {
+            max-width: 900px; margin: 0 auto 40px; padding: 20px;
+            background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(51, 65, 85, 0.6);
+            border-radius: 16px; display: flex; gap: 20px; flex-wrap: wrap;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5); backdrop-filter: blur(10px);
+        }
+        .search-box {
+            flex: 2; min-width: 250px; background: rgba(2, 6, 23, 0.8); 
+            border: 1px solid #334155; padding: 15px 25px; border-radius: 12px; 
+            color: white; font-family: inherit; font-size: 15px; outline: none; transition: 0.3s;
+        }
+        .search-box:focus { border-color: #0ea5e9; box-shadow: 0 0 15px rgba(14, 165, 233, 0.3); }
+        
+        .filter-box {
+            flex: 1; min-width: 200px; background: rgba(2, 6, 23, 0.8); 
+            border: 1px solid #334155; padding: 15px 25px; border-radius: 12px; 
+            color: #0ea5e9; font-family: inherit; font-size: 14px; font-weight: 600; outline: none; cursor: pointer;
+        }
+
+        /* Loading Screen */
+        #loading-screen { text-align: center; color: #0ea5e9; font-size: 18px; margin: 60px 0; font-family: monospace; }
+        
+        /* Grid Layout */
+        .grid-container {
+            max-width: 1250px; margin: 0 auto; padding: 0 20px 80px;
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 30px;
+        }
+
+        /* Premium Character Card */
+        .toon-card {
+            background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(51, 65, 85, 0.8);
+            border-radius: 16px; overflow: hidden; transition: all 0.4s ease;
+            display: flex; flex-direction: column;
+        }
+        .toon-card:hover { 
+            border-color: #0ea5e9; transform: translateY(-8px); 
+            box-shadow: 0 15px 35px rgba(14, 165, 233, 0.15); 
+        }
+        
+        /* Image Placeholder Area */
+        .card-img-wrapper {
+            width: 100%; height: 200px; background: #020617;
+            position: relative; overflow: hidden; border-bottom: 1px solid rgba(51, 65, 85, 0.5);
+        }
+        .card-img {
+            width: 100%; height: 100%; object-fit: cover; opacity: 0.8; transition: 0.5s;
+        }
+        .toon-card:hover .card-img { opacity: 1; transform: scale(1.05); }
+        .era-tag {
+            position: absolute; top: 15px; right: 15px;
+            background: rgba(139, 92, 246, 0.9); color: white; font-size: 10px; font-weight: 700;
+            padding: 4px 10px; border-radius: 20px; text-transform: uppercase; letter-spacing: 1px;
+            backdrop-filter: blur(5px);
+        }
+
+        /* Card Content */
+        .card-content { padding: 25px; flex-grow: 1; display: flex; flex-direction: column; }
+        .char-name { font-size: 24px; font-weight: 700; color: #ffffff; margin: 0 0 8px; line-height: 1.2; }
+        .show-name { color: #38bdf8; font-size: 14px; font-weight: 600; margin-bottom: 20px; display: flex; align-items: center; gap: 8px; }
+        
+        .info-grid { display: grid; grid-template-columns: 1fr; gap: 10px; margin-bottom: 25px; }
+        .info-item { display: flex; align-items: flex-start; gap: 10px; font-size: 13px; color: #cbd5e1; }
+        .info-item i { color: #8b5cf6; font-size: 14px; margin-top: 3px; width: 16px; text-align: center; }
+        .info-item b { color: #94a3b8; margin-right: 5px; }
+
+        /* Secret Fact Button & Box */
+        .reveal-btn {
+            margin-top: auto; width: 100%; background: rgba(14, 165, 233, 0.1); 
+            border: 1px solid rgba(14, 165, 233, 0.3); color: #0ea5e9;
+            padding: 12px; border-radius: 8px; cursor: pointer; font-weight: 600; 
+            font-size: 14px; transition: 0.3s; display: flex; justify-content: center; align-items: center; gap: 8px;
+        }
+        .reveal-btn:hover { background: #0ea5e9; color: #fff; }
+        
+        .fact-box {
+            background: rgba(16, 185, 129, 0.1); border-left: 3px solid #10b981;
+            padding: 15px; margin-top: 15px; border-radius: 4px 8px 8px 4px; display: none;
+            animation: fadeInDown 0.4s ease;
+        }
+        .fact-box p { margin: 0; font-size: 13px; color: #10b981; line-height: 1.6; }
+        
+        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Mobile Adjustments */
+        @media (max-width: 768px) {
+            .hero-section h1 { font-size: 32px; }
+            .search-container { flex-direction: column; gap: 15px; padding: 15px; margin: 0 15px 30px; }
+            .nav-logo { font-size: 18px; }
+            .grid-container { padding: 0 15px 50px; grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="phantomix-navbar">
+        <a href="index.html" class="nav-logo"><i class="fa-solid fa-gem" style="color: #0ea5e9; margin-right: 8px;"></i> Phantomix</a>
+        <a href="apps.html" class="nav-btn"><i class="fas fa-layer-group" style="margin-right: 5px;"></i> All Apps</a>
+    </nav>
+
+    <div class="hero-section">
+        <h1>Phantom <span>Toon-Vault</span></h1>
+        <p>The ultimate classified archive of animation legends. Search characters, discover rare facts, and explore eras.</p>
+    </div>
+
+    <div class="search-container">
+        <input type="text" id="searchInput" class="search-box" placeholder="🔍 Search character, show, or keywords...">
+        <select id="genreFilter" class="filter-box">
+            <option value="All">🌌 All Genres & Eras</option>
+        </select>
+    </div>
+
+    <div id="loading-screen">
+        <i class="fas fa-satellite-dish fa-spin" style="font-size: 28px; margin-bottom: 15px; display: block;"></i>
+        <span id="loading-text">Establishing connection to database nodes...</span>
+    </div>
+
+    <div class="grid-container" id="characterGrid"></div>
+
+    <script>
+        // ✅ Aapki saari Excel files ki list
+        const excelFiles = [
+            "cartoon_anime_database_batch_6.xlsx",
+            "cartoon_anime_database_batch_5.xlsx",
+            "cartoon_anime_database_batch_4.xlsx",
+            "cartoon_anime_database_batch_3.xlsx",
+            "cartoon_anime_database_batch_2.xlsx",
+            "cartoon_anime_database_new.xlsx"
+        ];
+        
+        let allDatabase = []; 
+
+        document.addEventListener("DOMContentLoaded", async () => {
+            const loadingText = document.getElementById("loading-text");
+            const loadingScreen = document.getElementById("loading-screen");
+            
+            for (let i = 0; i < excelFiles.length; i++) {
+                try {
+                    loadingText.innerText = `Decrypting file ${i + 1} of ${excelFiles.length}...`;
+                    
+                    let response = await fetch(excelFiles[i]);
+                    if (response.ok) {
+                        let arrayBuffer = await response.arrayBuffer();
+                        let workbook = XLSX.read(arrayBuffer, {type: 'array'});
+                        let firstSheetName = workbook.SheetNames[0];
+                        let jsonData = XLSX.utils.sheet_to_json(workbook.Sheets[firstSheetName]);
+                        allDatabase = allDatabase.concat(jsonData);
+                    }
+                } catch (error) {
+                    console.log(`Failed to load: ${excelFiles[i]}`);
+                }
+            }
+            
+            loadingScreen.style.display = "none";
+            
+            // UI setup
+            populateFilters(allDatabase);
+            renderCards(allDatabase);
+        });
+
+        // 🖼️ RENDER CARDS FUNCTION
+        function renderCards(data) {
+            const grid = document.getElementById("characterGrid");
+            grid.innerHTML = "";
+            
+            if(data.length === 0) {
+                grid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: #94a3b8; padding: 40px; background: rgba(15, 23, 42, 0.5); border-radius: 12px; border: 1px dashed #334155;">No records found matching your scan parameters.</div>`;
+                return;
+            }
+
+            data.forEach((row, index) => {
+                let name = row['Character Name'] || "Unknown Entity";
+                let show = row['Cartoon / Show Name'] || "Unknown Universe";
+                let dob = row['DOB / Manufacturing / Debut Date'] || "Classified";
+                let dod = row['DOD (If Applicable)'];
+                let role = row['Character Type & Role'] || "Unknown";
+                let fact = row['Rare / Mind-Blowing Fact'] || "No classified data found.";
+                let genre = row['Era / Genre'] || "Unknown Era";
+                
+                // Image Handling: Checks for 'Image URL' column, otherwise uses premium placeholder
+                let encodedName = encodeURIComponent(name);
+                let fallbackImg = `https://ui-avatars.com/api/?name=${encodedName}&background=0f172a&color=0ea5e9&size=400&font-size=0.33`;
+                let imgUrl = row['Image URL'] ? row['Image URL'] : fallbackImg;
+
+                if(!dod || String(dod).toLowerCase() === 'nan' || String(dod).trim() === '') dod = "Alive / Active";
+
+                const card = document.createElement("div");
+                card.className = "toon-card";
+                card.innerHTML = `
+                    <div class="card-img-wrapper">
+                        <span class="era-tag">${genre}</span>
+                        <img src="${imgUrl}" alt="${name}" class="card-img" loading="lazy">
+                    </div>
+                    
+                    <div class="card-content">
+                        <h3 class="char-name">${name}</h3>
+                        <div class="show-name"><i class="fas fa-tv"></i> ${show}</div>
+                        
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <i class="fas fa-calendar-alt"></i>
+                                <div><b>DOB/Debut:</b> ${dob}</div>
+                            </div>
+                            <div class="info-item">
+                                <i class="fas fa-skull-crossbones"></i>
+                                <div><b>DOD:</b> ${dod}</div>
+                            </div>
+                            <div class="info-item">
+                                <i class="fas fa-user-shield"></i>
+                                <div><b>Role:</b> ${role}</div>
+                            </div>
+                        </div>
+                        
+                        <button class="reveal-btn" onclick="toggleFact('fact-${index}')">
+                            <i class="fas fa-fingerprint"></i> Reveal Secret File
+                        </button>
+                        
+                        <div class="fact-box" id="fact-${index}">
+                            <p><b><i class="fas fa-bolt"></i> Mind-Blowing:</b> ${fact}</p>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // 🔍 SEARCH & FILTER ENGINE
+        document.getElementById('searchInput').addEventListener('input', filterData);
+        document.getElementById('genreFilter').addEventListener('change', filterData);
+
+        function filterData() {
+            let searchText = document.getElementById('searchInput').value.toLowerCase();
+            let selectedGenre = document.getElementById('genreFilter').value;
+            
+            let filtered = allDatabase.filter(row => {
+                let name = String(row['Character Name'] || "").toLowerCase();
+                let show = String(row['Cartoon / Show Name'] || "").toLowerCase();
+                let fact = String(row['Rare / Mind-Blowing Fact'] || "").toLowerCase();
+                let genre = row['Era / Genre'] || "";
+                
+                // Allow searching by Name, Show, or keywords in the Fact
+                let matchesSearch = name.includes(searchText) || show.includes(searchText) || fact.includes(searchText);
+                let matchesGenre = (selectedGenre === 'All' || genre === selectedGenre);
+                
+                return matchesSearch && matchesGenre;
+            });
+            
+            renderCards(filtered);
+        }
+
+        // 🏷️ DYNAMIC GENRE GENERATOR
+        function populateFilters(data) {
+            let genres = new Set();
+            data.forEach(row => {
+                if(row['Era / Genre']) genres.add(row['Era / Genre']);
+            });
+            
+            const select = document.getElementById('genreFilter');
+            genres.forEach(g => {
+                let opt = document.createElement('option');
+                opt.value = g;
+                opt.innerText = g;
+                select.appendChild(opt);
+            });
+        }
+
+        // 🔓 TOGGLE FACT BOX
+        window.toggleFact = function(id) {
+            const factBox = document.getElementById(id);
+            if (factBox.style.display === 'block') {
+                factBox.style.display = 'none';
+            } else {
+                factBox.style.display = 'block';
+            }
+        }
+    </script>
+</body>
+</html>
