@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phantomix Database Compiler</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #020617; color: #fff; text-align: center; padding: 50px; }
+        .box { background: #0f172a; border: 2px dashed #0ea5e9; padding: 40px; border-radius: 15px; max-width: 500px; margin: 0 auto; }
+        h2 { color: #0ea5e9; margin-top: 0; }
+        input[type="file"] { margin: 20px 0; color: #94a3b8; }
+        button { background: #10b981; color: white; border: none; padding: 12px 25px; font-size: 16px; border-radius: 8px; cursor: pointer; font-weight: bold; transition: 0.3s; }
+        button:hover { background: #059669; }
+        #log { margin-top: 20px; font-size: 14px; color: #94a3b8; }
+    </style>
+</head>
+<body>
+
+    <div class="box">
+        <h2><i class="fas fa-database"></i> Database Merger Tool</h2>
+        <p>Select all your Excel files at once. This tool will merge them, map the columns for Supabase, add the 'image_url' column, and download a Master CSV.</p>
+        
+        <input type="file" id="fileInput" multiple accept=".xlsx, .xls">
+        <br>
+        <button onclick="mergeFiles()">Merge & Download Master CSV</button>
+        
+        <div id="log">Waiting for files...</div>
+    </div>
+
+    <script>
+        async function mergeFiles() {
+            const fileInput = document.getElementById('fileInput');
+            const log = document.getElementById('log');
+            
+            if (fileInput.files.length === 0) {
+                alert("Bhai, pehle excel files toh select kar lo! 😅");
+                return;
+            }
+
+            log.innerText = "Merging " + fileInput.files.length + " files... Please wait.";
+            let masterData = [];
+
+            // Read all selected files
+            for (let i = 0; i < fileInput.files.length; i++) {
+                let file = fileInput.files[i];
+                let data = await readFile(file);
+                masterData = masterData.concat(data);
+            }
+
+            // Map old headers to new Supabase headers and add image_url
+            let finalCsvData = masterData.map(row => ({
+                genre: row['Era / Genre'] || "",
+                show_name: row['Cartoon / Show Name'] || "",
+                character_name: row['Character Name'] || "",
+                dob: row['DOB / Manufacturing / Debut Date'] || "",
+                dod: row['DOD (If Applicable)'] || "",
+                role: row['Character Type & Role'] || "",
+                fact: row['Rare / Mind-Blowing Fact'] || "",
+                image_url: "" // Empty column added automatically!
+            }));
+
+            // Convert back to CSV
+            const worksheet = XLSX.utils.json_to_sheet(finalCsvData);
+            const csvOutput = XLSX.utils.sheet_to_csv(worksheet);
+
+            // Trigger Download
+            downloadCSV(csvOutput, "Master_Toon_Database.csv");
+            log.innerHTML = "<span style='color:#10b981;'>✅ Success! Master_Toon_Database.csv downloaded!</span>";
+        }
+
+        function readFile(file) {
+            return new Promise((resolve) => {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const data = new Uint8Array(e.target.result);
+                    const workbook = XLSX.read(data, { type: 'array' });
+                    const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
+                    const jsonData = XLSX.utils.sheet_to_json(firstSheet);
+                    resolve(jsonData);
+                };
+                reader.readAsArrayBuffer(file);
+            });
+        }
+
+        function downloadCSV(csv, filename) {
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement("a");
+            const url = URL.createObjectURL(blob);
+            link.setAttribute("href", url);
+            link.setAttribute("download", filename);
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    </script>
+</body>
+</html>
