@@ -2,19 +2,18 @@
 <html lang="en">
 <head>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-LX3YH0GSZG"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-LX3YH0GSZG');
-</script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-LX3YH0GSZG');
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Privacy Policy | Phantomix</title>
     
-    <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/phantomix-dev/phantomix-dev.github.io/main/assets/favicon.png">
-    <meta name="description" content="Official Privacy Policy of Phantomix and DiamondMax. Learn how we protect your data with zero-storage and local-first architecture.">
+    <link rel="icon" type="image/png" href="logo.png">
+    <meta name="description" content="Official Privacy Policy of Phantomix. Learn how we protect your data.">
     
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -33,7 +32,6 @@
             display: flex; flex-direction: column; min-height: 100vh;
         }
 
-        /* Navbar */
         .phantomix-navbar {
             position: fixed; top: 0; left: 0; width: 100%; height: 70px;
             display: flex; justify-content: space-between; align-items: center;
@@ -50,12 +48,11 @@
         }
         .nav-btn:hover { background: #0ea5e9; color: white; box-shadow: 0 0 15px rgba(14, 165, 233, 0.4); }
 
-        /* Container */
         .main-wrapper { flex-grow: 1; display: flex; justify-content: center; align-items: flex-start; padding: 40px 20px; }
         
         .policy-container {
             background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(14, 165, 233, 0.3);
-            border-radius: 16px; padding: 40px; width: 100%; max-width: 800px;
+            border-radius: 16px; padding: 40px; width: 100%; max-width: 900px;
             box-shadow: 0 10px 40px rgba(0,0,0,0.5); text-align: left;
         }
 
@@ -63,17 +60,21 @@
         h1 span { color: #0ea5e9; }
         .last-updated { font-size: 13px; color: #64748b; margin-bottom: 30px; border-bottom: 1px solid #334155; padding-bottom: 15px; }
 
-        h3 { color: #38bdf8; font-size: 18px; margin-top: 25px; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
-        p, li { font-size: 14px; line-height: 1.7; color: #cbd5e1; }
-        ul { padding-left: 20px; }
+        h3 { color: #38bdf8; font-size: 18px; margin-top: 35px; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; border-bottom: 1px dashed rgba(51, 65, 85, 0.5); padding-bottom: 8px;}
+        p, li { font-size: 14px; line-height: 1.7; color: #cbd5e1; margin-bottom: 12px;}
+        ul { padding-left: 20px; margin-top: 5px;}
 
         .highlight-box {
             background: rgba(16, 185, 129, 0.1); border-left: 3px solid #10b981;
-            padding: 15px 20px; border-radius: 6px; margin: 20px 0; color: #e2e8f0; font-size: 14px;
+            padding: 15px 20px; border-radius: 6px; margin: 20px 0 30px 0; color: #e2e8f0; font-size: 14px;
         }
 
-        /* Footer */
         .phantomix-footer { background: #020617; border-top: 1px solid rgba(14, 165, 233, 0.2); padding: 30px 5%; margin-top: auto; font-size: 13px; color: #64748b; text-align: center; width: 100%; box-sizing: border-box; }
+        
+        @media (max-width: 768px) {
+            .policy-container { padding: 25px 15px; }
+            h1 { font-size: 26px; }
+        }
     </style>
 </head>
 <body>
@@ -81,50 +82,102 @@
     <nav class="phantomix-navbar">
         <a href="index.html" class="nav-logo"><i class="fa-solid fa-gem" style="color: #0ea5e9; margin-right: 8px;"></i> Phantomix</a>
         <div class="nav-actions">
-            <a href="index.html" class="nav-btn"><i class="fas fa-arrow-left"></i> Back to Home</a>
+            <a href="index.html" class="nav-btn"><i class="fas fa-arrow-left"></i> Back to Hub</a>
         </div>
     </nav>
 
     <div class="main-wrapper">
         <div class="policy-container">
             <h1>Privacy <span>Policy</span></h1>
-            <div class="last-updated">Effective Date: August 2026 | Phantomix Ecosystem</div>
+            <div class="last-updated">Effective Date: September 6, 2026 | Last Updated: September 6, 2026<br>Contact: phantomix.00@gmail.com | Country: India</div>
 
             <div class="highlight-box">
-                <i class="fas fa-user-shield" style="color: #10b981; margin-right: 8px;"></i>
-                <b>Our Core Pledge:</b> Phantomix is engineered with a local-first, zero-storage architecture. Your files, keys, and private data never hit our cloud servers.
+                <i class="fas fa-shield-alt" style="color: #10b981; margin-right: 8px;"></i>
+                <b>Final Privacy Principle:</b> Phantomix aims to follow a simple principle: Collect what is reasonably necessary, use it for a clear purpose, protect it appropriately, and avoid unnecessary storage.
             </div>
 
-            <h3><i class="fas fa-microchip"></i> 1. Local-First Processing Architecture</h3>
-            <p>Our web utilities—including <b>Phantom-Shrink</b> (Image Compressor), <b>Phantom-Morph</b> (Image Converter), <b>Diamond-Vault</b> (Password Generator), and <b>Phantom-Wormhole</b> (P2P File Transfer)—execute code directly inside your web browser using client-side JavaScript and WebRTC.</p>
+            <h3>1. Introduction</h3>
+            <p>Phantomix respects user privacy and aims to minimize unnecessary collection of personal information. This Privacy Policy explains how Phantomix may collect, use, process, store, share, and protect information when you use the Phantomix website, applications, utilities, accounts, community features, waitlist services, DiamondMax, future products, forms, and support channels.</p>
+
+            <h3>2. Who This Policy Applies To</h3>
+            <p>This Privacy Policy applies to visitors and users of Phantomix services operated through the Phantomix ecosystem. Phantomix is currently an independent technology project and is not represented by this Privacy Policy as a registered corporation or financial institution.</p>
+
+            <h3>3. Information Phantomix May Collect</h3>
+            <p><b>3.1 Account information:</b> For account-based functionality, Phantomix may process email address, name, username, password or authentication credentials, account identifiers, account status, and information necessary to provide the relevant service. Passwords should be stored using appropriate security mechanisms.</p>
+            <p><b>3.2 Waitlist information:</b> If you join a Phantomix waitlist, Phantomix may collect information such as your email address and information necessary to manage the waitlist. Waitlist information may be stored using Phantomix's backend infrastructure, including Supabase.</p>
+            <p><b>3.3 Community information:</b> If you use Phantomix Community functionality, information associated with your community account and activity may be processed (identifiers, usernames, messages, moderation data).</p>
+            <p><b>3.4 DiamondMax:</b> DiamondMax is currently a demonstration/pre-launch product. Where functionality uses backend infrastructure, information necessary to operate that functionality may be processed through services such as Supabase. It should not currently be interpreted as a live monetary-reward platform.</p>
+
+            <h3>4. Information We Do Not Currently Intentionally Store</h3>
             <ul>
-                <li>Your converted or compressed images are never uploaded to any central server.</li>
-                <li>P2P file transfers are direct device-to-device encrypted connections.</li>
-                <li>Password generation uses <code>window.crypto</code> API offline.</li>
+                <li>Phantomix does not currently maintain a dedicated database of users' IP addresses for ordinary user profiling.</li>
+                <li>Phantomix does not currently maintain persistent device-fingerprint profiles for users.</li>
+                <li>Phantomix does not currently operate Phantom-Trade as an active financial/gift-card exchange.</li>
+                <li>Phantomix does not currently distribute real monetary DiamondMax rewards.</li>
             </ul>
 
-            <h3><i class="fas fa-database"></i> 2. Information We Collect</h3>
-            <p>We strictly minimize data collection:</p>
-            <ul>
-                <li><b>Waitlist Email Addresses:</b> If you voluntarily join our early access waitlist, your email is stored securely in our encrypted Supabase database solely for sending product launch updates.</li>
-                <li><b>Diagnostics & Performance:</b> Non-identifiable diagnostic metrics (like server response ping times) may be evaluated locally to monitor system health.</li>
-            </ul>
+            <h3>5. Local Processing</h3>
+            <p>Certain Phantomix tools are designed to process information locally in the user's browser or device (e.g., image utilities, file-processing, compression, metadata-removal, encoding utilities). However, local processing does not mean that every component of the webpage is completely disconnected from the internet. The surrounding website may still use analytics, hosting infrastructure, and external libraries.</p>
 
-            <h3><i class="fas fa-ban"></i> 3. Zero Data Selling</h3>
-            <p>We do not, and will never, sell, rent, or trade user personal data to third-party ad networks or brokers. Phantomix is sustained through direct community support, micro-sponsorships, and future premium passes.</p>
+            <h3>6. Supabase</h3>
+            <p>Phantomix uses Supabase infrastructure for several platform functions, including authentication, account management, community, waitlists, and DiamondMax-related functionality. Supabase operates as a third-party technology/service provider and processing may be subject to its own privacy practices.</p>
 
-            <h3><i class="fas fa-lock"></i> 4. Data Security</h3>
-            <p>All client-server communications (such as submitting feedback or waitlist requests) are transmitted over SSL/TLS (HTTPS) encryption. Data stored in our database uses AES-256 standards.</p>
+            <h3>7. Google Analytics & 8. Search Console</h3>
+            <p>Phantomix uses Google Analytics for website measurement and analytics to understand website traffic, page usage, and technical behaviour. Phantomix does not use Google Analytics as authorization to sell users' personal information. Phantomix may also use Google Search Console for website administration and search visibility diagnostics.</p>
 
-            <h3><i class="fas fa-envelope"></i> 5. Your Rights & Support</h3>
-            <p>You can request the deletion of your email from our waitlist database at any time by contacting our support team directly at <b>phantomix.00@gmail.com</b>.</p>
+            <h3>9. Google AdSense</h3>
+            <p>Phantomix has integrated or may integrate Google AdSense advertising code. At the time of this Privacy Policy, AdSense activation may still be pending review. If advertising becomes active, Google may process information in accordance with their policies. Phantomix does not intentionally direct targeted advertising at children.</p>
 
+            <h3>10. Cookies and Browser Storage</h3>
+            <p>Phantomix may use browser-based technologies such as cookies, local storage, session storage, and indexed browser storage for settings, authentication, functionality, analytics, and security. Clearing browser data may remove locally stored information.</p>
+
+            <h3>11. Information From Your Device & 12. IP Addresses</h3>
+            <p>Phantomix may access technical information made available by your browser (type, OS, screen dimensions, timezone). While Phantomix does not intentionally maintain a dedicated IP database for profiling, IP addresses may technically be visible to infrastructure providers as part of normal internet communication.</p>
+
+            <h3>13. Device Fingerprinting</h3>
+            <p>Phantomix currently provides a browser/device information demonstration tool but does not claim to maintain persistent device-fingerprint profiles. Future anti-fraud systems may require additional identifiers, which will be disclosed appropriately.</p>
+
+            <h3>14. How Phantomix Uses Information</h3>
+            <p>Phantomix processes information to provide requested services, manage accounts, operate community/waitlist features, maintain security, detect fraud, improve performance, communicate updates, and comply with legal obligations.</p>
+
+            <h3>15. Data Minimization & 16. Data Sharing</h3>
+            <p>Phantomix follows a data-minimization approach. We do not sell users' personal information. Information may be processed by third-party providers (Supabase, Google, hosting providers) when reasonably necessary to operate Phantomix.</p>
+
+            <h3>17. Third-Party Links & 18. External Services</h3>
+            <p>Once you leave Phantomix or interact directly with a third-party service (like temporary-email services), that service's own privacy policy applies. Phantomix does not control these independent practices.</p>
+
+            <h3>19. Data Retention & 20. Data Deletion</h3>
+            <p>Phantomix retains personal information only for as long as reasonably necessary. You may contact Phantomix regarding deletion of personal information associated with your account by emailing <b>phantomix.00@gmail.com</b>.</p>
+
+            <h3>21. Security & 22. Password Security</h3>
+            <p>Phantomix uses reasonable measures (HTTPS/TLS, authentication controls) to protect information. Users are responsible for choosing strong passwords and protecting credentials. Never send your full password through support communication.</p>
+
+            <h3>23. Children and Age-Restricted Services</h3>
+            <p>Under the Digital Personal Data Protection Act, 2023, an individual under 18 is defined as a child. Phantomix currently restricts account-based, community, DiamondMax, and paid membership functionality to adults unless compliant alternatives are implemented. We do not knowingly request unnecessary personal information from children.</p>
+
+            <h3>24. No Targeted Child Advertising & 25. International Processing</h3>
+            <p>Phantomix does not intend to use children's personal data for targeted advertising. Some third-party technology providers may process information outside India subject to their infrastructure and legal requirements.</p>
+
+            <h3>26. User Rights & 27. Grievances</h3>
+            <p>Users may have rights relating to their personal information regarding access, correction, and deletion. For privacy questions or deletion requests, email <b>phantomix.00@gmail.com</b> with a clear subject like "Privacy Request Phantomix".</p>
+
+            <h3>28. Future Products</h3>
+            <p>As the ecosystem evolves, future products may introduce payments, rewards, or subscriptions. Material changes to processing will result in updated privacy disclosures.</p>
+
+            <h3>29. Phantom-Trade & 30. DiamondMax</h3>
+            <p>Phantom-Trade is currently disabled and not processing gift cards or payouts. DiamondMax is a demonstration product and does not guarantee real-world monetary rewards. Data practices will be separately disclosed if these transition to live financial services.</p>
+
+            <h3>31. Data Breaches & 32. Policy Changes</h3>
+            <p>In the event of a security incident affecting personal data, Phantomix will investigate, secure systems, and notify parties where required. Phantomix may update this policy, indicated by the "Last Updated" date.</p>
+
+            <h3>33. Contact</h3>
+            <p>For all privacy matters: Email <b>phantomix.00@gmail.com</b></p>
         </div>
     </div>
 
     <footer class="phantomix-footer">
         <div style="margin-bottom: 15px; display: flex; justify-content: center; gap: 25px;">
-            <a href="support.html" style="color: #10b981; text-decoration: none; font-weight: 600; font-size: 14px;"><i class="fas fa-coffee"></i> Support Us</a>
+            <a href="terms.html" style="color: #10b981; text-decoration: none; font-weight: 600; font-size: 14px;"><i class="fas fa-file-contract"></i> Terms & Conditions</a>
             <a href="feedback.html" style="color: #94a3b8; text-decoration: none; font-weight: 600; font-size: 14px;"><i class="fas fa-bug"></i> Feedback & Issues</a>
         </div>
         <p style="margin: 0;">&copy; 2026 Phantomix. All rights reserved. Built with passion.</p>
